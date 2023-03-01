@@ -1,0 +1,27 @@
+{
+  "name": "rp-community-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "scripts": {
+    "nodemon": "nodemon --exec \"npm start\"",
+    "start": "cd ./build && node --experimental-specifier-resolution=node index.js"
+  },
+  "author": "mrganmak",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@discordx/importer": "^1.1.10",
+    "@types/node": "^18.14.2",
+    "@types/node-fetch": "^2.6.2",
+    "discord.js": "^14.7.1",
+    "discordx": "^11.7.1",
+    "dotenv": "^16.0.3",
+    "generate-api-key": "^1.0.2",
+    "mongodb": "^5.1.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "typescript": "^5.0.0-beta"
+  }
+}
