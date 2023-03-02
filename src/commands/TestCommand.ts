@@ -12,7 +12,8 @@ class TestCommand {
 		description,
 		nameLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TEST, 'name', [ELocalizationsLanguages.EN]),
 		descriptionLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TEST, 'description', [ELocalizationsLanguages.EN]),
-		guilds: [process.env.TEST_GUILD_ID]
+		guilds: [process.env.TEST_GUILD_ID],
+		dmPermission: false
 	})
 	async test(interaction: CommandInteraction) {
 		interaction.reply({ content: 'test', ephemeral: true });
