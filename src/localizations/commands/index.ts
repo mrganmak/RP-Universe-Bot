@@ -1,5 +1,5 @@
 import { ApplicationCommandOptions } from "discordx"
-import { ECommandsId, ELocalizationsLanguages } from "../../enum.js"
+import { ECommandsIds, ELocalizationsLanguages } from "../../enum.js"
 import TCommandsLocalizationsPropertys from "./commandsLocalizationsPropertys.js"
 import enLocalization from "./list/en.js"
 import ruLocalization from "./list/ru.js"
@@ -10,14 +10,14 @@ const commandsLocalizations: TCommandsLocalizations = {
 	[ELocalizationsLanguages.EN]: enLocalization
 }
 
-export function getLocalizationForCommand<T extends ECommandsId>(commandId: T, language: ELocalizationsLanguages): TCommandsLocalization[T] {
+export function getLocalizationForCommand<T extends ECommandsIds>(commandId: T, language: ELocalizationsLanguages): TCommandsLocalization[T] {
 	const languageLocalization = commandsLocalizations[language];
 	const commandLocalization = languageLocalization[commandId];
 
 	return commandLocalization;
 }
 
-export function getLocalizationsForCommandProperty<T extends ECommandsId>(
+export function getLocalizationsForCommandProperty<T extends ECommandsIds>(
 	commandId: T,
 	property: keyof TCommandsLocalizationsPropertys[T],
 	languages: Array<ELocalizationsLanguages>
@@ -32,7 +32,7 @@ export function getLocalizationsForCommandProperty<T extends ECommandsId>(
 	return localizations;
 }
 
-export function getAllLocalizationsForCommandProperty<T extends ECommandsId>(
+export function getAllLocalizationsForCommandProperty<T extends ECommandsIds>(
 	commandId: T,
 	property: keyof TCommandsLocalizationsPropertys[T],
 	excludeLanguages?: Array<ELocalizationsLanguages>,
@@ -49,7 +49,7 @@ export function getAllLocalizationsForCommandProperty<T extends ECommandsId>(
 	return localizations;
 }
 
-function getLocalizationForCommandProperty<T extends ECommandsId>(
+function getLocalizationForCommandProperty<T extends ECommandsIds>(
 	commandId: T,
 	property: keyof TCommandsLocalizationsPropertys[T],
 	language: ELocalizationsLanguages

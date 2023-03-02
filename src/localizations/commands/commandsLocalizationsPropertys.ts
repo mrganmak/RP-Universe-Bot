@@ -1,5 +1,5 @@
 import { NotEmpty, VerifyName } from "discordx";
-import { ECommandsId } from "../../enum.js";
+import { ECommandsIds } from "../../enum.js";
 import { ValueOf } from "../../types/types.js";
 import { TCommandLocalization } from "./types/LocalizationsTypes.js";
 
@@ -13,13 +13,13 @@ enum EPingCommandLocalization {
 	description,
 }
 const commandsLocalizationsPropertys = {
-	[ECommandsId.TEST]: ETestCommandLocalization,
-	[ECommandsId.PING]: EPingCommandLocalization
+	[ECommandsIds.TEST]: ETestCommandLocalization,
+	[ECommandsIds.PING]: EPingCommandLocalization
 };
 
 type TCommandsLocalizationsPropertys = {
-	[ECommandsId.TEST]: TTestCommandLocalization,
-	[ECommandsId.PING]: TPingCommandLocalization,
+	[ECommandsIds.TEST]: TTestCommandLocalization,
+	[ECommandsIds.PING]: TPingCommandLocalization,
 }
 
 type TTestCommandLocalization = {

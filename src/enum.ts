@@ -1,4 +1,4 @@
-export enum ECommandsId {
+export enum ECommandsIds {
 	TEST,
 	PING
 }

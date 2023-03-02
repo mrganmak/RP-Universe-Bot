@@ -1,12 +1,12 @@
-import { ECommandsId } from "../../../enum.js";
+import { ECommandsIds } from "../../../enum.js";
 import { TCommandsLocalization } from "../types/LocalizationsTypes.js";
 
 const ruLocalization: TCommandsLocalization = {
-	[ECommandsId.TEST]: {
+	[ECommandsIds.TEST]: {
 		name: 'тест',
 		description: 'тест'
 	},
-	[ECommandsId.PING]: {
+	[ECommandsIds.PING]: {
 		name: 'ping',
 		description: 'ping'
 	}
