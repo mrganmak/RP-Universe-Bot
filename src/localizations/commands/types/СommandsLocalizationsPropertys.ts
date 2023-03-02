@@ -1,21 +1,5 @@
 import { NotEmpty, VerifyName } from "discordx";
-import { ECommandsIds } from "../../enum.js";
-import { ValueOf } from "../../types/types.js";
-import { TCommandLocalization } from "./types/LocalizationsTypes.js";
-
-enum ETestCommandLocalization {
-	name,
-	description,
-}
-
-enum EPingCommandLocalization {
-	name,
-	description,
-}
-const commandsLocalizationsPropertys = {
-	[ECommandsIds.TEST]: ETestCommandLocalization,
-	[ECommandsIds.PING]: EPingCommandLocalization
-};
+import { ECommandsIds } from "../../../enum.js";
 
 type TCommandsLocalizationsPropertys = {
 	[ECommandsIds.TEST]: TTestCommandLocalization,
