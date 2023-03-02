@@ -11,7 +11,8 @@ class PingCommand {
 		name,
 		description,
 		nameLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.PING, 'name', [ELocalizationsLanguages.EN]),
-		descriptionLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.PING, 'description', [ELocalizationsLanguages.EN])
+		descriptionLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.PING, 'description', [ELocalizationsLanguages.EN]),
+		guilds: [process.env.TEST_GUILD_ID]
 	})
 	async test(interaction: CommandInteraction) {
 		interaction.reply({ content: `🏓 | Задержка апи: ${Math.round(interaction.client.ws.ping)}ms`, ephemeral: true });
