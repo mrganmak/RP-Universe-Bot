@@ -1,6 +1,5 @@
 import { generateApiKey } from "generate-api-key";
 import GuildsIdentifiersBase from "../Databases/bases_list/GuildsIdentifiersBase.js";
-import { Guild } from "discord.js";
 
 export default class TokenGenerator {
 	public static async createTokenForGuild(): Promise<string> {
