@@ -1,6 +1,5 @@
-import { VName } from "discordx";
 import { ValueOf } from "../../../types/types.js";
-import TCommandsLocalizationsPropertys from "../commandsLocalizationsPropertys.js";
+import TCommandsLocalizationsPropertys from "./СommandsLocalizationsPropertys.js";
 
 export type TCommandsLocalization = {
 	[Key in keyof TCommandsLocalizationsPropertys]: TCommandLocalization<TCommandsLocalizationsPropertys[Key]>;

@@ -1,6 +1,6 @@
 import { ApplicationCommandOptions } from "discordx"
 import { ECommandsIds, ELocalizationsLanguages } from "../../enum.js"
-import TCommandsLocalizationsPropertys from "./commandsLocalizationsPropertys.js"
+import TCommandsLocalizationsPropertys from "./types/СommandsLocalizationsPropertys.js"
 import enLocalization from "./list/en.js"
 import ruLocalization from "./list/ru.js"
 import { TCommandsLocalization } from "./types/LocalizationsTypes.js"
