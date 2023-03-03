@@ -8,6 +8,7 @@ declare global {
 			DB_NAME: string;
 			TEST_GUILD_ID: string;
 			DB_GUILDS_IDENTIFIRES: string;
+			DB_GUILDS_LOCALIZATION_SETTINGS: string;
 		}
 	}
 }
