@@ -1,13 +1,13 @@
 import { ApplicationCommandOptions } from "discordx"
 import { ECommandsIds, ELocalizationsLanguages } from "../../enum.js"
 import TCommandsLocalizationsPropertys from "./types/СommandsLocalizationsPropertys.js"
-import enLocalization from "./list/en.js"
-import ruLocalization from "./list/ru.js"
-import { TCommandsLocalization } from "./types/LocalizationsTypes.js"
+import enCommandsLocalization from "./list/en.js"
+import ruCommandsLocalization from "./list/ru.js"
+import { TCommandsLocalization } from "./types/CommandsLocalizationsTypes.js"
 
 const commandsLocalizations: TCommandsLocalizations = {
-	[ELocalizationsLanguages.RU]: ruLocalization,
-	[ELocalizationsLanguages.EN]: enLocalization
+	[ELocalizationsLanguages.RU]: ruCommandsLocalization,
+	[ELocalizationsLanguages.EN]: enCommandsLocalization
 }
 
 export function getLocalizationForCommand<T extends ECommandsIds>(commandId: T, language: ELocalizationsLanguages): TCommandsLocalization[T] {
