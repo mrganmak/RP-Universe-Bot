@@ -1,6 +1,8 @@
 export enum ECommandsIds {
 	TEST,
-	PING
+	PING,
+	GENERATE_API_KEY,
+	SET_SERVER_LANGUAGE
 }
 
 export enum ELocalizationsLanguages {
