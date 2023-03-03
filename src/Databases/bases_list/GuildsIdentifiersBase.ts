@@ -1,6 +1,6 @@
 import { Snowflake } from "discord.js";
 import MongoBase from "../MongoBase.js";
-import { Collection, DeleteResult, InsertOneResult } from "mongodb";
+import { Collection, DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
 
 export default class GuildsIdentifiersBase {
 	private static _instance: GuildsIdentifiersBase | undefined;
@@ -16,8 +16,8 @@ export default class GuildsIdentifiersBase {
 		this._collection = this._database.collection<IGuildIdentifiersBase>(process.env.DB_GUILDS_IDENTIFIRES);
 	}
 
-	public async getByGuildId(id: Snowflake): Promise<IGuildIdentifiersBase | null> {
-		return await this._collection.findOne({ guildId: id });
+	public async getByGuildId(guildId: Snowflake): Promise<IGuildIdentifiersBase | null> {
+		return await this._collection.findOne({ guildId });
 	}
 
 	public async getByToken(token: string): Promise<IGuildIdentifiersBase | null> {
@@ -33,16 +33,29 @@ export default class GuildsIdentifiersBase {
 		return await this._collection.insertOne(identifier);
 	}
 
-	public async deleteIdentifierByGuildId(id: Snowflake): Promise<DeleteResult> {
-		return await this._collection.deleteOne({ guildId: id });
+	public async deleteIdentifierByGuildId(guildId: Snowflake): Promise<DeleteResult> {
+		return await this._collection.deleteOne({ guildId });
 	}
 
 	public async deleteIdentifierByToken(token: string): Promise<DeleteResult> {
 		return await this._collection.deleteOne({ token });
+	}
+
+	public async addAPIKeyForGuild(guildId: Snowflake, APIKey: string): Promise<UpdateResult> {
+		return await this._collection.updateOne(
+			{ guildId },
+			{ $set: { APIKey } },
+			{ upsert: false }
+		);
+	}
+
+	public async getByAPIKey(APIKey: string): Promise<IGuildIdentifiersBase | null> {
+		return await this._collection.findOne({ APIKey });
 	}
 }
 
 interface IGuildIdentifiersBase {
 	guildId: Snowflake;
 	token: string;
+	APIKey?: string;
 }
