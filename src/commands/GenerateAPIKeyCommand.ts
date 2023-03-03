@@ -4,8 +4,8 @@ import { ECommandsIds, ELocalizationsLanguages } from "../enum.js";
 import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import TokenGenerator from "../utils/TokenGenerator.js";
 import { getGuildLanguage } from "../localizations/index.js";
-import { getLocalizationForText } from "../localizations/text/index.js";
-import EDefaultTextLocalization from "../localizations/text/list/default.js";
+import { getLocalizationForText } from "../localizations/texts/index.js";
+import EDefaultTextLocalization from "../localizations/texts/list/default.js";
 import GuildsIdentifiersBase from "../Databases/bases_list/GuildsIdentifiersBase.js";
 
 const { name, description } = getLocalizationForCommand(ECommandsIds.GENERATE_API_KEY, ELocalizationsLanguages.EN);

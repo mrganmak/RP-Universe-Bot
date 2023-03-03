@@ -3,8 +3,8 @@ import { Discord, Slash, SlashChoice, SlashChoiceType, SlashOption } from "disco
 import { ECommandsIds, ELocalizationsLanguages } from "../enum.js";
 import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import GuildsLocalizationSettingsBase from "../Databases/bases_list/GuildsLocalizationSettingsBase.js";
-import { getLocalizationForText } from "../localizations/text/index.js";
-import EDefaultTextLocalization from "../localizations/text/list/default.js";
+import { getLocalizationForText } from "../localizations/texts/index.js";
+import EDefaultTextLocalization from "../localizations/texts/list/default.js";
 import { getGuildLanguage } from "../localizations/index.js";
 
 const { name, description, languageChooseName, languageChooseDescription } = getLocalizationForCommand(ECommandsIds.SET_SERVER_LANGUAGE, ELocalizationsLanguages.EN);
