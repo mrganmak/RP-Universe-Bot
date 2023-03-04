@@ -1,5 +1,5 @@
-import EDefaultTextLocalization from "../list/default.js";
+import ETextsLocalizationsIds from "./ETextsLocalizationsIds.js";
 
 export type TTextsLocalization = {
-	[Key in EDefaultTextLocalization]: string;
+	[Key in ETextsLocalizationsIds]: string;
 }

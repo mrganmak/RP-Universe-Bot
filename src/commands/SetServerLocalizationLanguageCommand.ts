@@ -4,8 +4,8 @@ import { ECommandsIds, ELocalizationsLanguages } from "../enum.js";
 import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import GuildsLocalizationSettingsBase from "../Databases/bases_list/GuildsLocalizationSettingsBase.js";
 import { getLocalizationForText } from "../localizations/texts/index.js";
-import EDefaultTextLocalization from "../localizations/texts/list/default.js";
 import { getGuildLanguage } from "../localizations/index.js";
+import ETextsLocalizationsIds from "../localizations/texts/types/ETextsLocalizationsIds.js";
 
 const { name, description, languageChooseName, languageChooseDescription } = getLocalizationForCommand(ECommandsIds.SET_SERVER_LANGUAGE, ELocalizationsLanguages.EN);
 
@@ -39,6 +39,6 @@ class SetServerLanguageCommand {
 		const base = new GuildsLocalizationSettingsBase();
 		await base.addSettings({ guildId: interaction.guild.id, language });
 
-		interaction.editReply({ content: getLocalizationForText(EDefaultTextLocalization.SET_SERVER_LANGUAGE_MESSAGE_TEXT, await getGuildLanguage(interaction.guild.id)) });
+		interaction.editReply({ content: getLocalizationForText(ETextsLocalizationsIds.SET_SERVER_LANGUAGE_MESSAGE_TEXT, await getGuildLanguage(interaction.guild.id)) });
 	}
 }
