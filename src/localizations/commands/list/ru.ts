@@ -11,14 +11,18 @@ const ruCommandsLocalization: TCommandsLocalization = {
 		description: 'ping'
 	},
 	[ECommandsIds.GENERATE_API_KEY]: {
-		name: 'generate_api',
+		name: 'сгенерировать_апи-ключ',
 		description: 'Генерирует API-ключ'
 	},
 	[ECommandsIds.SET_SERVER_LANGUAGE]: {
-		name: 'set_language',
+		name: 'установить_язык',
 		description: 'Задать язык сервера для корректной локализации',
-		languageChooseName: 'language',
+		languageChooseName: 'язык',
 		languageChooseDescription: 'Язык вашего сервера'
+	},
+	[ECommandsIds.TICKETS_SETTINGS]: {
+		name: 'настройки_тикетов',
+		description: 'Задать настройки для системы тикетов'
 	}
 }
 

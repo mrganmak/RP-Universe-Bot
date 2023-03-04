@@ -19,6 +19,10 @@ const enCommandsLocalization: TCommandsLocalization = {
 		description: 'Set server language for correct localization',
 		languageChooseName: 'language',
 		languageChooseDescription: 'Language of your server'
+	},
+	[ECommandsIds.TICKETS_SETTINGS]: {
+		name: 'tickets_settings',
+		description: 'Set preferences for the ticket system'
 	}
 }
 

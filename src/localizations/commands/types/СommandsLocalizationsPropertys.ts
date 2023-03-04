@@ -5,7 +5,8 @@ type TCommandsLocalizationsPropertys = {
 	[ECommandsIds.TEST]: IDefaultCommandLocalizationPropertys,
 	[ECommandsIds.PING]: IDefaultCommandLocalizationPropertys,
 	[ECommandsIds.GENERATE_API_KEY]: IDefaultCommandLocalizationPropertys,
-	[ECommandsIds.SET_SERVER_LANGUAGE]: ISetServerLanguageCommandLocalizationPropertys
+	[ECommandsIds.SET_SERVER_LANGUAGE]: ISetServerLanguageCommandLocalizationPropertys,
+	[ECommandsIds.TICKETS_SETTINGS]: IDefaultCommandLocalizationPropertys,
 }
 
 interface IDefaultCommandLocalizationPropertys {
