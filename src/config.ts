@@ -2,7 +2,6 @@ import { ButtonStyle } from "discord.js";
 import { IUserConfirmationInteractionButtonSettings } from "./modules/interactions/UserConfirmation.js";
 import ETextsLocalizationsIds from "./localizations/texts/types/ETextsLocalizationsIds.js";
 import { TButtonsPanelsSettings } from "./modules/interactions/ButtonsPanel.js";
-import { EButtosPanelSSettingsIds } from "./enum.js";
 import { TSelectMenuOptionsWithLocalizations } from "./types/types.js";
 
 export const devMode = true;
@@ -29,4 +28,3 @@ export const ticketsSettingsSelectMenuComponents: TSelectMenuOptionsWithLocaliza
 		value: 'change_category'
 	}
 ];
-
