@@ -1,14 +1,14 @@
-import { ActionRowBuilder, CategoryChannel, ChannelSelectMenuBuilder, ChannelType, CommandInteraction, ComponentType } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CategoryChannel, ChannelSelectMenuBuilder, ChannelType, CommandInteraction, ComponentType, GuildChannel, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 import { getGuildLanguage } from "../../../localizations/index.js";
 import { EmbedBuilder } from "@discordjs/builders";
 import { getLocalizationForText } from "../../../localizations/texts/index.js";
 import ETextsLocalizationsIds from "../../../localizations/texts/types/ETextsLocalizationsIds.js";
 
 export default class TicketsCommndInteractions {
-	public static async setCategoryForTickets(interaction: CommandInteraction): Promise<CategoryChannel> {
+	public static async getSetedCategoryForTickets(interaction: CommandInteraction): Promise<CategoryChannel> {
 		if (!interaction.guild?.id) throw new Error('This no guild in this interaction');
 
-		const replyFunction = (interaction.replied || interaction.deferred ? interaction.editReply : interaction.reply);
+		const replyFunction = (interaction.replied || interaction.deferred ? interaction.editReply : interaction.reply).bind(interaction);
 		const guildLanguage = await getGuildLanguage(interaction.guild.id);
 
 		const changeCategoryEmbed = new EmbedBuilder();
@@ -21,24 +21,50 @@ export default class TicketsCommndInteractions {
 		const message = await interaction.fetchReply();
 		const categoryComponent = await message.awaitMessageComponent({ componentType: ComponentType.ChannelSelect });
 		await categoryComponent.update({ components: [] });
+		const category = categoryComponent.channels.first();
+		if (!category) throw new Error('Something went wrong in getSetedCategoryForTickets');
 
-		const category = categoryComponent.channels.first() as CategoryChannel;
-
-		return category;
+		return category as CategoryChannel;
 	}
-}
 
-/*if (!interaction.guild) return;
+	public static async getSetedChannelForTickets(interaction: CommandInteraction): Promise<GuildChannel> {
+		if (!interaction.guild?.id) throw new Error('This no guild in this interaction');
+
+		const replyFunction = (interaction.replied || interaction.deferred ? interaction.editReply : interaction.reply).bind(interaction);
+		const guildLanguage = await getGuildLanguage(interaction.guild.id);
+
 		const changeChannelEmbed = new EmbedBuilder();
 		changeChannelEmbed
 			.setTitle(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_LABLE, guildLanguage))
 			.setDescription(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_DESCRIPTION, guildLanguage));
-		const channelSelectMenu = new ChannelSelectMenuBuilder().setChannelTypes(ChannelType.GuildText).setCustomId('selectmenu2');
-		await interaction.editReply({ embeds: [changeChannelEmbed], components: [new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(channelSelectMenu)] });
+		const channelSelectMenu = new ChannelSelectMenuBuilder().setChannelTypes(ChannelType.GuildText).setCustomId('selectmenu');
+		await replyFunction({ embeds: [changeChannelEmbed], components: [new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(channelSelectMenu)], ephemeral: true });
 
+		const message = await interaction.fetchReply();
 		const channelComponent = await message.awaitMessageComponent({ componentType: ComponentType.ChannelSelect });
+		await channelComponent.update({ components: [] });
+		const channel = channelComponent.channels.first();
+		if (!channel) throw new Error('Something went wrong in getSetedChannelForTickets');
 
-		const channel = channelComponent.channels.first(); //TODO: BD;
+		return channel as GuildChannel;
+	}
+
+	public static async getTextForTicketsMessage(interaction: CommandInteraction): Promise<string> {
+		if (!interaction.guild?.id) throw new Error('This no guild in this interaction');
+
+		const replyFunction = (interaction.replied || interaction.deferred ? interaction.editReply : interaction.reply).bind(interaction);
+		const guildLanguage = await getGuildLanguage(interaction.guild.id);
+
+		const messageEmbed = new EmbedBuilder();
+		messageEmbed
+			.setTitle('Отправить сообщение')
+			.setDescription('Нажмите снизу, чтобы отправить сообщение в канал для тикетов');
+		const sendMessageButton = new ButtonBuilder().setLabel('Отправить').setCustomId('selectmenu').setStyle(ButtonStyle.Success);
+		await replyFunction({ embeds: [messageEmbed], components: [new ActionRowBuilder<ButtonBuilder>().addComponents(sendMessageButton)], ephemeral: true });
+
+		const message = await interaction.fetchReply();
+		const messageComponent = await message.awaitMessageComponent({ componentType: ComponentType.Button });
+
 		const modal = new ModalBuilder()
 		modal
 			.setCustomId('modal')
@@ -63,10 +89,13 @@ export default class TicketsCommndInteractions {
 			)
 			.setTitle('Test modal')
 
-		channelComponent.showModal(modal);
-		const modalSubmit = await channelComponent.awaitModalSubmit({ time: 10*60*1000 });
-		console.log(modalSubmit.fields.getField('test'));
+		await messageComponent.showModal(modal);
+		const modalSubmit = await messageComponent.awaitModalSubmit({ time: 10*60*1000 }).catch((error) => { throw error; });
+		const testField = modalSubmit.fields.getField('test');
+		const text = (testField.type == ComponentType.TextInput ? testField.value : '');
+		if (!modalSubmit.isFromMessage()) throw new Error('Something went wrong with modal in getTextForTicketsMessage');
+		await modalSubmit.update({ components: [] });
 
-		const modulesBase = new GuildsModulesBase();
-		await modulesBase.changeModuleState(interaction.guild.id, 'isTicketsModuleInited', true);
-		CommandsIniter.changeCommandsForGuild(interaction.guild.id);*/
+		return text;
+	}
+}
