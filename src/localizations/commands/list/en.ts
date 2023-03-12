@@ -23,6 +23,14 @@ const enCommandsLocalization: TCommandsLocalization = {
 	[ECommandsIds.TICKETS_SETTINGS]: {
 		name: 'tickets_settings',
 		description: 'Set preferences for the ticket system'
+	},
+	[ECommandsIds.START]: {
+		name: 'start',
+		description: 'Primary bot settings for your guild',
+	},
+	[ECommandsIds.START_TICKETS]: {
+		name: 'start_tickets',
+		description: 'Primary settings for the ticket module',
 	}
 }
 

@@ -23,7 +23,16 @@ const ruCommandsLocalization: TCommandsLocalization = {
 	[ECommandsIds.TICKETS_SETTINGS]: {
 		name: 'настройки_тикетов',
 		description: 'Задать настройки для системы тикетов'
+	},
+	[ECommandsIds.START]: {
+		name: 'старт',
+		description: 'Первичные настройки бота для вашей гильдии',
+	},
+	[ECommandsIds.START_TICKETS]: {
+		name: 'старт_тикеты',
+		description: 'Первичные настройки бота для тикетов',
 	}
+
 }
 
 export default ruCommandsLocalization;
