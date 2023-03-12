@@ -14,14 +14,18 @@ export function getLocalizationForText(text: ETextsLocalizationsIds, language: E
 	return textsForLanguage[text];
 }
 
-export function getAllLocalizationsForText(text: ETextsLocalizationsIds, excludeLanguages?: Array<ELocalizationsLanguages>): Array<string> {
+export function getAllLocalizationsForText(text: ETextsLocalizationsIds, options?:IGetAllLocalizationsForTextOptions): Array<string> {
 	const texts: Array<string> = [];
 
 	for (const language of Object.keys(textsLocalizations) as Array<ELocalizationsLanguages>) {
-		if (excludeLanguages?.includes(language)) continue;
+		if (options?.excludeLanguages?.includes(language)) continue;
 
 		const localization = textsLocalizations[language];
-		const textForLanguage = localization[text];
+		const textForLanguage = (
+			options?.isLangugageEmojiNeeded ?
+			getLocalizationForText(ETextsLocalizationsIds.LANGUAGE_EMOJI, language) + ' ' + localization[text] :
+			localization[text]
+		);
 		texts.push(textForLanguage);
 	}
 
@@ -30,4 +34,9 @@ export function getAllLocalizationsForText(text: ETextsLocalizationsIds, exclude
 
 type TTextsLocalizations = {
 	[key in ELocalizationsLanguages]: TTextsLocalization;
+}
+
+interface IGetAllLocalizationsForTextOptions {
+	excludeLanguages?: Array<ELocalizationsLanguages>;
+	isLangugageEmojiNeeded?: boolean
 }
