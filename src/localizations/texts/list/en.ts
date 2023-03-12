@@ -26,8 +26,8 @@ const enTextsLocaliztion: TTextsLocalization = {
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_DESCRIPTION]: 'In order to select the category in which channels with tickets will be created, use the select menu, which is located below',
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_LABLE]: 'Channel selection',
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_DESCRIPTION]: 'The channel where you want to send a message with a ticket',
-	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IT_IS_DONE]: 'It is done.',
-	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IS_ANY_CHANGE_NEEDED]: 'Is there anything else you want to change?',
+	[ETextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE]: 'It is done.',
+	[ETextsLocalizationsIds.TICKETS_SETTINGS_IS_ANY_CHANGE_NEEDED]: 'Is there anything else you want to change?',
 
 	[ETextsLocalizationsIds.START_ABOUT_ME]: 'Greetings, dear friend!\nI am an intelligent machine that will help you manage your RP server.\nYou can find detailed information by clicking on the github link.\nAfter going through the initial setup, new commands will open for you, with which you can configure me specifically for your guild.',
 	[ETextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'First, let\'s set up the guild language.',

@@ -26,8 +26,8 @@ const ruTextsLocaliztion: TTextsLocalization = {
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_DESCRIPTION]: 'Для того, чтобы выбрать категорию, в которой будут создаваться каналы с тикетами, воспользоуйтесть селект меню, которое расположено ниже',
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_LABLE]: 'Выбор канала',
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_DESCRIPTION]: 'Канал, куда необходимо отправить сообщение с тикетом',
-	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IT_IS_DONE]: 'Дело сделано.',
-	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IS_ANY_CHANGE_NEEDED]: 'Хотите ли вы изменить ещё что-то?',
+	[ETextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE]: 'Дело сделано.',
+	[ETextsLocalizationsIds.TICKETS_SETTINGS_IS_ANY_CHANGE_NEEDED]: 'Хотите ли вы изменить ещё что-то?',
 
 	[ETextsLocalizationsIds.START_ABOUT_ME]: 'Приветствую тебя, дорогой друг!\nЯ — интеллектуальная машина, которая поможет тебе управлять твоим РП сервером.\nПодробную информацию ты можешь найти, перейдя по ссылке на гитхаб\nПосле прохождения первичной настройки тебе откроются новые команды, при помощи которых ты сможешь настроить меня конкретно под свой сервер.',
 	[ETextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'Для начала настроим язык сервера.',
