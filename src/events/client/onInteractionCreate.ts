@@ -1,4 +1,4 @@
-import { ArgsOf, Client, Discord, On, Once } from "discordx";
+import { ArgsOf, Client, Discord, On } from "discordx";
 
 @Discord()
 class onInteractionCreate {
