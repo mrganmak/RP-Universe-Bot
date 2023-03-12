@@ -1,16 +1,17 @@
 import { ActionRowBuilder, MessageActionRowComponentBuilder, ButtonBuilder, StringSelectMenuBuilder } from "@discordjs/builders";
-import { APISelectMenuOption, APIStringSelectComponent, ButtonInteraction, ButtonStyle, CommandInteraction, ComponentType, Interaction, InteractionCollector, Message, MessageInteraction, RichPresenceAssets, SelectMenuInteraction, TextChannel, User, VoiceChannel } from "discord.js";
+import { APISelectMenuOption, APIStringSelectComponent, ButtonInteraction, ButtonStyle, CommandInteraction, ComponentType, InteractionCollector, Message, StringSelectMenuInteraction, TextChannel, User, VoiceChannel } from "discord.js";
 import { ELocalizationsLanguages } from "../../enum.js";
-import { ISelectMenuOptionWithLocalizations, TSelectMenuOptionsWithLocalizations } from "../../types/types.js";
+import { TSelectMenuOptionsWithLocalizations, ValueOf } from "../../types/types.js";
 import { getLocalizationForText } from "../../localizations/texts/index.js";
 import EventEmitter from "events";
+import { DEFAULT_SERVER_LANGUAGE } from "../../consts.js";
 
-export default class PaginationSelectMenu extends EventEmitter {
-	public static create(message: Message, author: User, options: TSelectMenuOptionsWithLocalizations, language: ELocalizationsLanguages, selectMenuOptions?: IPaginationSelectMenuSettings, isNeedMessageDelete?: boolean): Promise<PaginationSelectMenu>;
-	public static create(interaction: CommandInteraction, author: User, options: TSelectMenuOptionsWithLocalizations, language: ELocalizationsLanguages, selectMenuOptions?: IPaginationSelectMenuSettings): Promise<PaginationSelectMenu>;
-	public static create(channel: TextChannel | VoiceChannel, author: User, options: TSelectMenuOptionsWithLocalizations, language: ELocalizationsLanguages, selectMenuOptions?: IPaginationSelectMenuSettings): Promise<PaginationSelectMenu>;
-	public static async create(data: TextChannel | VoiceChannel | CommandInteraction | Message, author: User, options: TSelectMenuOptionsWithLocalizations, language: ELocalizationsLanguages, selectMenuOptions?: IPaginationSelectMenuSettings, isNeedMessageDelete?: boolean): Promise<PaginationSelectMenu> {
-		const selectMenuInteractionBuilder = new SelectMenuInteractionBuilder(language, options, selectMenuOptions);
+export default class PaginationSelectMenu<T extends TPaginationSelectMenuOptions> extends EventEmitter {
+	public static create<T extends TPaginationSelectMenuOptions>(message: Message, author: User, options: T, isNeedMessageDelete?: boolean): Promise<PaginationSelectMenu<T>>;
+	public static create<T extends TPaginationSelectMenuOptions>(interaction: CommandInteraction, author: User, options: T): Promise<PaginationSelectMenu<T>>;
+	public static create<T extends TPaginationSelectMenuOptions>(channel: TextChannel | VoiceChannel, author: User, options: T): Promise<PaginationSelectMenu<T>>;
+	public static async create<T extends TPaginationSelectMenuOptions>(data: TextChannel | VoiceChannel | CommandInteraction | Message, author: User, options: T, isNeedMessageDelete?: boolean): Promise<PaginationSelectMenu<T>> {
+		const selectMenuInteractionBuilder = new SelectMenuInteractionBuilder(options);
 
 		if (data instanceof Message) {
 			const message = await data.edit({ components: selectMenuInteractionBuilder.components });
@@ -28,15 +29,15 @@ export default class PaginationSelectMenu extends EventEmitter {
 	}
 
 	private _messageOrInteraction: Message | CommandInteraction;
-	private _selectMenuInteractionBuilder: SelectMenuInteractionBuilder;
-	private _selectMenuCollector: InteractionCollector<SelectMenuInteraction>;
+	private _selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>;
+	private _selectMenuCollector: InteractionCollector<StringSelectMenuInteraction>;
 	private _buttonCollector: InteractionCollector<ButtonInteraction>;
 	private _answer: Array<string> | undefined;
 	private _isNeedMessageDelete: boolean;
 
-	private constructor(message: Message, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder, isNeedMessageDelete?: boolean)
-	private constructor(interaction: CommandInteraction, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder, isNeedMessageDelete: boolean, interactionMessage: Message)
-	private constructor(messageOrInteraction: Message | CommandInteraction, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder, isNeedMessageDelete: boolean = true, interactionMessage?: Message) {
+	private constructor(message: Message, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>, isNeedMessageDelete?: boolean)
+	private constructor(interaction: CommandInteraction, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>, isNeedMessageDelete: boolean, interactionMessage: Message)
+	private constructor(messageOrInteraction: Message | CommandInteraction, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>, isNeedMessageDelete: boolean = true, interactionMessage?: Message) {
 		super();
 
 		this._isNeedMessageDelete = isNeedMessageDelete;
@@ -58,7 +59,7 @@ export default class PaginationSelectMenu extends EventEmitter {
 		})
 	}
 
-	private async _onSelectMenuCollect(interaction: SelectMenuInteraction): Promise<void> {
+	private async _onSelectMenuCollect(interaction: StringSelectMenuInteraction): Promise<void> {
 		await interaction.deferUpdate();
 
 		if (this._messageOrInteraction instanceof Message) {
@@ -83,8 +84,8 @@ export default class PaginationSelectMenu extends EventEmitter {
 	}
 }
 
-class SelectMenuInteractionBuilder {
-	private _options: TSelectMenuOptionsWithLocalizations;
+class SelectMenuInteractionBuilder<T extends TPaginationSelectMenuOptions> {
+	private _options: TPaginationSelectMenuOptions;
 	private _selectMenuBuilder = new ActionRowBuilder<StringSelectMenuBuilder>();
 	private _buttonBuilder = new ActionRowBuilder<ButtonBuilder>();
 	private _currentMenuPage: number = 1;
@@ -111,11 +112,11 @@ class SelectMenuInteractionBuilder {
 		return this._pagesCount;
 	}
 
-	constructor(language: ELocalizationsLanguages, options?: TSelectMenuOptionsWithLocalizations, selectMenuOptions?: IPaginationSelectMenuSettings) {
+	constructor(options: T) {
 		this._pagesCount = 0;
-		this._options = options ?? [];
-		this._selectMenuOptions = selectMenuOptions;
-		this._language = language;
+		this._options = options;
+		this._selectMenuOptions = options?.selectMenuOptions;
+		this._language = (options.isLocalizationRequer ? options.language : DEFAULT_SERVER_LANGUAGE);
 
 		this._updatePagesCount();
 		this._createButtons();
@@ -123,7 +124,7 @@ class SelectMenuInteractionBuilder {
 	}
 
 	private _updatePagesCount(): void {
-		this._pagesCount = Math.floor(this._options.length / 25) + 1;
+		this._pagesCount = Math.floor(this._options.choices.length / 25) + 1;
 		this._createButtons();
 	}
 
@@ -147,16 +148,16 @@ class SelectMenuInteractionBuilder {
 		)
 	}
 
-	public addOptions(options: TSelectMenuOptionsWithLocalizations): this {
-		this._options = this._options.concat(options);
+	public addOptions(options: T['choices']): this {
+		this._options.choices = [...this._options.choices, ...options] as unknown as T['choices'];
 		this._updatePagesCount();
 		this._updateOptionsInSelectMenu();
 
 		return this;
 	}
 
-	public addOption(option: ISelectMenuOptionWithLocalizations): this {
-		this._options.push(option);
+	public addOption(option: ValueOf<T['choices']>): this {
+		this._options.choices = [...this._options.choices, option] as unknown as T['choices'];
 		this._updatePagesCount();
 		this._updateOptionsInSelectMenu();
 
@@ -165,13 +166,17 @@ class SelectMenuInteractionBuilder {
 
 	private _updateOptionsInSelectMenu(): void {
 		const selectMenu = new StringSelectMenuBuilder(this._selectMenuOptions)
-		const options: Array<APISelectMenuOption> = (this._options.length > 25 ? this._options.slice(25 * (this._currentMenuPage-1), 25 * this._currentMenuPage) : this._options).map((option) => ({
-			label: getLocalizationForText(option.label, this._language),
-			value: option.value,
-			default: option.default,
-			description: (option.description ? getLocalizationForText(option.description, this._language) : undefined),
-			emoji: option.emoji
-		}));
+		const options: Array<APISelectMenuOption> = (
+			this._options.isLocalizationRequer ?
+			(this._options.choices.length > 25 ? this._options.choices.slice(25 * (this._currentMenuPage-1), 25 * this._currentMenuPage) : this._options.choices).map((option) => ({
+				label: getLocalizationForText(option.label, this._language),
+				value: option.value,
+				default: option.default,
+				description: (option.description ? getLocalizationForText(option.description, this._language) : undefined),
+				emoji: option.emoji
+			})) :
+			this._options.choices
+		);
 		selectMenu
 			.setCustomId('selectmenu')
 			.addOptions(...options)
@@ -184,4 +189,19 @@ interface IPaginationSelectMenuSettings {
 	min_values?: Partial<APIStringSelectComponent>['min_values'];
 	max_values?: Partial<APIStringSelectComponent>['max_values'];
 	placeholder?: Partial<APIStringSelectComponent>['placeholder'];
+}
+
+type TPaginationSelectMenuOptions = IPaginationSelectMenuDefaultOptions | IPaginationSelectMenuWithLocalizationOptions;
+
+interface IPaginationSelectMenuDefaultOptions {
+	isLocalizationRequer: false;
+	choices: Array<APISelectMenuOption>
+	selectMenuOptions?: IPaginationSelectMenuSettings
+}
+
+interface IPaginationSelectMenuWithLocalizationOptions {
+	isLocalizationRequer: true;
+	choices: TSelectMenuOptionsWithLocalizations,
+	language: ELocalizationsLanguages,
+	selectMenuOptions?: IPaginationSelectMenuSettings
 }
