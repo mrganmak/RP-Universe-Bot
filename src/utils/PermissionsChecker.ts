@@ -1,4 +1,4 @@
-import { CategoryChannel, Guild, GuildChannel, GuildMember, PermissionResolvable, PermissionsBitField } from "discord.js";
+import { GuildChannel, GuildMember, PermissionResolvable, PermissionsBitField } from "discord.js";
 
 export default class PermissionsChecker {
 	public static checkOnMissingPermissions(neededPermissions: Array<PermissionResolvable>, targetMember: GuildMember, targetChannel: GuildChannel): boolean {
