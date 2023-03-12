@@ -2,6 +2,8 @@ import ETextsLocalizationsIds from "../types/ETextsLocalizationsIds.js";
 import { TTextsLocalization } from "../types/TextsLocalizationsTypes.js";
 
 const enTextsLocaliztion: TTextsLocalization = {
+	[ETextsLocalizationsIds.LANGUAGE_EMOJI]: '🇬🇧',
+
 	[ETextsLocalizationsIds.PING_COMMAND_MESSAGE_TEXT]: '🏓 | API Latency is {ping}ms',
 
 	[ETextsLocalizationsIds.SET_SERVER_LANGUAGE_MESSAGE_TEXT]: 'English is set for your server',
@@ -22,8 +24,14 @@ const enTextsLocaliztion: TTextsLocalization = {
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_DESCRIPTION]: 'Category in which channels with tickets will be created',
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_LABLE]: 'Category selection',
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_DESCRIPTION]: 'In order to select the category in which channels with tickets will be created, use the select menu, which is located below',
+	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_LABLE]: 'Channel selection',
+	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_DESCRIPTION]: 'The channel where you want to send a message with a ticket',
 	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IT_IS_DONE]: 'It is done.',
-	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IS_ANY_CHANGE_NEEDED]: 'Is there anything else you want to change?'
+	[ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IS_ANY_CHANGE_NEEDED]: 'Is there anything else you want to change?',
+
+	[ETextsLocalizationsIds.START_ABOUT_ME]: 'Greetings, dear friend!\nI am an intelligent machine that will help you manage your RP server.\nYou can find detailed information by clicking on the github link.\nAfter going through the initial setup, new commands will open for you, with which you can configure me specifically for your guild.',
+	[ETextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'First, let\'s set up the guild language.',
+	[ETextsLocalizationsIds.START_FINAL]: 'Initial settings completed\nNow you can chat / and look at the list of available commands',
 };
 
 export default enTextsLocaliztion;
