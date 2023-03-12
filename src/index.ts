@@ -6,6 +6,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import MongoBase from "./Databases/MongoBase.js";
 import Util from "./utils/Util.js";
+import CommandsIniter from "./utils/CommandsIniter.js";
 
 const client = new Client({
 	intents: [
@@ -18,6 +19,8 @@ const client = new Client({
 });
 
 async function run() {
+	CommandsIniter.changeClient(client);
+
 	const __filename = fileURLToPath(import.meta.url);
 	const __dirname = dirname(__filename);
 
