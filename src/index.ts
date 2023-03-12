@@ -26,7 +26,8 @@ async function run() {
 
 	const path = `${__dirname}/../.env`;
 	const dotenvConfigOutput = config({ path });
-	Util.debug(dotenvConfigOutput);
+	if (!dotenvConfigOutput.parsed) throw new Error('Something went wrong while parsing .env');
+	Util.debug(`${(Array.isArray(dotenvConfigOutput.parsed) ? dotenvConfigOutput.parsed.length : Object.values(dotenvConfigOutput.parsed).length)} propertys parsed`);
 
 	await MongoBase.initBase();
 	await importx(`${__dirname}/{events,commands}/**/**.js`);
