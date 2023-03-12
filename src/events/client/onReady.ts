@@ -1,4 +1,5 @@
-import { Client, Discord, Once } from "discordx";
+import { Client, Discord, Once, DApplicationCommand, MetadataStorage, } from "discordx";
+import CommandsIniter from "../../utils/CommandsIniter.js";
 
 @Discord()
 class onReady {
@@ -8,6 +9,6 @@ class onReady {
 
 		console.log(`Connected as ${client.user?.tag}`);
 
-		await client.initApplicationCommands();
+		CommandsIniter.initCommands();
 	}
 }
