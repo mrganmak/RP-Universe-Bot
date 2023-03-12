@@ -1,21 +1,22 @@
-import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
+import { ApplicationCommandOptionType, CommandInteraction, PermissionsBitField } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
-import { ECommandsIds, ELocalizationsLanguages } from "../enum.js";
+import { ECommandsCategirysIds, ECommandsIds, ELocalizationsLanguages } from "../enum.js";
 import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import { createHash } from "crypto";
 import GuildsIdentifiersBase from "../Databases/bases_list/GuildsIdentifiersBase.js";
+import { Category } from "@discordx/utilities";
 
 const { name, description } = getLocalizationForCommand(ECommandsIds.TEST, ELocalizationsLanguages.EN);
 
 @Discord()
+@Category(ECommandsCategirysIds.DEVELOPMENT)
 class TestCommand {
 	@Slash({
 		name,
 		description,
 		nameLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TEST, 'name', [ELocalizationsLanguages.EN]),
 		descriptionLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TEST, 'description', [ELocalizationsLanguages.EN]),
-		guilds: [process.env.TEST_GUILD_ID],
-		dmPermission: false
+		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
 	async test(
 		@SlashOption({

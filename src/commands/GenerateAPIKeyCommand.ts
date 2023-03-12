@@ -1,6 +1,6 @@
-import { CommandInteraction, EmbedBuilder } from "discord.js";
+import { CommandInteraction, EmbedBuilder, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
-import { ECommandsIds, ELocalizationsLanguages } from "../enum.js";
+import { ECommandsCategirysIds, ECommandsIds, ELocalizationsLanguages } from "../enum.js";
 import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import TokenGenerator from "../utils/TokenGenerator.js";
 import { getGuildLanguage } from "../localizations/index.js";
@@ -8,17 +8,19 @@ import { getLocalizationForText } from "../localizations/texts/index.js";
 import GuildsIdentifiersBase from "../Databases/bases_list/GuildsIdentifiersBase.js";
 import getUserConfirmation from "../modules/interactions/UserConfirmation.js";
 import ETextsLocalizationsIds from "../localizations/texts/types/ETextsLocalizationsIds.js";
+import { Category } from "@discordx/utilities";
 
 const { name, description } = getLocalizationForCommand(ECommandsIds.GENERATE_API_KEY, ELocalizationsLanguages.EN);
 
 @Discord()
+@Category(ECommandsCategirysIds.ONLY_IN_INITED_GUILDS)
 class GenerateAPIKeyCommand {
 	@Slash({
 		name,
 		description,
 		nameLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.GENERATE_API_KEY, 'name', [ELocalizationsLanguages.EN]),
 		descriptionLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.GENERATE_API_KEY, 'description', [ELocalizationsLanguages.EN]),
-		dmPermission: false
+		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
 	async generateAPIKey(interaction: CommandInteraction) {
 		if (!interaction.guild) return;
