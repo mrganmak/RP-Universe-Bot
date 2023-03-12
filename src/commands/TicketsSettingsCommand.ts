@@ -60,15 +60,15 @@ class TicketsSettingsCommand {
 			interaction,
 			{
 				content: (
-					getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IT_IS_DONE, guildLanguage) +
+					getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE, guildLanguage) +
 					' ' +
-					getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IS_ANY_CHANGE_NEEDED, guildLanguage)
+					getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_IS_ANY_CHANGE_NEEDED, guildLanguage)
 				),
 				language: guildLanguage
 			}
 		);
 
 		if (isAnyChangeNeeded == 'confirm') this.ticketSettings(interaction);
-		else interaction.editReply({ content: getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_IT_IS_DONE, guildLanguage), components: [] });
+		else interaction.editReply({ content: getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE, guildLanguage), components: [] });
 	}
 }
