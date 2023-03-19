@@ -1,14 +1,19 @@
 import { ActionRowBuilder, ChannelSelectMenuBuilder, ChannelType, CommandInteraction, ComponentType, EmbedBuilder, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
-import { CommandsCategirysIds, CommandsIds, LocalizationsLanguages } from "../enum.js";
-import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
-import { getGuildLanguage } from "../localizations/index.js";
-import { getLocalizationForText } from "../localizations/texts/index.js";
-import TextsLocalizationsIds from "../localizations/texts/types/TextsLocalizationsIds.js";
-import PaginationSelectMenu from "../modules/paginations/PaginationSelectMenu.js";
-import { ticketsSettingsSelectMenuComponents } from "../config.js";
-import getUserConfirmation from "../modules/interactions/UserConfirmation.js";
 import { Category } from "@discordx/utilities";
+import {
+	CommandsCategirysIds,
+	CommandsIds,
+	LocalizationsLanguages,
+	getAllLocalizationsForCommandProperty,
+	getLocalizationForCommand,
+	getGuildLanguage,
+	getLocalizationForText,
+	getUserConfirmation,
+	TextsLocalizationsIds,
+	PaginationSelectMenu,
+	ticketsSettingsSelectMenuComponents
+} from "../index.js";
 
 const { name, description } = getLocalizationForCommand(CommandsIds.TICKETS_SETTINGS, LocalizationsLanguages.EN);
 

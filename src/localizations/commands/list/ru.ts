@@ -1,7 +1,7 @@
-import { CommandsIds } from "../../../enum.js";
-import { CommandsLocalization } from "../types/CommandsLocalizationsTypes.js";
+import { CommandsLocalization, CommandsIds } from "../../../index.js";
 
-const ruCommandsLocalization: CommandsLocalization = {
+
+export const ruCommandsLocalization: CommandsLocalization = {
 	[CommandsIds.TEST]: {
 		name: 'тест',
 		description: 'тест'
@@ -34,5 +34,3 @@ const ruCommandsLocalization: CommandsLocalization = {
 	}
 
 }
-
-export default ruCommandsLocalization;

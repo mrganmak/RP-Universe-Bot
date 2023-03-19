@@ -1,5 +1,5 @@
-import { Client, Discord, Once, DApplicationCommand, MetadataStorage, } from "discordx";
-import CommandsIniter from "../../utils/CommandsIniter.js";
+import { Client, Discord, Once } from "discordx";
+import { CommandsIniter } from "../../index.js";
 
 @Discord()
 class onReady {

@@ -1,14 +1,19 @@
 import { CommandInteraction, EmbedBuilder, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
-import { CommandsCategirysIds, CommandsIds, LocalizationsLanguages } from "../enum.js";
-import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
-import TokenGenerator from "../utils/TokenGenerator.js";
-import { getGuildLanguage } from "../localizations/index.js";
-import { getLocalizationForText } from "../localizations/texts/index.js";
-import GuildsIdentifiersBase from "../Databases/bases_list/GuildsIdentifiersBase.js";
-import getUserConfirmation from "../modules/interactions/UserConfirmation.js";
-import TextsLocalizationsIds from "../localizations/texts/types/TextsLocalizationsIds.js";
 import { Category } from "@discordx/utilities";
+import {
+	CommandsCategirysIds,
+	CommandsIds,
+	LocalizationsLanguages,
+	getAllLocalizationsForCommandProperty,
+	getLocalizationForCommand,
+	TokenGenerator,
+	getGuildLanguage,
+	getLocalizationForText,
+	GuildsIdentifiersBase,
+	getUserConfirmation,
+	TextsLocalizationsIds
+} from "../index.js";
 
 const { name, description } = getLocalizationForCommand(CommandsIds.GENERATE_API_KEY, LocalizationsLanguages.EN);
 

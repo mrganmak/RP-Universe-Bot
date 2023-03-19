@@ -1,10 +1,15 @@
 import {  CommandInteraction, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
-import { CommandsCategirysIds, CommandsIds, LocalizationsLanguages } from "../enum.js";
-import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import { Category } from "@discordx/utilities";
-import { getGuildLanguage } from "../localizations/index.js";
-import TicketsCommndInteractions from "../modules/tickets/utils/TicketsCommndInteractions.js";
+import {
+	CommandsCategirysIds,
+	CommandsIds,
+	LocalizationsLanguages,
+	getAllLocalizationsForCommandProperty,
+	getLocalizationForCommand,
+	getGuildLanguage,
+	TicketsCommndInteractions,
+} from "../index.js";
 
 const { name, description } = getLocalizationForCommand(CommandsIds.START_TICKETS, LocalizationsLanguages.EN);
 

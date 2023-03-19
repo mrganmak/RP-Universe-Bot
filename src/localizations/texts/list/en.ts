@@ -1,7 +1,6 @@
-import TextsLocalizationsIds from "../types/TextsLocalizationsIds.js";
-import { TextsLocalization } from "../types/TextsLocalizationsTypes.js";
+import { TextsLocalization, TextsLocalizationsIds } from "../../../index.js";
 
-const enTextsLocaliztion: TextsLocalization = {
+export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.LANGUAGE_EMOJI]: '🇬🇧',
 
 	[TextsLocalizationsIds.PING_COMMAND_MESSAGE_TEXT]: '🏓 | API Latency is {ping}ms',
@@ -33,5 +32,3 @@ const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'First, let\'s set up the guild language.',
 	[TextsLocalizationsIds.START_FINAL]: 'Initial settings completed\nNow you can chat / and look at the list of available commands',
 };
-
-export default enTextsLocaliztion;

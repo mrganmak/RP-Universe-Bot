@@ -1,9 +1,8 @@
 import { Snowflake } from "discord.js";
-import MongoBase from "../MongoBase.js";
 import { Collection, InsertOneResult, UpdateResult } from "mongodb";
-import { LocalizationsLanguages } from "../../enum.js";
+import { LocalizationsLanguages, MongoBase } from "../../index.js";
 
-export default class GuildsLocalizationSettingsBase {
+export class GuildsLocalizationSettingsBase {
 	private static _instance: GuildsLocalizationSettingsBase | undefined;
 
 	private _database!: typeof MongoBase['database'];

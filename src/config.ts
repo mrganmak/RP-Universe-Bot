@@ -1,8 +1,5 @@
 import { ButtonStyle } from "discord.js";
-import { UserConfirmationInteractionButtonSettings } from "./modules/interactions/UserConfirmation.js";
-import TextsLocalizationsIds from "./localizations/texts/types/TextsLocalizationsIds.js";
-import { ButtonsPanelsSettings } from "./modules/interactions/ButtonsPanel.js";
-import { SelectMenuOptionsWithLocalizations } from "./types/types.js";
+import { UserConfirmationInteractionButtonSettings, TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations } from "./index.js";
 
 export const devMode = true;
 

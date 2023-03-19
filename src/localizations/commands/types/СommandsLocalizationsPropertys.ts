@@ -1,7 +1,7 @@
 import { NotEmpty, VerifyName } from "discordx";
-import { CommandsIds } from "../../../enum.js";
+import { CommandsIds } from "../../../index.js";
 
-type CommandsLocalizationsPropertys = {
+export type CommandsLocalizationsPropertys = {
 	[CommandsIds.TEST]: DefaultCommandLocalizationPropertys,
 	[CommandsIds.PING]: DefaultCommandLocalizationPropertys,
 	[CommandsIds.GENERATE_API_KEY]: DefaultCommandLocalizationPropertys,
@@ -20,5 +20,3 @@ interface SetServerLanguageCommandLocalizationPropertys extends DefaultCommandLo
 	languageChooseName: VerifyName<string>
 	languageChooseDescription: NotEmpty<string>
 }
-
-export default CommandsLocalizationsPropertys;

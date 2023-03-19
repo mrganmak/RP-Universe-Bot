@@ -1,8 +1,8 @@
 import { Snowflake } from "discord.js";
-import MongoBase from "../MongoBase.js";
 import { Collection, InsertOneResult, UpdateResult } from "mongodb";
+import { MongoBase } from "../../index.js";
 
-export default class GuildsModulesBase {
+export class GuildsModulesBase {
 	private static _instance: GuildsModulesBase | undefined;
 
 	private _database!: typeof MongoBase['database'];

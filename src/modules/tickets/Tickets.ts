@@ -1,5 +1,5 @@
 import { Snowflake } from "discord.js";
-import Ticket from "./classes/Ticket.js";
+import { Ticket } from "../../index.js";
 
 export class Tickets {
 	private static _tickets: Map<Snowflake, Ticket> = new Map();

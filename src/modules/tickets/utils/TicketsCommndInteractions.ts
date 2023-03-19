@@ -1,10 +1,8 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CategoryChannel, ChannelSelectMenuBuilder, ChannelType, CommandInteraction, ComponentType, GuildChannel, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
-import { getGuildLanguage } from "../../../localizations/index.js";
 import { EmbedBuilder } from "@discordjs/builders";
-import { getLocalizationForText } from "../../../localizations/texts/index.js";
-import TextsLocalizationsIds from "../../../localizations/texts/types/TextsLocalizationsIds.js";
+import { TextsLocalizationsIds, getLocalizationForText, getGuildLanguage } from "../../../index.js";
 
-export default class TicketsCommndInteractions {
+export class TicketsCommndInteractions {
 	public static async getSetedCategoryForTickets(interaction: CommandInteraction): Promise<CategoryChannel> {
 		if (!interaction.guild?.id) throw new Error('This no guild in this interaction');
 

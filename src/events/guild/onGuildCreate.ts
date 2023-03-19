@@ -1,6 +1,5 @@
 import { ArgsOf, Discord, On } from "discordx";
-import GuildsIdentifiersBase from "../../Databases/bases_list/GuildsIdentifiersBase.js";
-import TokenGenerator from "../../utils/TokenGenerator.js";
+import { GuildsIdentifiersBase, TokenGenerator } from "../../index.js";
 
 @Discord()
 class onGuildCreate {

@@ -1,6 +1,6 @@
 import { GuildChannel, GuildMember, PermissionResolvable, PermissionsBitField } from "discord.js";
 
-export default class PermissionsChecker {
+export class PermissionsChecker {
 	public static checkOnMissingPermissions(neededPermissions: Array<PermissionResolvable>, targetMember: GuildMember, targetChannel: GuildChannel): boolean {
 		return this._getMissingPermissions(neededPermissions, targetMember, targetChannel).length > 0;
 	}

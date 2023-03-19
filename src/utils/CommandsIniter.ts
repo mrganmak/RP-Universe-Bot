@@ -1,11 +1,9 @@
 import { ICategory } from "@discordx/utilities";
 import { Snowflake } from "discord.js";
 import { Client, DApplicationCommand, MetadataStorage } from "discordx";
-import { CommandsCategirysIds } from "../enum.js";
-import GuildsModulesBase from "../Databases/bases_list/GuildsModulesBase.js";
-import Util from "./Util.js";
+import { Util, GuildsModulesBase, CommandsCategirysIds } from "../index.js";
 
-export default class CommandsIniter {
+export class CommandsIniter {
 	private static _client: Client;
 	private static _guildsScopes: IGuildsScopes = {
 		initedGuilds: new Set(),

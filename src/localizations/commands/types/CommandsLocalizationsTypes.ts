@@ -1,5 +1,4 @@
-import { ValueOf } from "../../../types/types.js";
-import CommandsLocalizationsPropertys from "./СommandsLocalizationsPropertys.js";
+import { CommandsLocalizationsPropertys, ValueOf } from "../../../index.js";
 
 export type CommandsLocalization = {
 	[Key in keyof CommandsLocalizationsPropertys]: CommandLocalization<CommandsLocalizationsPropertys[Key]>;

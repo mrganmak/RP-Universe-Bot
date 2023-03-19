@@ -1,4 +1,4 @@
-enum TextsLocalizationsIds {
+export enum TextsLocalizationsIds {
 	LANGUAGE_EMOJI,
 
 	PING_COMMAND_MESSAGE_TEXT,
@@ -30,5 +30,3 @@ enum TextsLocalizationsIds {
 	START_CHOOSE_LANGUAGE,
 	START_FINAL,
 }
-
-export default TextsLocalizationsIds;

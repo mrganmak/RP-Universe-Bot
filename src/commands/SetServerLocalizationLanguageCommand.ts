@@ -1,12 +1,17 @@
 import { ApplicationCommandOptionType, CommandInteraction, PermissionsBitField } from "discord.js";
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { CommandsCategirysIds, CommandsIds, LocalizationsLanguages } from "../enum.js";
-import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
-import GuildsLocalizationSettingsBase from "../Databases/bases_list/GuildsLocalizationSettingsBase.js";
-import { getLocalizationForText } from "../localizations/texts/index.js";
-import { getGuildLanguage } from "../localizations/index.js";
-import TextsLocalizationsIds from "../localizations/texts/types/TextsLocalizationsIds.js";
 import { Category, EnumChoice } from "@discordx/utilities";
+import {
+	CommandsCategirysIds,
+	CommandsIds,
+	LocalizationsLanguages,
+	getAllLocalizationsForCommandProperty,
+	getLocalizationForCommand,
+	getGuildLanguage,
+	getLocalizationForText,
+	TextsLocalizationsIds,
+	GuildsLocalizationSettingsBase
+} from "../index.js";
 
 const { name, description, languageChooseName, languageChooseDescription } = getLocalizationForCommand(CommandsIds.SET_SERVER_LANGUAGE, LocalizationsLanguages.EN);
 

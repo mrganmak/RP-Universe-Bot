@@ -1,8 +1,8 @@
 import { generateApiKey } from "generate-api-key";
-import GuildsIdentifiersBase from "../Databases/bases_list/GuildsIdentifiersBase.js";
+import { GuildsIdentifiersBase } from "../index.js";
 import { createHash } from "crypto";
 
-export default class TokenGenerator {
+export class TokenGenerator {
 	public static async createTokenForGuild(): Promise<string> {
 		const database = new GuildsIdentifiersBase();
 		const token = generateApiKey({ method: 'string' });

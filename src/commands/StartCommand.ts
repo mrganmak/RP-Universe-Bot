@@ -1,14 +1,20 @@
 import { APISelectMenuOption, CommandInteraction, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
-import { CommandsCategirysIds, CommandsIds, LocalizationsLanguages } from "../enum.js";
-import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import { Category } from "@discordx/utilities";
-import GuildsModulesBase from "../Databases/bases_list/GuildsModulesBase.js";
-import CommandsIniter from "../utils/CommandsIniter.js";
-import { getAllLocalizationsForText, getLocalizationForText } from "../localizations/texts/index.js";
-import TextsLocalizationsIds from "../localizations/texts/types/TextsLocalizationsIds.js";
-import PaginationSelectMenu from "../modules/paginations/PaginationSelectMenu.js";
-import GuildsLocalizationSettingsBase from "../Databases/bases_list/GuildsLocalizationSettingsBase.js";
+import {
+	CommandsCategirysIds,
+	CommandsIds,
+	LocalizationsLanguages,
+	getAllLocalizationsForCommandProperty,
+	getLocalizationForCommand,
+	getLocalizationForText,
+	TextsLocalizationsIds,
+	getAllLocalizationsForText,
+	PaginationSelectMenu,
+	GuildsLocalizationSettingsBase,
+	GuildsModulesBase,
+	CommandsIniter
+} from "../index.js";
 
 const { name, description } = getLocalizationForCommand(CommandsIds.START, LocalizationsLanguages.EN);
 

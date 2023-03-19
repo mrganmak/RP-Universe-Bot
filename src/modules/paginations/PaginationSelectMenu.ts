@@ -1,12 +1,9 @@
 import { ActionRowBuilder, MessageActionRowComponentBuilder, ButtonBuilder, StringSelectMenuBuilder } from "@discordjs/builders";
 import { APISelectMenuOption, APIStringSelectComponent, ButtonInteraction, ButtonStyle, CommandInteraction, ComponentType, InteractionCollector, Message, StringSelectMenuInteraction, TextChannel, User, VoiceChannel } from "discord.js";
-import { LocalizationsLanguages } from "../../enum.js";
-import { SelectMenuOptionsWithLocalizations, ValueOf } from "../../types/types.js";
-import { getLocalizationForText } from "../../localizations/texts/index.js";
+import { DEFAULT_SERVER_LANGUAGE, getLocalizationForText, SelectMenuOptionsWithLocalizations, ValueOf, LocalizationsLanguages } from "../../index.js";
 import EventEmitter from "events";
-import { DEFAULT_SERVER_LANGUAGE } from "../../consts.js";
 
-export default class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends EventEmitter {
+export class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends EventEmitter {
 	public static create<T extends PaginationSelectMenuOptions>(message: Message, author: User, options: T, isNeedMessageDelete?: boolean): Promise<PaginationSelectMenu<T>>;
 	public static create<T extends PaginationSelectMenuOptions>(interaction: CommandInteraction, author: User, options: T): Promise<PaginationSelectMenu<T>>;
 	public static create<T extends PaginationSelectMenuOptions>(channel: TextChannel | VoiceChannel, author: User, options: T): Promise<PaginationSelectMenu<T>>;

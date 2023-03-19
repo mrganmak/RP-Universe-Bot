@@ -1,7 +1,6 @@
-import { CommandsIds } from "../../../enum.js";
-import { CommandsLocalization } from "../types/CommandsLocalizationsTypes.js";
+import { CommandsLocalization, CommandsIds } from "../../../index.js";
 
-const enCommandsLocalization: CommandsLocalization = {
+export const enCommandsLocalization: CommandsLocalization = {
 	[CommandsIds.TEST]: {
 		name: 'test',
 		description: 'test'
@@ -33,5 +32,3 @@ const enCommandsLocalization: CommandsLocalization = {
 		description: 'Primary settings for the ticket module',
 	}
 }
-
-export default enCommandsLocalization;

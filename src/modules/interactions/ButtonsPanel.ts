@@ -1,8 +1,5 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, Collection, CollectorFilter, CommandInteraction, ComponentEmojiResolvable, ComponentType, InteractionCollector, Message } from "discord.js";
-import TextsLocalizationsIds from "../../localizations/texts/types/TextsLocalizationsIds.js"
-import { ButtosPanelSSettingsIds, LocalizationsLanguages } from "../../enum.js";
-import { buttonsPanelsSettings } from "../../config.js";
-import { getLocalizationForText } from "../../localizations/texts/index.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, Collection, CollectorFilter, ComponentEmojiResolvable, ComponentType, InteractionCollector, Message } from "discord.js";
+import {getLocalizationForText, buttonsPanelsSettings, ButtosPanelSSettingsIds, LocalizationsLanguages, TextsLocalizationsIds } from "../../index.js";
 import EventEmitter from "events";
 
 class ButtonsPanel extends EventEmitter {
@@ -67,13 +64,11 @@ class ButtonsPanel extends EventEmitter {
 	}
 }
 
-async function createButtonsPanel(message: Message, panelName: ButtosPanelSSettingsIds, language: LocalizationsLanguages): Promise<ButtonsPanel> {
+export async function createButtonsPanel(message: Message, panelName: ButtosPanelSSettingsIds, language: LocalizationsLanguages): Promise<ButtonsPanel> {
 	const settings = buttonsPanelsSettings[panelName];
 
 	return new ButtonsPanel(message, settings, language);
 }
-
-export default createButtonsPanel;
 
 export type ButtonsPanelsSettings = Record<ButtosPanelSSettingsIds, ButtonsPanelSettings>;
 

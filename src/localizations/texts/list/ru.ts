@@ -1,7 +1,6 @@
-import TextsLocalizationsIds from "../types/TextsLocalizationsIds.js";
-import { TextsLocalization } from "../types/TextsLocalizationsTypes.js";
+import { TextsLocalization, TextsLocalizationsIds } from "../../../index.js";
 
-const ruTextsLocaliztion: TextsLocalization = {
+export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.LANGUAGE_EMOJI]: '🇷🇺',
 
 	[TextsLocalizationsIds.PING_COMMAND_MESSAGE_TEXT]: '🏓 | Задержка апи: {ping}мс',
@@ -33,5 +32,3 @@ const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'Для начала настроим язык сервера.',
 	[TextsLocalizationsIds.START_FINAL]: 'Первичные настройки завершены\nТеперь вы можете написать в чат / и посмотреть на список доступных команд',
 }
-
-export default ruTextsLocaliztion;

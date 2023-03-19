@@ -1,5 +1,5 @@
 import { APIMessageComponentEmoji } from "discord.js";
-import TextsLocalizationsIds from "../localizations/texts/types/TextsLocalizationsIds.js";
+import { TextsLocalizationsIds } from "../index.js";
 
 export type ValueOf<T> = T[keyof T];
 export type ChangeAllTypes<InstanceType extends Array<any> | Object, FinalType extends any, TargetType extends any = string> = {

@@ -1,6 +1,6 @@
 import { MongoClient, Db } from "mongodb";
 
-export default class MongoBase {
+export class MongoBase {
 	private static _client: MongoClient;
 	public static database: Db;
 

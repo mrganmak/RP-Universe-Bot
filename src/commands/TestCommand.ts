@@ -1,10 +1,15 @@
 import { ApplicationCommandOptionType, CommandInteraction, PermissionsBitField } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
-import { CommandsCategirysIds, CommandsIds, LocalizationsLanguages } from "../enum.js";
-import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import { createHash } from "crypto";
-import GuildsIdentifiersBase from "../Databases/bases_list/GuildsIdentifiersBase.js";
 import { Category } from "@discordx/utilities";
+import {
+	CommandsCategirysIds,
+	CommandsIds,
+	LocalizationsLanguages,
+	getAllLocalizationsForCommandProperty,
+	getLocalizationForCommand,
+	GuildsIdentifiersBase,
+} from "../index.js";
 
 const { name, description } = getLocalizationForCommand(CommandsIds.TEST, LocalizationsLanguages.EN);
 

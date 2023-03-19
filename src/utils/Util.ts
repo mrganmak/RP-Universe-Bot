@@ -1,7 +1,7 @@
 import { Guild, GuildMember, Snowflake, User } from "discord.js";
-import { devMode } from "../config.js";
+import { devMode } from "../index.js";
 
-export default class Util {
+export class Util {
 	private constructor() {}
 
 	public static getUserAvatarUrl(user: User): string {

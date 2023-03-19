@@ -1,1 +1,1 @@
-export default class Ticket {}
+export class Ticket {}
