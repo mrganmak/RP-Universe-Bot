@@ -1,26 +1,26 @@
 import { ApplicationCommandOptions } from "discordx"
-import { ECommandsIds, ELocalizationsLanguages } from "../../enum.js"
-import TCommandsLocalizationsPropertys from "./types/СommandsLocalizationsPropertys.js"
+import { CommandsIds, LocalizationsLanguages } from "../../enum.js"
+import CommandsLocalizationsPropertys from "./types/СommandsLocalizationsPropertys.js"
 import enCommandsLocalization from "./list/en.js"
 import ruCommandsLocalization from "./list/ru.js"
-import { TCommandsLocalization } from "./types/CommandsLocalizationsTypes.js"
+import { CommandsLocalization } from "./types/CommandsLocalizationsTypes.js"
 
-const commandsLocalizations: TCommandsLocalizations = {
-	[ELocalizationsLanguages.RU]: ruCommandsLocalization,
-	[ELocalizationsLanguages.EN]: enCommandsLocalization
+const commandsLocalizations: CommandsLocalizations = {
+	[LocalizationsLanguages.RU]: ruCommandsLocalization,
+	[LocalizationsLanguages.EN]: enCommandsLocalization
 }
 
-export function getLocalizationForCommand<T extends ECommandsIds>(commandId: T, language: ELocalizationsLanguages): TCommandsLocalization[T] {
+export function getLocalizationForCommand<T extends CommandsIds>(commandId: T, language: LocalizationsLanguages): CommandsLocalization[T] {
 	const languageLocalization = commandsLocalizations[language];
 	const commandLocalization = languageLocalization[commandId];
 
 	return commandLocalization;
 }
 
-export function getLocalizationsForCommandProperty<T extends ECommandsIds>(
+export function getLocalizationsForCommandProperty<T extends CommandsIds>(
 	commandId: T,
-	property: keyof TCommandsLocalizationsPropertys[T],
-	languages: Array<ELocalizationsLanguages>
+	property: keyof CommandsLocalizationsPropertys[T],
+	languages: Array<LocalizationsLanguages>
 ): ApplicationCommandOptions<string, string>['nameLocalizations'] {
 	const localizations: ApplicationCommandOptions<string, string>['nameLocalizations'] = {};
 
@@ -32,14 +32,14 @@ export function getLocalizationsForCommandProperty<T extends ECommandsIds>(
 	return localizations;
 }
 
-export function getAllLocalizationsForCommandProperty<T extends ECommandsIds>(
+export function getAllLocalizationsForCommandProperty<T extends CommandsIds>(
 	commandId: T,
-	property: keyof TCommandsLocalizationsPropertys[T],
-	excludeLanguages?: Array<ELocalizationsLanguages>,
+	property: keyof CommandsLocalizationsPropertys[T],
+	excludeLanguages?: Array<LocalizationsLanguages>,
 ): ApplicationCommandOptions<string, string>['nameLocalizations'] {
 	const localizations: ApplicationCommandOptions<string, string>['nameLocalizations'] = {};
 
-	for (const language of Object.keys(commandsLocalizations) as Array<ELocalizationsLanguages>) {
+	for (const language of Object.keys(commandsLocalizations) as Array<LocalizationsLanguages>) {
 		if (excludeLanguages?.includes(language)) continue;
 
 		const propertyLocalization = getLocalizationForCommandProperty(commandId, property, language);
@@ -49,17 +49,15 @@ export function getAllLocalizationsForCommandProperty<T extends ECommandsIds>(
 	return localizations;
 }
 
-function getLocalizationForCommandProperty<T extends ECommandsIds>(
+function getLocalizationForCommandProperty<T extends CommandsIds>(
 	commandId: T,
-	property: keyof TCommandsLocalizationsPropertys[T],
-	language: ELocalizationsLanguages
-): TCommandsLocalization[T][keyof TCommandsLocalizationsPropertys[T]] {
+	property: keyof CommandsLocalizationsPropertys[T],
+	language: LocalizationsLanguages
+): CommandsLocalization[T][keyof CommandsLocalizationsPropertys[T]] {
 	const languageLocalization = getLocalizationForCommand(commandId, language);
 	const propertyLocalization = languageLocalization[property];
 
 	return propertyLocalization;
 }
 
-type TCommandsLocalizations = {
-	[key in ELocalizationsLanguages]: TCommandsLocalization
-}
+type CommandsLocalizations = Record<LocalizationsLanguages, CommandsLocalization>;

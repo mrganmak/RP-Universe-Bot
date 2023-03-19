@@ -1,18 +1,18 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CacheType, Collection, CollectorFilter, CommandInteraction, ComponentEmojiResolvable, ComponentType, InteractionCollector, Message } from "discord.js";
-import ETextsLocalizationsIds from "../../localizations/texts/types/ETextsLocalizationsIds.js"
-import { EButtosPanelSSettingsIds, ELocalizationsLanguages } from "../../enum.js";
+import TextsLocalizationsIds from "../../localizations/texts/types/TextsLocalizationsIds.js"
+import { ButtosPanelSSettingsIds, LocalizationsLanguages } from "../../enum.js";
 import { buttonsPanelsSettings } from "../../config.js";
 import { getLocalizationForText } from "../../localizations/texts/index.js";
 import EventEmitter from "events";
 
 class ButtonsPanel extends EventEmitter {
 	private _message: Message;
-	private _settings: IButtonsPanelSettings;
+	private _settings: ButtonsPanelSettings;
 	private _collector: InteractionCollector<ButtonInteraction>;
 	private _categoryName: string = 'begin';
-	private _language: ELocalizationsLanguages;
+	private _language: LocalizationsLanguages;
 
-	constructor(message: Message, settings: IButtonsPanelSettings, language: ELocalizationsLanguages) {
+	constructor(message: Message, settings: ButtonsPanelSettings, language: LocalizationsLanguages) {
 		super();
 
 		this._message = message;
@@ -67,7 +67,7 @@ class ButtonsPanel extends EventEmitter {
 	}
 }
 
-async function createButtonsPanel(message: Message, panelName: EButtosPanelSSettingsIds, language: ELocalizationsLanguages): Promise<ButtonsPanel> {
+async function createButtonsPanel(message: Message, panelName: ButtosPanelSSettingsIds, language: LocalizationsLanguages): Promise<ButtonsPanel> {
 	const settings = buttonsPanelsSettings[panelName];
 
 	return new ButtonsPanel(message, settings, language);
@@ -75,35 +75,33 @@ async function createButtonsPanel(message: Message, panelName: EButtosPanelSSett
 
 export default createButtonsPanel;
 
-export type TButtonsPanelsSettings = {
-	[key in EButtosPanelSSettingsIds]: IButtonsPanelSettings;
-}
+export type ButtonsPanelsSettings = Record<ButtosPanelSSettingsIds, ButtonsPanelSettings>;
 
-export interface IButtonsPanelSettings {
-	buttons: IButtonsPanelButtonsCategorys
+export interface ButtonsPanelSettings {
+	buttons: ButtonsPanelButtonsCategorys
 	filter?: CollectorFilter<[ButtonInteraction<CacheType>, Collection<string, ButtonInteraction<CacheType>>]>;
 }
 
-interface IButtonsPanelButtonsCategorys {
-	[key: string]: IButtosPanelButtonsCategory
+interface ButtonsPanelButtonsCategorys {
+	[key: string]: ButtosPanelButtonsCategory
 }
 
-type IButtosPanelButtonsCategory = Array<IButtosPanelButtonSettings>;
-type IButtosPanelButtonSettings = IButtonsPanelButtonSettingsWithCategoryChange | IButtonsPanelButtonSettingsWithValueReturn;
+type ButtosPanelButtonsCategory = Array<ButtosPanelButtonSettings>;
+type ButtosPanelButtonSettings = ButtonsPanelButtonSettingsWithCategoryChange | ButtonsPanelButtonSettingsWithValueReturn;
 
-interface IButtonsPanelButtonSettingsDefault {
-	label: ETextsLocalizationsIds;
+interface ButtonsPanelButtonSettingsDefault {
+	label: TextsLocalizationsIds;
 	style: ButtonStyle;
 	isClose?: true;
 	emoji?: ComponentEmojiResolvable;
 }
 
-interface IButtonsPanelButtonSettingsWithCategoryChange extends IButtonsPanelButtonSettingsDefault {
+interface ButtonsPanelButtonSettingsWithCategoryChange extends ButtonsPanelButtonSettingsDefault {
 	type: 'category'
 	category: string;
 }
 
-interface IButtonsPanelButtonSettingsWithValueReturn extends IButtonsPanelButtonSettingsDefault {
+interface ButtonsPanelButtonSettingsWithValueReturn extends ButtonsPanelButtonSettingsDefault {
 	type: 'value';
 	value: string;
 }

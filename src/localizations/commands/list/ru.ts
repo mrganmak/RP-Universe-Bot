@@ -1,34 +1,34 @@
-import { ECommandsIds } from "../../../enum.js";
-import { TCommandsLocalization } from "../types/CommandsLocalizationsTypes.js";
+import { CommandsIds } from "../../../enum.js";
+import { CommandsLocalization } from "../types/CommandsLocalizationsTypes.js";
 
-const ruCommandsLocalization: TCommandsLocalization = {
-	[ECommandsIds.TEST]: {
+const ruCommandsLocalization: CommandsLocalization = {
+	[CommandsIds.TEST]: {
 		name: 'тест',
 		description: 'тест'
 	},
-	[ECommandsIds.PING]: {
+	[CommandsIds.PING]: {
 		name: 'ping',
 		description: 'ping'
 	},
-	[ECommandsIds.GENERATE_API_KEY]: {
+	[CommandsIds.GENERATE_API_KEY]: {
 		name: 'сгенерировать_апи-ключ',
 		description: 'Генерирует API-ключ'
 	},
-	[ECommandsIds.SET_SERVER_LANGUAGE]: {
+	[CommandsIds.SET_SERVER_LANGUAGE]: {
 		name: 'установить_язык',
 		description: 'Задать язык сервера для корректной локализации',
 		languageChooseName: 'язык',
 		languageChooseDescription: 'Язык вашего сервера'
 	},
-	[ECommandsIds.TICKETS_SETTINGS]: {
+	[CommandsIds.TICKETS_SETTINGS]: {
 		name: 'настройки_тикетов',
 		description: 'Задать настройки для системы тикетов'
 	},
-	[ECommandsIds.START]: {
+	[CommandsIds.START]: {
 		name: 'старт',
 		description: 'Первичные настройки бота для вашей гильдии',
 	},
-	[ECommandsIds.START_TICKETS]: {
+	[CommandsIds.START_TICKETS]: {
 		name: 'старт_тикеты',
 		description: 'Первичные настройки бота для тикетов',
 	}

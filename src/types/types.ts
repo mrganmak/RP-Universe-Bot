@@ -1,5 +1,5 @@
 import { APIMessageComponentEmoji } from "discord.js";
-import ETextsLocalizationsIds from "../localizations/texts/types/ETextsLocalizationsIds.js";
+import TextsLocalizationsIds from "../localizations/texts/types/TextsLocalizationsIds.js";
 
 export type ValueOf<T> = T[keyof T];
 export type ChangeAllTypes<InstanceType extends Array<any> | Object, FinalType extends any, TargetType extends any = string> = {
@@ -18,11 +18,11 @@ export type ChangeAllTypes<InstanceType extends Array<any> | Object, FinalType e
 	)
 }
 
-export type TSelectMenuOptionsWithLocalizations = Array<ISelectMenuOptionWithLocalizations>;
-export interface ISelectMenuOptionWithLocalizations {
-	label: ETextsLocalizationsIds;
+export type SelectMenuOptionsWithLocalizations = Array<SelectMenuOptionWithLocalizations>;
+export interface SelectMenuOptionWithLocalizations {
+	label: TextsLocalizationsIds;
 	value: string;
 	default?: boolean;
-	description?: ETextsLocalizationsIds;
+	description?: TextsLocalizationsIds;
 	emoji?: APIMessageComponentEmoji;
 }

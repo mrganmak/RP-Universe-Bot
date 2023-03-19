@@ -1,3 +1,3 @@
-import { ELocalizationsLanguages } from "./enum.js";
+import { LocalizationsLanguages } from "./enum.js";
 
-export const DEFAULT_SERVER_LANGUAGE = ELocalizationsLanguages.EN;
+export const DEFAULT_SERVER_LANGUAGE = LocalizationsLanguages.EN;

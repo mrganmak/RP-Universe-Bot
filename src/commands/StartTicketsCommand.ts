@@ -1,25 +1,21 @@
-import { ActionRowBuilder, ChannelSelectMenuBuilder, ChannelType, CommandInteraction, ComponentType, EmbedBuilder, ModalBuilder, PermissionsBitField, TextInputBuilder, TextInputStyle } from "discord.js";
+import {  CommandInteraction, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
-import { ECommandsCategirysIds, ECommandsIds, ELocalizationsLanguages } from "../enum.js";
+import { CommandsCategirysIds, CommandsIds, LocalizationsLanguages } from "../enum.js";
 import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import { Category } from "@discordx/utilities";
-import GuildsModulesBase from "../Databases/bases_list/GuildsModulesBase.js";
-import CommandsIniter from "../utils/CommandsIniter.js";
-import { getLocalizationForText } from "../localizations/texts/index.js";
-import ETextsLocalizationsIds from "../localizations/texts/types/ETextsLocalizationsIds.js";
 import { getGuildLanguage } from "../localizations/index.js";
 import TicketsCommndInteractions from "../modules/tickets/utils/TicketsCommndInteractions.js";
 
-const { name, description } = getLocalizationForCommand(ECommandsIds.START_TICKETS, ELocalizationsLanguages.EN);
+const { name, description } = getLocalizationForCommand(CommandsIds.START_TICKETS, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(ECommandsCategirysIds.ONLY_WITH_TICKETS_NOT_INITED)
+@Category(CommandsCategirysIds.ONLY_WITH_TICKETS_NOT_INITED)
 class StartTicketsCommand {
 	@Slash({
 		name,
 		description,
-		nameLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.START_TICKETS, 'name', [ELocalizationsLanguages.EN]),
-		descriptionLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.START_TICKETS, 'description', [ELocalizationsLanguages.EN]),
+		nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.START_TICKETS, 'name', [LocalizationsLanguages.EN]),
+		descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.START_TICKETS, 'description', [LocalizationsLanguages.EN]),
 		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
 	async test(interaction: CommandInteraction) {

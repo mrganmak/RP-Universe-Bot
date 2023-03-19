@@ -1,10 +1,10 @@
 import { ValueOf } from "../../../types/types.js";
-import TCommandsLocalizationsPropertys from "./СommandsLocalizationsPropertys.js";
+import CommandsLocalizationsPropertys from "./СommandsLocalizationsPropertys.js";
 
-export type TCommandsLocalization = {
-	[Key in keyof TCommandsLocalizationsPropertys]: TCommandLocalization<TCommandsLocalizationsPropertys[Key]>;
+export type CommandsLocalization = {
+	[Key in keyof CommandsLocalizationsPropertys]: CommandLocalization<CommandsLocalizationsPropertys[Key]>;
 }
 
-export type TCommandLocalization<T extends ValueOf<TCommandsLocalizationsPropertys>> = {
+export type CommandLocalization<T extends ValueOf<CommandsLocalizationsPropertys>> = {
 	[Key in keyof T]: T[Key] extends string ? T[Key] : string;
 }

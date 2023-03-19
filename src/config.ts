@@ -1,30 +1,30 @@
 import { ButtonStyle } from "discord.js";
-import { IUserConfirmationInteractionButtonSettings } from "./modules/interactions/UserConfirmation.js";
-import ETextsLocalizationsIds from "./localizations/texts/types/ETextsLocalizationsIds.js";
-import { TButtonsPanelsSettings } from "./modules/interactions/ButtonsPanel.js";
-import { TSelectMenuOptionsWithLocalizations } from "./types/types.js";
+import { UserConfirmationInteractionButtonSettings } from "./modules/interactions/UserConfirmation.js";
+import TextsLocalizationsIds from "./localizations/texts/types/TextsLocalizationsIds.js";
+import { ButtonsPanelsSettings } from "./modules/interactions/ButtonsPanel.js";
+import { SelectMenuOptionsWithLocalizations } from "./types/types.js";
 
 export const devMode = true;
 
-export const userConfirmationInteractionButtonsSettings: Array<IUserConfirmationInteractionButtonSettings> = [
+export const userConfirmationInteractionButtonsSettings: Array<UserConfirmationInteractionButtonSettings> = [
 	{
-		label: ETextsLocalizationsIds.USER_CONFIRMATION_BUTTON_NO,
+		label: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_NO,
 		style: ButtonStyle.Danger,
 		customId: 'deny'
 	},
 	{
-		label: ETextsLocalizationsIds.USER_CONFIRMATION_BUTTON_YES,
+		label: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_YES,
 		style: ButtonStyle.Success,
 		customId: 'confirm'
 	}
 ];
 
-export const buttonsPanelsSettings: TButtonsPanelsSettings = { }
+export const buttonsPanelsSettings: ButtonsPanelsSettings = { }
 
-export const ticketsSettingsSelectMenuComponents: TSelectMenuOptionsWithLocalizations = [
+export const ticketsSettingsSelectMenuComponents: SelectMenuOptionsWithLocalizations = [
 	{
-		label: ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_LABEL,
-		description: ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_DESCRIPTION,
+		label: TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_LABEL,
+		description: TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_DESCRIPTION,
 		value: 'change_category'
 	}
 ];

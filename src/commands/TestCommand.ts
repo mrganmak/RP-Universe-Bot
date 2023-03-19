@@ -1,29 +1,29 @@
 import { ApplicationCommandOptionType, CommandInteraction, PermissionsBitField } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
-import { ECommandsCategirysIds, ECommandsIds, ELocalizationsLanguages } from "../enum.js";
+import { CommandsCategirysIds, CommandsIds, LocalizationsLanguages } from "../enum.js";
 import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import { createHash } from "crypto";
 import GuildsIdentifiersBase from "../Databases/bases_list/GuildsIdentifiersBase.js";
 import { Category } from "@discordx/utilities";
 
-const { name, description } = getLocalizationForCommand(ECommandsIds.TEST, ELocalizationsLanguages.EN);
+const { name, description } = getLocalizationForCommand(CommandsIds.TEST, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(ECommandsCategirysIds.DEVELOPMENT)
+@Category(CommandsCategirysIds.DEVELOPMENT)
 class TestCommand {
 	@Slash({
 		name,
 		description,
-		nameLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TEST, 'name', [ELocalizationsLanguages.EN]),
-		descriptionLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TEST, 'description', [ELocalizationsLanguages.EN]),
+		nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.TEST, 'name', [LocalizationsLanguages.EN]),
+		descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.TEST, 'description', [LocalizationsLanguages.EN]),
 		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
 	async test(
 		@SlashOption({
 			name,
 			description,
-			nameLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TEST, 'name', [ELocalizationsLanguages.EN]),
-			descriptionLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TEST, 'description', [ELocalizationsLanguages.EN]),
+			nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.TEST, 'name', [LocalizationsLanguages.EN]),
+			descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.TEST, 'description', [LocalizationsLanguages.EN]),
 			required: true,
 			type: ApplicationCommandOptionType.String
 		})

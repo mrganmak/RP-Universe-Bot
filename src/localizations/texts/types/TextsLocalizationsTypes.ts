@@ -1,5 +1,3 @@
-import ETextsLocalizationsIds from "./ETextsLocalizationsIds.js";
+import TextsLocalizationsIds from "./TextsLocalizationsIds.js";
 
-export type TTextsLocalization = {
-	[Key in ETextsLocalizationsIds]: string;
-}
+export type TextsLocalization = Record<TextsLocalizationsIds, string>;

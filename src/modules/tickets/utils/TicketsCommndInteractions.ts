@@ -2,7 +2,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, CategoryChannel, ChannelS
 import { getGuildLanguage } from "../../../localizations/index.js";
 import { EmbedBuilder } from "@discordjs/builders";
 import { getLocalizationForText } from "../../../localizations/texts/index.js";
-import ETextsLocalizationsIds from "../../../localizations/texts/types/ETextsLocalizationsIds.js";
+import TextsLocalizationsIds from "../../../localizations/texts/types/TextsLocalizationsIds.js";
 
 export default class TicketsCommndInteractions {
 	public static async getSetedCategoryForTickets(interaction: CommandInteraction): Promise<CategoryChannel> {
@@ -13,8 +13,8 @@ export default class TicketsCommndInteractions {
 
 		const changeCategoryEmbed = new EmbedBuilder();
 		changeCategoryEmbed
-			.setTitle(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_LABLE, guildLanguage))
-			.setDescription(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_DESCRIPTION, guildLanguage));
+			.setTitle(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_LABLE, guildLanguage))
+			.setDescription(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_DESCRIPTION, guildLanguage));
 		const categorySelectMenu = new ChannelSelectMenuBuilder().setChannelTypes(ChannelType.GuildCategory).setCustomId('selectmenu');
 		await replyFunction({ embeds: [changeCategoryEmbed], components: [new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(categorySelectMenu)], ephemeral: true });
 
@@ -35,8 +35,8 @@ export default class TicketsCommndInteractions {
 
 		const changeChannelEmbed = new EmbedBuilder();
 		changeChannelEmbed
-			.setTitle(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_LABLE, guildLanguage))
-			.setDescription(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_DESCRIPTION, guildLanguage));
+			.setTitle(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_LABLE, guildLanguage))
+			.setDescription(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_DESCRIPTION, guildLanguage));
 		const channelSelectMenu = new ChannelSelectMenuBuilder().setChannelTypes(ChannelType.GuildText).setCustomId('selectmenu');
 		await replyFunction({ embeds: [changeChannelEmbed], components: [new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(channelSelectMenu)], ephemeral: true });
 

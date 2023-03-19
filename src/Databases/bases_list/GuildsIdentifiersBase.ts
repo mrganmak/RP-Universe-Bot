@@ -6,25 +6,25 @@ export default class GuildsIdentifiersBase {
 	private static _instance: GuildsIdentifiersBase | undefined;
 
 	private _database!: typeof MongoBase['database'];
-	private _collection!: Collection<IGuildIdentifiersBase>;
+	private _collection!: Collection<GuildIdentifiersBase>;
 
 	constructor() {
 		if (GuildsIdentifiersBase._instance) return GuildsIdentifiersBase._instance;
 		GuildsIdentifiersBase._instance = this;
 
 		this._database = MongoBase.database;
-		this._collection = this._database.collection<IGuildIdentifiersBase>(process.env.DB_GUILDS_IDENTIFIRES);
+		this._collection = this._database.collection<GuildIdentifiersBase>(process.env.DB_GUILDS_IDENTIFIRES);
 	}
 
-	public async getByGuildId(guildId: Snowflake): Promise<IGuildIdentifiersBase | null> {
+	public async getByGuildId(guildId: Snowflake): Promise<GuildIdentifiersBase | null> {
 		return await this._collection.findOne({ guildId });
 	}
 
-	public async getByToken(token: string): Promise<IGuildIdentifiersBase | null> {
+	public async getByToken(token: string): Promise<GuildIdentifiersBase | null> {
 		return await this._collection.findOne({ token });
 	}
 
-	public async addIdentifier(identifier: IGuildIdentifiersBase): Promise<InsertOneResult<IGuildIdentifiersBase>> {
+	public async addIdentifier(identifier: GuildIdentifiersBase): Promise<InsertOneResult<GuildIdentifiersBase>> {
 		const identifierById = await this.getByGuildId(identifier.guildId);
 		const identifierByToken = await this.getByToken(identifier.token);
 
@@ -49,12 +49,12 @@ export default class GuildsIdentifiersBase {
 		);
 	}
 
-	public async getByAPIKey(APIKey: string): Promise<IGuildIdentifiersBase | null> {
+	public async getByAPIKey(APIKey: string): Promise<GuildIdentifiersBase | null> {
 		return await this._collection.findOne({ APIKey });
 	}
 }
 
-interface IGuildIdentifiersBase {
+interface GuildIdentifiersBase {
 	guildId: Snowflake;
 	token: string;
 	APIKey?: string;

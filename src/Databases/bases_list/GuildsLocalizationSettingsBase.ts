@@ -1,28 +1,28 @@
 import { Snowflake } from "discord.js";
 import MongoBase from "../MongoBase.js";
 import { Collection, InsertOneResult, UpdateResult } from "mongodb";
-import { ELocalizationsLanguages } from "../../enum.js";
+import { LocalizationsLanguages } from "../../enum.js";
 
 export default class GuildsLocalizationSettingsBase {
 	private static _instance: GuildsLocalizationSettingsBase | undefined;
 
 	private _database!: typeof MongoBase['database'];
-	private _collection!: Collection<IGuildsLocalizationSettingsBase>;
-	private _localBase: Map<Snowflake, IGuildsLocalizationSettingsBase> = new Map();
+	private _collection!: Collection<GuildLocalizationSettingsBase>;
+	private _localBase: Map<Snowflake, GuildLocalizationSettingsBase> = new Map();
 
 	constructor() {
 		if (GuildsLocalizationSettingsBase._instance) return GuildsLocalizationSettingsBase._instance;
 		GuildsLocalizationSettingsBase._instance = this;
 
 		this._database = MongoBase.database;
-		this._collection = this._database.collection<IGuildsLocalizationSettingsBase>(process.env.DB_GUILDS_LOCALIZATION_SETTINGS);
+		this._collection = this._database.collection<GuildLocalizationSettingsBase>(process.env.DB_GUILDS_LOCALIZATION_SETTINGS);
 
 		this._collection.find().forEach((settings) => {
 			this._localBase.set(settings.guildId, settings);
 		});
 	}
 
-	public async getByGuildId(guildId: Snowflake): Promise<IGuildsLocalizationSettingsBase | null> {
+	public async getByGuildId(guildId: Snowflake): Promise<GuildLocalizationSettingsBase | null> {
 		const localData = this._localBase.get(guildId);
 
 		if (localData) {
@@ -37,7 +37,7 @@ export default class GuildsLocalizationSettingsBase {
 		}
 	}
 
-	public async addSettings(settings: IGuildsLocalizationSettingsBase): Promise<InsertOneResult<IGuildsLocalizationSettingsBase> | UpdateResult> {
+	public async addSettings(settings: GuildLocalizationSettingsBase): Promise<InsertOneResult<GuildLocalizationSettingsBase> | UpdateResult> {
 		const settingsById = await this.getByGuildId(settings.guildId);
 		this._localBase.set(settings.guildId, settings);
 
@@ -52,7 +52,7 @@ export default class GuildsLocalizationSettingsBase {
 		}
 	}
 
-	public async changeSettings(settings: IGuildsLocalizationSettingsBase): Promise<UpdateResult | null> {
+	public async changeSettings(settings: GuildLocalizationSettingsBase): Promise<UpdateResult | null> {
 		const settingsById = await this.getByGuildId(settings.guildId);
 
 		if (!settingsById) return null;
@@ -66,7 +66,7 @@ export default class GuildsLocalizationSettingsBase {
 	}
 }
 
-interface IGuildsLocalizationSettingsBase {
+interface GuildLocalizationSettingsBase {
 	guildId: Snowflake;
-	language: ELocalizationsLanguages;
+	language: LocalizationsLanguages;
 }

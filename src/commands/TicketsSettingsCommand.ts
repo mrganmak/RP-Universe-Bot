@@ -1,25 +1,25 @@
 import { ActionRowBuilder, ChannelSelectMenuBuilder, ChannelType, CommandInteraction, ComponentType, EmbedBuilder, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
-import { ECommandsCategirysIds, ECommandsIds, ELocalizationsLanguages } from "../enum.js";
+import { CommandsCategirysIds, CommandsIds, LocalizationsLanguages } from "../enum.js";
 import { getAllLocalizationsForCommandProperty, getLocalizationForCommand } from "../localizations/commands/index.js";
 import { getGuildLanguage } from "../localizations/index.js";
 import { getLocalizationForText } from "../localizations/texts/index.js";
-import ETextsLocalizationsIds from "../localizations/texts/types/ETextsLocalizationsIds.js";
+import TextsLocalizationsIds from "../localizations/texts/types/TextsLocalizationsIds.js";
 import PaginationSelectMenu from "../modules/paginations/PaginationSelectMenu.js";
 import { ticketsSettingsSelectMenuComponents } from "../config.js";
 import getUserConfirmation from "../modules/interactions/UserConfirmation.js";
 import { Category } from "@discordx/utilities";
 
-const { name, description } = getLocalizationForCommand(ECommandsIds.TICKETS_SETTINGS, ELocalizationsLanguages.EN);
+const { name, description } = getLocalizationForCommand(CommandsIds.TICKETS_SETTINGS, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(ECommandsCategirysIds.ONLY_WITH_TICKETS_INITED)
+@Category(CommandsCategirysIds.ONLY_WITH_TICKETS_INITED)
 class TicketsSettingsCommand {
 	@Slash({
 		name,
 		description,
-		nameLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TICKETS_SETTINGS, 'name', [ELocalizationsLanguages.EN]),
-		descriptionLocalizations: getAllLocalizationsForCommandProperty(ECommandsIds.TICKETS_SETTINGS, 'description', [ELocalizationsLanguages.EN]),
+		nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.TICKETS_SETTINGS, 'name', [LocalizationsLanguages.EN]),
+		descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.TICKETS_SETTINGS, 'description', [LocalizationsLanguages.EN]),
 		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
 	async ticketSettings(interaction: CommandInteraction) {
@@ -29,8 +29,8 @@ class TicketsSettingsCommand {
 
 		const embed = new EmbedBuilder();
 		embed
-			.setTitle(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_EMBED_LABLE, guildLanguage))
-			.setDescription(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_EMBED_DESCRIPTION, guildLanguage))
+			.setTitle(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_EMBED_LABLE, guildLanguage))
+			.setDescription(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_EMBED_DESCRIPTION, guildLanguage))
 
 		await interaction.editReply({ embeds: [embed], content: '' });
 
@@ -44,8 +44,8 @@ class TicketsSettingsCommand {
 		if (answer[0] == 'change_category') {
 			const changeCategoryEmbed = new EmbedBuilder();
 			changeCategoryEmbed
-				.setTitle(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_LABLE, guildLanguage))
-				.setDescription(getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_DESCRIPTION, guildLanguage))
+				.setTitle(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_LABLE, guildLanguage))
+				.setDescription(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_DESCRIPTION, guildLanguage))
 			const selectMenu = new ChannelSelectMenuBuilder().setChannelTypes(ChannelType.GuildCategory).setCustomId('selectmenu');
 			interaction.editReply({ embeds: [changeCategoryEmbed], components: [new ActionRowBuilder<ChannelSelectMenuBuilder>().addComponents(selectMenu)] });
 
@@ -60,15 +60,15 @@ class TicketsSettingsCommand {
 			interaction,
 			{
 				content: (
-					getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE, guildLanguage) +
+					getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE, guildLanguage) +
 					' ' +
-					getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_IS_ANY_CHANGE_NEEDED, guildLanguage)
+					getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_IS_ANY_CHANGE_NEEDED, guildLanguage)
 				),
 				language: guildLanguage
 			}
 		);
 
 		if (isAnyChangeNeeded == 'confirm') this.ticketSettings(interaction);
-		else interaction.editReply({ content: getLocalizationForText(ETextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE, guildLanguage), components: [] });
+		else interaction.editReply({ content: getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE, guildLanguage), components: [] });
 	}
 }

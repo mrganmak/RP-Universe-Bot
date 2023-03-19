@@ -1,29 +1,29 @@
-import { ELocalizationsLanguages } from "../../enum.js";
+import { LocalizationsLanguages } from "../../enum.js";
 import enTextsLocaliztion from "./list/en.js";
 import ruTextsLocaliztion from "./list/ru.js";
-import ETextsLocalizationsIds from "./types/ETextsLocalizationsIds.js";
-import { TTextsLocalization } from "./types/TextsLocalizationsTypes.js";
+import TextsLocalizationsIds from "./types/TextsLocalizationsIds.js";
+import { TextsLocalization } from "./types/TextsLocalizationsTypes.js";
 
-const textsLocalizations: TTextsLocalizations = {
-	[ELocalizationsLanguages.RU]: ruTextsLocaliztion,
-	[ELocalizationsLanguages.EN]: enTextsLocaliztion
+const textsLocalizations: TextsLocalizations = {
+	[LocalizationsLanguages.RU]: ruTextsLocaliztion,
+	[LocalizationsLanguages.EN]: enTextsLocaliztion
 }
-export function getLocalizationForText(text: ETextsLocalizationsIds, language: ELocalizationsLanguages): string {
+export function getLocalizationForText(text: TextsLocalizationsIds, language: LocalizationsLanguages): string {
 	const textsForLanguage = textsLocalizations[language];
 
 	return textsForLanguage[text];
 }
 
-export function getAllLocalizationsForText(text: ETextsLocalizationsIds, options?:IGetAllLocalizationsForTextOptions): Array<string> {
+export function getAllLocalizationsForText(text: TextsLocalizationsIds, options?:IGetAllLocalizationsForTextOptions): Array<string> {
 	const texts: Array<string> = [];
 
-	for (const language of Object.keys(textsLocalizations) as Array<ELocalizationsLanguages>) {
+	for (const language of Object.keys(textsLocalizations) as Array<LocalizationsLanguages>) {
 		if (options?.excludeLanguages?.includes(language)) continue;
 
 		const localization = textsLocalizations[language];
 		const textForLanguage = (
 			options?.isLangugageEmojiNeeded ?
-			getLocalizationForText(ETextsLocalizationsIds.LANGUAGE_EMOJI, language) + ' ' + localization[text] :
+			getLocalizationForText(TextsLocalizationsIds.LANGUAGE_EMOJI, language) + ' ' + localization[text] :
 			localization[text]
 		);
 		texts.push(textForLanguage);
@@ -32,11 +32,9 @@ export function getAllLocalizationsForText(text: ETextsLocalizationsIds, options
 	return texts;
 }
 
-type TTextsLocalizations = {
-	[key in ELocalizationsLanguages]: TTextsLocalization;
-}
+type TextsLocalizations = Record<LocalizationsLanguages, TextsLocalization>;
 
 interface IGetAllLocalizationsForTextOptions {
-	excludeLanguages?: Array<ELocalizationsLanguages>;
+	excludeLanguages?: Array<LocalizationsLanguages>;
 	isLangugageEmojiNeeded?: boolean
 }

@@ -6,22 +6,22 @@ export default class GuildsModulesBase {
 	private static _instance: GuildsModulesBase | undefined;
 
 	private _database!: typeof MongoBase['database'];
-	private _collection!: Collection<IGuildsModulesBase>;
-	private _localBase: Map<Snowflake, IGuildsModulesBase> = new Map();
+	private _collection!: Collection<GuildModulesBase>;
+	private _localBase: Map<Snowflake, GuildModulesBase> = new Map();
 
 	constructor() {
 		if (GuildsModulesBase._instance) return GuildsModulesBase._instance;
 		GuildsModulesBase._instance = this;
 
 		this._database = MongoBase.database;
-		this._collection = this._database.collection<IGuildsModulesBase>(process.env.DB_GUILDS_MODULES);
+		this._collection = this._database.collection<GuildModulesBase>(process.env.DB_GUILDS_MODULES);
 
 		this._collection.find().forEach((settings) => {
 			this._localBase.set(settings.guildId, settings);
 		});
 	}
 
-	public async getByGuildId(guildId: Snowflake): Promise<IGuildsModulesBase | null> {
+	public async getByGuildId(guildId: Snowflake): Promise<GuildModulesBase | null> {
 		const localData = this._localBase.get(guildId);
 
 		if (localData) {
@@ -36,7 +36,7 @@ export default class GuildsModulesBase {
 		}
 	}
 
-	public async changeModuleState<K extends keyof IGuildsModulesBase>(guildId: Snowflake, key: K, value: IGuildsModulesBase[K]): Promise<InsertOneResult<IGuildsModulesBase> | UpdateResult> {
+	public async changeModuleState<K extends keyof GuildModulesBase>(guildId: Snowflake, key: K, value: GuildModulesBase[K]): Promise<InsertOneResult<GuildModulesBase> | UpdateResult> {
 		const modulesById = await this.getByGuildId(guildId);
 
 		if (modulesById) {
@@ -60,7 +60,7 @@ export default class GuildsModulesBase {
 	}
 }
 
-interface IGuildsModulesBase {
+interface GuildModulesBase {
 	guildId: Snowflake;
 	isGuildInited?: boolean;
 	isTicketsModuleInited?: boolean;
