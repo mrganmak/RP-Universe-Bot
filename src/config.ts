@@ -3,7 +3,7 @@ import { UserConfirmationInteractionButtonSettings, TextsLocalizationsIds, Butto
 
 export const devMode = true;
 
-export const userConfirmationInteractionButtonsSettings: Array<UserConfirmationInteractionButtonSettings> = [
+export const userConfirmationInteractionButtonsSettings: UserConfirmationInteractionButtonSettings[] = [
 	{
 		label: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_NO,
 		style: ButtonStyle.Danger,

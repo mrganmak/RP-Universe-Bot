@@ -27,9 +27,9 @@ export class Util {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	public static async getMembersByRoles(guild: Guild, roleIds: Array<Snowflake>): Promise<Array<GuildMember> | undefined>  {
-		const members: Array<GuildMember> = [];
-		const membersIds: Array<Snowflake> = [];
+	public static async getMembersByRoles(guild: Guild, roleIds: Snowflake[]): Promise<GuildMember[] | undefined>  {
+		const members: GuildMember[] = [];
+		const membersIds: Snowflake[] = [];
 
 		for(const roleId of roleIds) {
 			const membersThatHaveRole = await this.getMembersByRole(guild, roleId);
@@ -46,7 +46,7 @@ export class Util {
 		return (members.length > 0 ? members : undefined);
 	}
 
-	public static async getMembersByRole(guild: Guild, roleId: Snowflake): Promise<Array<GuildMember> | undefined> {
+	public static async getMembersByRole(guild: Guild, roleId: Snowflake): Promise<GuildMember[] | undefined> {
 		await guild.members.fetch();
 		const role = await guild.roles.fetch(roleId).catch(() => {});
 		if (!role) return;
@@ -56,7 +56,7 @@ export class Util {
 		return members;
 	}
 
-	public static async hasMemberHaveRoles(member: GuildMember, roleIds: Array<Snowflake>): Promise<boolean> {
+	public static async hasMemberHaveRoles(member: GuildMember, roleIds: Snowflake[]): Promise<boolean> {
 		for (const roleId of roleIds) if (await this.hasMemberHaveRole(member, roleId)) return true;
 		return false;
 	}
@@ -67,11 +67,11 @@ export class Util {
 		return member.roles.cache.has(roleId);
 	}
 
-	public static filterOnlyOnlineMembers(members: Array<GuildMember>): Array<GuildMember> {
+	public static filterOnlyOnlineMembers(members: GuildMember[]): GuildMember[] {
 		return members.filter((member) => (member.presence?.status !== 'offline'));
 	}
 
-	public static async convertUsersArrayIntoMembersArray(users: Array<User>, guild: Guild): Promise<Array<GuildMember>> {
+	public static async convertUsersArrayIntoMembersArray(users: User[], guild: Guild): Promise<GuildMember[]> {
 		await guild.members.fetch();
 
 		const members = [];
@@ -86,7 +86,7 @@ export class Util {
 		return members;
 	}
 	
-	public static randomizeArray<T>(array: Array<T>): Array<T> {
+	public static randomizeArray<T>(array: T[]): T[] {
 		for (const i in array) {
 			const randomIndex = Util.getRandomInRange(0, array.length - 1);
 

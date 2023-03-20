@@ -37,7 +37,7 @@ class StartCommand {
 		].join('\n\n');
 
 		await interaction.reply({ content, ephemeral: true });
-		const choices: Array<APISelectMenuOption> = Object.entries(LocalizationsLanguages).map(([label, value]) => ({ label, value }));
+		const choices: APISelectMenuOption[] = Object.entries(LocalizationsLanguages).map(([label, value]) => ({ label, value }));
 
 		const selectMenu = await PaginationSelectMenu.create(interaction, interaction.user, {
 			isLocalizationRequer: false,

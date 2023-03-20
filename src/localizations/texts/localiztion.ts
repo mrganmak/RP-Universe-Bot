@@ -17,10 +17,10 @@ export function getLocalizationForText(text: TextsLocalizationsIds, language: Lo
 	return textsForLanguage[text];
 }
 
-export function getAllLocalizationsForText(text: TextsLocalizationsIds, options?:IGetAllLocalizationsForTextOptions): Array<string> {
-	const texts: Array<string> = [];
+export function getAllLocalizationsForText(text: TextsLocalizationsIds, options?:IGetAllLocalizationsForTextOptions): string[] {
+	const texts: string[] = [];
 
-	for (const language of Object.keys(textsLocalizations) as Array<LocalizationsLanguages>) {
+	for (const language of Object.keys(textsLocalizations) as LocalizationsLanguages[]) {
 		if (options?.excludeLanguages?.includes(language)) continue;
 
 		const localization = textsLocalizations[language];
@@ -38,6 +38,6 @@ export function getAllLocalizationsForText(text: TextsLocalizationsIds, options?
 type TextsLocalizations = Record<LocalizationsLanguages, TextsLocalization>;
 
 interface IGetAllLocalizationsForTextOptions {
-	excludeLanguages?: Array<LocalizationsLanguages>;
+	excludeLanguages?: LocalizationsLanguages[];
 	isLangugageEmojiNeeded?: boolean
 }

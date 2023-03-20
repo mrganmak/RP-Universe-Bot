@@ -29,7 +29,7 @@ export class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends
 	private _selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>;
 	private _selectMenuCollector: InteractionCollector<StringSelectMenuInteraction>;
 	private _buttonCollector: InteractionCollector<ButtonInteraction>;
-	private _answer: Array<string> | undefined;
+	private _answer: string[] | undefined;
 	private _isNeedMessageDelete: boolean;
 
 	private constructor(message: Message, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>, isNeedMessageDelete?: boolean)
@@ -49,7 +49,7 @@ export class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends
 		this._buttonCollector.on('collect', (interaction) => (this._onButtonCollect(interaction)));
 	}
 
-	public getUserAnswer(): Promise<Array<string>> {
+	public getUserAnswer(): Promise<string[]> {
 		return new Promise((resolve) => {
 			if (this._answer) return resolve(this._answer);
 			this.on('collect', (answer) => (resolve(answer)));
@@ -90,7 +90,7 @@ class SelectMenuInteractionBuilder<T extends PaginationSelectMenuOptions> {
 	private _selectMenuOptions: PaginationSelectMenuSettings | undefined;
 	private _language: LocalizationsLanguages;
 
-	public get components(): Array<ActionRowBuilder<MessageActionRowComponentBuilder>> {
+	public get components(): ActionRowBuilder<MessageActionRowComponentBuilder>[] {
 		if (this._pagesCount > 1) return [this._selectMenuBuilder, this._buttonBuilder];
 		else return [this._selectMenuBuilder];
 	}
@@ -163,7 +163,7 @@ class SelectMenuInteractionBuilder<T extends PaginationSelectMenuOptions> {
 
 	private _updateOptionsInSelectMenu(): void {
 		const selectMenu = new StringSelectMenuBuilder(this._selectMenuOptions)
-		const options: Array<APISelectMenuOption> = (
+		const options: APISelectMenuOption[] = (
 			this._options.isLocalizationRequer ?
 			(this._options.choices.length > 25 ? this._options.choices.slice(25 * (this._currentMenuPage-1), 25 * this._currentMenuPage) : this._options.choices).map((option) => ({
 				label: getLocalizationForText(option.label, this._language),
@@ -192,7 +192,7 @@ type PaginationSelectMenuOptions = PaginationSelectMenuDefaultOptions | Paginati
 
 interface PaginationSelectMenuDefaultOptions {
 	isLocalizationRequer: false;
-	choices: Array<APISelectMenuOption>
+	choices: APISelectMenuOption[]
 	selectMenuOptions?: PaginationSelectMenuSettings
 }
 

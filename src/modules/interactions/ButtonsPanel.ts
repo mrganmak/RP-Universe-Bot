@@ -81,7 +81,7 @@ interface ButtonsPanelButtonsCategorys {
 	[key: string]: ButtosPanelButtonsCategory
 }
 
-type ButtosPanelButtonsCategory = Array<ButtosPanelButtonSettings>;
+type ButtosPanelButtonsCategory = ButtosPanelButtonSettings[];
 type ButtosPanelButtonSettings = ButtonsPanelButtonSettingsWithCategoryChange | ButtonsPanelButtonSettingsWithValueReturn;
 
 interface ButtonsPanelButtonSettingsDefault {

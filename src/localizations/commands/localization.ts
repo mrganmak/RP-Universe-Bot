@@ -23,7 +23,7 @@ export function getLocalizationForCommand<T extends CommandsIds>(commandId: T, l
 export function getLocalizationsForCommandProperty<T extends CommandsIds>(
 	commandId: T,
 	property: keyof CommandsLocalizationsPropertys[T],
-	languages: Array<LocalizationsLanguages>
+	languages: LocalizationsLanguages[]
 ): ApplicationCommandOptions<string, string>['nameLocalizations'] {
 	const localizations: ApplicationCommandOptions<string, string>['nameLocalizations'] = {};
 
@@ -38,11 +38,11 @@ export function getLocalizationsForCommandProperty<T extends CommandsIds>(
 export function getAllLocalizationsForCommandProperty<T extends CommandsIds>(
 	commandId: T,
 	property: keyof CommandsLocalizationsPropertys[T],
-	excludeLanguages?: Array<LocalizationsLanguages>,
+	excludeLanguages?: LocalizationsLanguages[],
 ): ApplicationCommandOptions<string, string>['nameLocalizations'] {
 	const localizations: ApplicationCommandOptions<string, string>['nameLocalizations'] = {};
 
-	for (const language of Object.keys(commandsLocalizations) as Array<LocalizationsLanguages>) {
+	for (const language of Object.keys(commandsLocalizations) as LocalizationsLanguages[]) {
 		if (excludeLanguages?.includes(language)) continue;
 
 		const propertyLocalization = getLocalizationForCommandProperty(commandId, property, language);

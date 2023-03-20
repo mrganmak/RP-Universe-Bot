@@ -2,12 +2,12 @@ import { APIMessageComponentEmoji } from "discord.js";
 import { TextsLocalizationsIds } from "../index.js";
 
 export type ValueOf<T> = T[keyof T];
-export type ChangeAllTypes<InstanceType extends Array<any> | Object, FinalType extends any, TargetType extends any = string> = {
+export type ChangeAllTypes<InstanceType extends any[] | Object, FinalType extends any, TargetType extends any = string> = {
 	[Key in keyof InstanceType]: (
 		NonNullable<InstanceType[Key]> extends TargetType ?
 		FinalType :
 		(
-			NonNullable<InstanceType[Key]> extends Array<any> ?
+			NonNullable<InstanceType[Key]> extends any[] ?
 			ChangeAllTypes<NonNullable<InstanceType[Key]>, FinalType, TargetType> :
 			(
 				NonNullable<InstanceType[Key]> extends Object ?
@@ -18,7 +18,7 @@ export type ChangeAllTypes<InstanceType extends Array<any> | Object, FinalType e
 	)
 }
 
-export type SelectMenuOptionsWithLocalizations = Array<SelectMenuOptionWithLocalizations>;
+export type SelectMenuOptionsWithLocalizations = SelectMenuOptionWithLocalizations[];
 export interface SelectMenuOptionWithLocalizations {
 	label: TextsLocalizationsIds;
 	value: string;
