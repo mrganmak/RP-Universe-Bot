@@ -51,11 +51,11 @@ class ButtonsPanel extends EventEmitter {
 	private async _onCollect(interaction: ButtonInteraction) {
 		const collectedButton = this._settings.buttons[this._categoryName][Number(interaction.id)];
 
-		if (collectedButton.type == 'category') {
+		if (collectedButton.type === 'category') {
 			this._categoryName = collectedButton.category;
 
 			await interaction.update({ components: [this._createButtons()] });
-		} else if (collectedButton.type == 'value') {
+		} else if (collectedButton.type === 'value') {
 			await interaction.deferUpdate();
 			this.emit('collect', collectedButton.value);
 		}

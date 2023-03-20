@@ -60,7 +60,7 @@ class UserConfirmation {
 	public getUserAnswer(): Promise<UserAnswers> {
 		return new Promise((resolve) => {
 			if (this._answer) return resolve(this._answer);
-			this._buttonCollector.on('collect', (interaction) => (resolve(interaction.customId == 'confirm' ? 'confirm' : 'deny')));
+			this._buttonCollector.on('collect', (interaction) => (resolve(interaction.customId === 'confirm' ? 'confirm' : 'deny')));
 			this._buttonCollector.on('end', () => {
 				if (!this._answer) resolve('deny');
 			});
@@ -68,7 +68,7 @@ class UserConfirmation {
 	}
 
 	private _onCollect(interaction: ButtonInteraction) {
-		this._answer = (interaction.customId == 'confirm' ? 'confirm' : 'deny');
+		this._answer = (interaction.customId === 'confirm' ? 'confirm' : 'deny');
 		this._buttonCollector.stop();
 
 		if ((this._messageOrInteraction instanceof Message) && this._messageOrInteraction.deletable) {

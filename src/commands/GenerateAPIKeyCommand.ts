@@ -45,7 +45,7 @@ class GenerateAPIKeyCommand {
 				}	
 			);
 
-			if (userConfirmation == 'deny') return await interaction.editReply({ content: getLocalizationForText(TextsLocalizationsIds.GENERATE_API_KEY_RESET_CANCELED_TEXT, guildLanguage) });
+			if (userConfirmation === 'deny') return await interaction.editReply({ content: getLocalizationForText(TextsLocalizationsIds.GENERATE_API_KEY_RESET_CANCELED_TEXT, guildLanguage) });
 		}
 
 		const APIKey = await TokenGenerator.createAPIKey();

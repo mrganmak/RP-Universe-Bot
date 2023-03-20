@@ -30,15 +30,15 @@ export class CommandsIniter {
 		for (const command of commands as unknown as Array<DApplicationCommand & ICategory>) {
 			command.dmPermission = false;
 	
-			if (command.category == CommandsCategirysIds.DEVELOPMENT) {
+			if (command.category === CommandsCategirysIds.DEVELOPMENT) {
 				command.guilds = [process.env.TEST_GUILD_ID];
-			} else if (command.category == CommandsCategirysIds.ONLY_IN_INITED_GUILDS) {
+			} else if (command.category === CommandsCategirysIds.ONLY_IN_INITED_GUILDS) {
 				command.guilds = [process.env.TEST_GUILD_ID, ...Array.from(this._guildsScopes.initedGuilds)];
-			} else if (command.category == CommandsCategirysIds.ONLY_IN_NOT_INITED_GUILDS) {
+			} else if (command.category === CommandsCategirysIds.ONLY_IN_NOT_INITED_GUILDS) {
 				command.guilds = [process.env.TEST_GUILD_ID, ...Array.from(this._guildsScopes.notInitedGuilds)];
-			} else if (command.category == CommandsCategirysIds.ONLY_WITH_TICKETS_INITED) {
+			} else if (command.category === CommandsCategirysIds.ONLY_WITH_TICKETS_INITED) {
 				command.guilds = [process.env.TEST_GUILD_ID, ...Array.from(this._guildsScopes.guildsWithInitedTickets)];
-			} else if (command.category == CommandsCategirysIds.ONLY_WITH_TICKETS_NOT_INITED) {
+			} else if (command.category === CommandsCategirysIds.ONLY_WITH_TICKETS_NOT_INITED) {
 				command.guilds = [process.env.TEST_GUILD_ID, ...Array.from(this._guildsScopes.guildsWithNotInitedTickets)];
 			}
 

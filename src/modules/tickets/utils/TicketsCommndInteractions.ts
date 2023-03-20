@@ -90,7 +90,7 @@ export class TicketsCommndInteractions {
 		await messageComponent.showModal(modal);
 		const modalSubmit = await messageComponent.awaitModalSubmit({ time: 10*60*1000 }).catch((error) => { throw error; });
 		const testField = modalSubmit.fields.getField('test');
-		const text = (testField.type == ComponentType.TextInput ? testField.value : '');
+		const text = (testField.type === ComponentType.TextInput ? testField.value : '');
 		if (!modalSubmit.isFromMessage()) throw new Error('Something went wrong with modal in getTextForTicketsMessage');
 		await modalSubmit.update({ components: [] });
 

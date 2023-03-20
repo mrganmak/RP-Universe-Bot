@@ -74,8 +74,8 @@ export class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends
 	}
 
 	private _onButtonCollect(interaction: ButtonInteraction): void {
-		if (interaction.customId == 'left') this._selectMenuInteractionBuilder.currentMenuPage -= 1;
-		else if (interaction.customId == 'right') this._selectMenuInteractionBuilder.currentMenuPage += 1;
+		if (interaction.customId === 'left') this._selectMenuInteractionBuilder.currentMenuPage -= 1;
+		else if (interaction.customId === 'right') this._selectMenuInteractionBuilder.currentMenuPage += 1;
 
 		interaction.update({ components: this._selectMenuInteractionBuilder.components });
 	}
@@ -131,7 +131,7 @@ class SelectMenuInteractionBuilder<T extends PaginationSelectMenuOptions> {
 				.setCustomId('left')
 				.setLabel('<')
 				.setStyle(ButtonStyle.Primary)
-				.setDisabled(this._currentMenuPage == 1),
+				.setDisabled(this._currentMenuPage === 1),
 			new ButtonBuilder()
 				.setCustomId('pages')
 				.setLabel(`${this._currentMenuPage}/${this._pagesCount}`)

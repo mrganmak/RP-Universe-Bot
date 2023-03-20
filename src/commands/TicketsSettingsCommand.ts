@@ -46,7 +46,7 @@ class TicketsSettingsCommand {
 		});
 		const answer = await paginationSelectMenu.getUserAnswer();
 		
-		if (answer[0] == 'change_category') {
+		if (answer[0] === 'change_category') {
 			const changeCategoryEmbed = new EmbedBuilder();
 			changeCategoryEmbed
 				.setTitle(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_LABLE, guildLanguage))
@@ -73,7 +73,7 @@ class TicketsSettingsCommand {
 			}
 		);
 
-		if (isAnyChangeNeeded == 'confirm') this.ticketSettings(interaction);
+		if (isAnyChangeNeeded === 'confirm') this.ticketSettings(interaction);
 		else interaction.editReply({ content: getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE, guildLanguage), components: [] });
 	}
 }

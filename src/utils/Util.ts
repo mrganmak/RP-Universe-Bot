@@ -68,7 +68,7 @@ export class Util {
 	}
 
 	public static filterOnlyOnlineMembers(members: Array<GuildMember>): Array<GuildMember> {
-		return members.filter((member) => (member.presence?.status != 'offline'));
+		return members.filter((member) => (member.presence?.status !== 'offline'));
 	}
 
 	public static async convertUsersArrayIntoMembersArray(users: Array<User>, guild: Guild): Promise<Array<GuildMember>> {
