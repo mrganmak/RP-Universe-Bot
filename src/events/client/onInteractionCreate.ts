@@ -1,10 +1,11 @@
+import { Events } from "discord.js";
 import { ArgsOf, Client, Discord, On } from "discordx";
 
 @Discord()
 class onInteractionCreate {
-	@On({ event: 'interactionCreate' })
+	@On({ event: Events.InteractionCreate })
 	onInteractionCreate(
-		[interaction]: ArgsOf<'interactionCreate'>,
+		[interaction]: ArgsOf<Events.InteractionCreate>,
 		client: Client
 	) {
 		client.executeInteraction(interaction);
