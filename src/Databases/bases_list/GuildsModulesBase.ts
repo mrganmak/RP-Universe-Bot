@@ -1,6 +1,6 @@
 import { Snowflake } from "discord.js";
 import { Collection, InsertOneResult, UpdateResult } from "mongodb";
-import { MongoBase } from "../../index.js";
+import { GuildModules, MongoBase } from "../../index.js";
 
 export class GuildsModulesBase {
 	private static _instance: GuildsModulesBase | undefined;
@@ -28,7 +28,6 @@ export class GuildsModulesBase {
 			return localData;
 		} else {
 			const settings = await this._collection.findOne({ guildId });
-
 			if (!settings) return null;
 
 			this._localBase.set(settings.guildId, settings);
@@ -36,7 +35,7 @@ export class GuildsModulesBase {
 		}
 	}
 
-	public async changeModuleState<K extends keyof GuildModulesBase>(guildId: Snowflake, key: K, value: GuildModulesBase[K]): Promise<InsertOneResult<GuildModulesBase> | UpdateResult> {
+	public async changeModuleState<K extends GuildModules>(guildId: Snowflake, key: K, value: GuildModulesBase[K]): Promise<InsertOneResult<GuildModulesBase> | UpdateResult> {
 		const modulesById = await this.getByGuildId(guildId);
 
 		if (modulesById) {
@@ -60,8 +59,6 @@ export class GuildsModulesBase {
 	}
 }
 
-interface GuildModulesBase {
+interface GuildModulesBase extends Partial<Record<GuildModules, boolean>> {
 	guildId: Snowflake;
-	isGuildInited?: boolean;
-	isTicketsModuleInited?: boolean;
 }
