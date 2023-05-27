@@ -25,15 +25,11 @@ class StartTicketsCommand {
 	})
 	async test(interaction: CommandInteraction) {
 		if (!interaction.guild) return;
-		const guildLanguage = await getGuildLanguage(interaction.guild.id);
+		await interaction.deferReply({ ephemeral: true });
 
-		const category = await TicketsCommndInteractions.getSetedCategoryForTickets(interaction); //TODO: BD;
-		const channel = await TicketsCommndInteractions.getSetedChannelForTickets(interaction); //TODO: BD;
-		const text = await TicketsCommndInteractions.getTextForTicketsMessage(interaction);
-
-		console.log(category.name);
-		console.log(channel.name);
-		console.log(text);
+		const settings = await TicketsCommndInteractions.getAllTicketsSettings(interaction);
+		
+		console.log(settings);
 
 		//const modulesBase = new GuildsModulesBase();
 		//await modulesBase.changeModuleState(interaction.guild.id, 'isTicketsModuleInited', true);
