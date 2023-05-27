@@ -17,7 +17,7 @@ export function getLocalizationForText(text: TextsLocalizationsIds, language: Lo
 	return textsForLanguage[text];
 }
 
-export function getAllLocalizationsForText(text: TextsLocalizationsIds, options?:IGetAllLocalizationsForTextOptions): string[] {
+export function getAllLocalizationsForText(text: TextsLocalizationsIds, options?: GetAllLocalizationsForTextOptions): string[] {
 	const texts: string[] = [];
 
 	for (const language of Object.keys(textsLocalizations) as LocalizationsLanguages[]) {
@@ -37,7 +37,7 @@ export function getAllLocalizationsForText(text: TextsLocalizationsIds, options?
 
 type TextsLocalizations = Record<LocalizationsLanguages, TextsLocalization>;
 
-interface IGetAllLocalizationsForTextOptions {
+interface GetAllLocalizationsForTextOptions {
 	excludeLanguages?: LocalizationsLanguages[];
 	isLangugageEmojiNeeded?: boolean
 }
