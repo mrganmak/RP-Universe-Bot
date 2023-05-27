@@ -2,7 +2,7 @@ import { APISelectMenuOption, CommandInteraction, PermissionsBitField } from "di
 import { Discord, Slash } from "discordx";
 import { Category } from "@discordx/utilities";
 import {
-	CommandsCategirysIds,
+	CommandsCategoriesIds,
 	CommandsIds,
 	LocalizationsLanguages,
 	getAllLocalizationsForCommandProperty,
@@ -13,13 +13,14 @@ import {
 	PaginationSelectMenu,
 	GuildsLocalizationSettingsBase,
 	GuildsModulesBase,
-	CommandsIniter
+	CommandsIniter,
+	GuildModules
 } from "../index.js";
 
 const { name, description } = getLocalizationForCommand(CommandsIds.START, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(CommandsCategirysIds.ONLY_IN_NOT_INITED_GUILDS)
+@Category(CommandsCategoriesIds.ONLY_IN_NOT_INITED_GUILDS)
 class StartCommand {
 	@Slash({
 		name,
@@ -49,7 +50,7 @@ class StartCommand {
 		await settingsBase.addSettings({ guildId: interaction.guild.id, language: answer });
 
 		const modulesBase = new GuildsModulesBase();
-		await modulesBase.changeModuleState(interaction.guild.id, 'isGuildInited', true);
+		await modulesBase.changeModuleState(interaction.guild.id, GuildModules.INITED_GUILD, true);
 		CommandsIniter.changeCommandsForGuild(interaction.guild.id);
 
 		interaction.editReply({ content: getLocalizationForText(TextsLocalizationsIds.START_FINAL, answer) });
