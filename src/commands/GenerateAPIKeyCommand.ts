@@ -2,7 +2,7 @@ import { CommandInteraction, EmbedBuilder, PermissionsBitField } from "discord.j
 import { Discord, Slash } from "discordx";
 import { Category } from "@discordx/utilities";
 import {
-	CommandsCategirysIds,
+	CommandsCategoriesIds,
 	CommandsIds,
 	LocalizationsLanguages,
 	getAllLocalizationsForCommandProperty,
@@ -18,7 +18,7 @@ import {
 const { name, description } = getLocalizationForCommand(CommandsIds.GENERATE_API_KEY, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(CommandsCategirysIds.ONLY_IN_INITED_GUILDS)
+@Category(CommandsCategoriesIds.ONLY_IN_INITED_GUILDS)
 class GenerateAPIKeyCommand {
 	@Slash({
 		name,

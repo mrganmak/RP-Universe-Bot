@@ -2,19 +2,18 @@ import {  CommandInteraction, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
 import { Category } from "@discordx/utilities";
 import {
-	CommandsCategirysIds,
+	CommandsCategoriesIds,
 	CommandsIds,
 	LocalizationsLanguages,
 	getAllLocalizationsForCommandProperty,
 	getLocalizationForCommand,
-	getGuildLanguage,
 	TicketsCommndInteractions,
 } from "../index.js";
 
 const { name, description } = getLocalizationForCommand(CommandsIds.START_TICKETS, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(CommandsCategirysIds.ONLY_WITH_TICKETS_NOT_INITED)
+@Category(CommandsCategoriesIds.ONLY_WITH_TICKETS_NOT_INITED)
 class StartTicketsCommand {
 	@Slash({
 		name,

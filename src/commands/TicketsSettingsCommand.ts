@@ -2,7 +2,7 @@ import { ActionRowBuilder, ChannelSelectMenuBuilder, ChannelType, CommandInterac
 import { Discord, Slash } from "discordx";
 import { Category } from "@discordx/utilities";
 import {
-	CommandsCategirysIds,
+	CommandsCategoriesIds,
 	CommandsIds,
 	LocalizationsLanguages,
 	getAllLocalizationsForCommandProperty,
@@ -18,7 +18,7 @@ import {
 const { name, description } = getLocalizationForCommand(CommandsIds.TICKETS_SETTINGS, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(CommandsCategirysIds.ONLY_WITH_TICKETS_INITED)
+@Category(CommandsCategoriesIds.ONLY_WITH_TICKETS_INITED)
 class TicketsSettingsCommand {
 	@Slash({
 		name,

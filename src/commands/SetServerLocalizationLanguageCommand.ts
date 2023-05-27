@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType, CommandInteraction, PermissionsBitField }
 import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
 import { Category, EnumChoice } from "@discordx/utilities";
 import {
-	CommandsCategirysIds,
+	CommandsCategoriesIds,
 	CommandsIds,
 	LocalizationsLanguages,
 	getAllLocalizationsForCommandProperty,
@@ -16,7 +16,7 @@ import {
 const { name, description, languageChooseName, languageChooseDescription } = getLocalizationForCommand(CommandsIds.SET_SERVER_LANGUAGE, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(CommandsCategirysIds.ONLY_IN_INITED_GUILDS)
+@Category(CommandsCategoriesIds.ONLY_IN_INITED_GUILDS)
 class SetServerLanguageCommand {
 	@Slash({
 		name,

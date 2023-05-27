@@ -2,7 +2,7 @@ import { CommandInteraction, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
 import { Category } from "@discordx/utilities";
 import {
-	CommandsCategirysIds,
+	CommandsCategoriesIds,
 	CommandsIds,
 	LocalizationsLanguages,
 	getAllLocalizationsForCommandProperty,
@@ -15,7 +15,7 @@ import {
 const { name, description } = getLocalizationForCommand(CommandsIds.PING, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(CommandsCategirysIds.DEVELOPMENT)
+@Category(CommandsCategoriesIds.DEVELOPMENT)
 class PingCommand {
 	@Slash({
 		name,

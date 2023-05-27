@@ -3,7 +3,7 @@ import { Discord, Slash, SlashOption } from "discordx";
 import { createHash } from "crypto";
 import { Category } from "@discordx/utilities";
 import {
-	CommandsCategirysIds,
+	CommandsCategoriesIds,
 	CommandsIds,
 	LocalizationsLanguages,
 	getAllLocalizationsForCommandProperty,
@@ -14,7 +14,7 @@ import {
 const { name, description } = getLocalizationForCommand(CommandsIds.TEST, LocalizationsLanguages.EN);
 
 @Discord()
-@Category(CommandsCategirysIds.DEVELOPMENT)
+@Category(CommandsCategoriesIds.DEVELOPMENT)
 class TestCommand {
 	@Slash({
 		name,

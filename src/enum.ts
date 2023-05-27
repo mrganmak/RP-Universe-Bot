@@ -8,7 +8,7 @@ export enum CommandsIds {
 	START_TICKETS,
 }
 
-export enum CommandsCategirysIds {
+export enum CommandsCategoriesIds {
 	DEVELOPMENT = 'development',
 	ONLY_IN_INITED_GUILDS = 'only_in_inited_guilds',
 	ONLY_IN_NOT_INITED_GUILDS = 'only_in_not_inited_guilds',
@@ -19,6 +19,11 @@ export enum CommandsCategirysIds {
 export enum LocalizationsLanguages {
 	EN = 'en-GB',
 	RU = 'ru'
+}
+
+export enum GuildModules {
+	INITED_GUILD = 'isGuildInited',
+	TICKETS = 'isTicketsModuleInited'
 }
 
 export enum ButtosPanelSSettingsIds { }
