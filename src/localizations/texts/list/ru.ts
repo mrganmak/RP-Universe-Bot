@@ -27,6 +27,12 @@ export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_DESCRIPTION]: 'Канал, куда необходимо отправить сообщение с тикетом',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE]: 'Дело сделано.',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_IS_ANY_CHANGE_NEEDED]: 'Хотите ли вы изменить ещё что-то?',
+	[TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_TICKET_MESSAGE_TITLE_TEXT]: 'Заголовок для сообщения-открытия тикета',
+	[TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_TICKET_MESSAGE_DESCRIPTION_TEXT]: 'Описание для сообщения-открытия тикета',
+	[TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_TICKET_MESSAGE_BUTTON_TEXT]: 'Текст для кнопки отправки тикета',
+	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_TITLE_TEXT]: 'Обработчик Тикетов',
+	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_DESCRIPTION_TEXT]: 'Нажмите на кнопку ниже, чтобы открыть тикет',
+	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_BUTTON_TEXT]: 'Открыть тикет',
 
 	[TextsLocalizationsIds.START_ABOUT_ME]: 'Приветствую тебя, дорогой друг!\nЯ — интеллектуальная машина, которая поможет тебе управлять твоим РП сервером.\nПодробную информацию ты можешь найти, перейдя по ссылке на гитхаб\nПосле прохождения первичной настройки тебе откроются новые команды, при помощи которых ты сможешь настроить меня конкретно под свой сервер.',
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'Для начала настроим язык сервера.',

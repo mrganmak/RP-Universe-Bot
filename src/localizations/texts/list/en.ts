@@ -27,6 +27,12 @@ export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CHANNEL_EMBED_DESCRIPTION]: 'The channel where you want to send a message with a ticket',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_IT_IS_DONE]: 'It is done.',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_IS_ANY_CHANGE_NEEDED]: 'Is there anything else you want to change?',
+	[TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_TICKET_MESSAGE_TITLE_TEXT]: 'Title of open ticket message',
+	[TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_TICKET_MESSAGE_DESCRIPTION_TEXT]: 'Descriptions of open ticket message',
+	[TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_TICKET_MESSAGE_BUTTON_TEXT]: 'Text for ticket open button',
+	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_TITLE_TEXT]: 'Ticket Sender',
+	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_DESCRIPTION_TEXT]: 'Click on the button below to open the ticket',
+	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_BUTTON_TEXT]: 'Open Ticket',
 
 	[TextsLocalizationsIds.START_ABOUT_ME]: 'Greetings, dear friend!\nI am an intelligent machine that will help you manage your RP server.\nYou can find detailed information by clicking on the github link.\nAfter going through the initial setup, new commands will open for you, with which you can configure me specifically for your guild.',
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'First, let\'s set up the guild language.',
