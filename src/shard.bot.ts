@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import { Util } from "./index.js";
 
 export class ShardBot {
-  static start(): void {
+	static start(): void {
 		const __filename = fileURLToPath(import.meta.url);
 		const __dirname = dirname(__filename);
 
@@ -15,6 +15,7 @@ export class ShardBot {
 		Util.debug(`${(Array.isArray(dotenvConfigOutput.parsed) ? dotenvConfigOutput.parsed.length : Object.values(dotenvConfigOutput.parsed).length)} propertys parsed`);
 
 		const manager = new ShardingManager(`${__dirname}/entry.bot.js`, {
+			totalShards: 'auto',
 			token: process.env.TOKEN,
 			respawn: true
 		});
