@@ -9,6 +9,7 @@ import {
 	getAllLocalizationsForCommandProperty,
 	getLocalizationForCommand,
 	GuildsIdentifiersBase,
+	GuildsReSendingSettingsBase,
 } from "../index.js";
 
 const { name, description } = getLocalizationForCommand(CommandsIds.TEST, LocalizationsLanguages.EN);
@@ -24,21 +25,22 @@ class TestCommand {
 		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
 	async test(
-		@SlashOption({
-			name,
-			description,
-			nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.TEST, 'name', [LocalizationsLanguages.EN]),
-			descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.TEST, 'description', [LocalizationsLanguages.EN]),
-			required: true,
-			type: ApplicationCommandOptionType.String
-		})
-		test: string,
 		interaction: CommandInteraction
 	) {
-		const base = new GuildsIdentifiersBase();
-		const keyHash = createHash('sha512').update(test).digest('hex');
-		const guildIdentifiers = await base.getByAPIKey(keyHash);
+		if (!interaction.guild) return;
+		const base = new GuildsReSendingSettingsBase();
 
-		interaction.reply({ content: (guildIdentifiers ? 'yes' : 'no'), ephemeral: true });
+		base.addSettings({
+			guildId: '1079448420630139023',
+			reSenders: {
+				'1113505695887794288': {
+					isInEmbed: true,
+					isAnonymously: true,
+					channelId: '1113505695887794288',
+					colorInHex: '#522a5d',
+					isNeedToCreateAThread: false
+				}
+			}
+		});
 	}
 }
