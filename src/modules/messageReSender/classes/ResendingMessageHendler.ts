@@ -1,5 +1,5 @@
-import { Attachment, EmbedBuilder, Message, ThreadAutoArchiveDuration, WebhookClient, resolveColor } from "discord.js";
-import { GuildReSender, GuildsReSendingSettingsBase, Util } from "../../../index.js";
+import { Attachment, EmbedBuilder, Message, WebhookClient, resolveColor } from "discord.js";
+import { GuildReSender, GuildsReSendingSettingsBase, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText } from "../../../index.js";
 
 export class ResendingMessageHendler {
 	constructor(private _message: Message, private _settings: GuildReSender) {}
@@ -8,7 +8,7 @@ export class ResendingMessageHendler {
 		setTimeout(() => (this._message.delete()), 1000);
 
 		if (this._settings.isInEmbed && this._settings.counter != null) await this._handleEmbedCounter();
-
+		const guildLanguage = await getGuildLanguage(this._message.guild?.id ?? '0');
 		
 		const webhook = (
 			this._settings.webhookSettings
@@ -52,8 +52,11 @@ export class ResendingMessageHendler {
 		if (this._settings.isNeedToCreateAThread) message.startThread({
 			name: (
 				this._settings.isInEmbed
-				? (this._settings.title?.replace('{COUNTER}', String(this._settings.counter ?? 0)) ?? 'Обсуждение')
-				: 'Обсуждение'
+				? (
+					this._settings.title?.replace('{COUNTER}', String(this._settings.counter ?? 0)) ??
+					getLocalizationForText(TextsLocalizationsIds.RE_SENDERS_THREAD_DEFAULT_TITLE, guildLanguage)
+				)
+				: getLocalizationForText(TextsLocalizationsIds.RE_SENDERS_THREAD_DEFAULT_TITLE, guildLanguage)
 			)
 		});
 
