@@ -10,6 +10,8 @@ declare global {
 			DB_GUILDS_IDENTIFIRES: string;
 			DB_GUILDS_LOCALIZATION_SETTINGS: string;
 			DB_GUILDS_MODULES: string;
+			DB_GUILDS_RE_SENDING_SETTINGS: string;
+			ICON_FOR_ANONYMOUSLY_RE_SENDING_MESSAGE: string;
 		}
 	}
 }
