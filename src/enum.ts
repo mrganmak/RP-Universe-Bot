@@ -6,6 +6,7 @@ export enum CommandsIds {
 	TICKETS_SETTINGS,
 	START,
 	START_TICKETS,
+	RE_SENDERS_SETTINGS
 }
 
 export enum CommandsCategoriesIds {
