@@ -9,10 +9,12 @@ class onInteractionCreate {
 		[interaction]: ArgsOf<Events.InteractionCreate>,
 		client: Client
 	) {
+		if (!interaction.guild) return;
+
 		if (interaction.guild) {
 			const database = new GuildsIdentifiersBase();
 			const guildIdentifier = await database.getByGuildId(interaction.guild.id);
-			
+
 			if (!guildIdentifier?.token) {
 				const token = await TokenGenerator.createTokenForGuild();
 				const guildId = interaction.guild.id;
