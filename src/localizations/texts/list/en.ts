@@ -45,4 +45,5 @@ export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_EMBED_LABLE]: 'Resender settings',
 	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_EMBED_DESCRIPTION]: 'Below you can choose what you need to change',
 	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_NO_RE_SENDERS_FOR_DELETE_ERROR]: 'Error! You don\'t have any resenders to delete',
+	[TextsLocalizationsIds.RE_SENDERS_THREAD_DEFAULT_TITLE]: 'Discussion',
 };
