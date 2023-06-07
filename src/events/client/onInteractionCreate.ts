@@ -11,17 +11,15 @@ class onInteractionCreate {
 	) {
 		if (!interaction.guild) return;
 
-		if (interaction.guild) {
-			const database = new GuildsIdentifiersBase();
-			const guildIdentifier = await database.getByGuildId(interaction.guild.id);
+		const database = new GuildsIdentifiersBase();
+		const guildIdentifier = await database.getByGuildId(interaction.guild.id);
 
-			if (!guildIdentifier?.token) {
-				const token = await TokenGenerator.createTokenForGuild();
-				const guildId = interaction.guild.id;
-		
-				await database.addIdentifier({ token, guildId });
-			}	
-		}
+		if (!guildIdentifier?.token) {
+			const token = await TokenGenerator.createTokenForGuild();
+			const guildId = interaction.guild.id;
+	
+			await database.addIdentifier({ token, guildId });
+		}	
 
 		client.executeInteraction(interaction);
 	}
