@@ -30,5 +30,9 @@ export const enCommandsLocalization: CommandsLocalization = {
 	[CommandsIds.START_TICKETS]: {
 		name: 'start_tickets',
 		description: 'Primary settings for the ticket module',
+	},
+	[CommandsIds.RE_SENDERS_SETTINGS]: {
+		name: 're_senders_settings',
+		description: 'Settings for forwarding messages in channels on behalf of a bot',
 	}
 }

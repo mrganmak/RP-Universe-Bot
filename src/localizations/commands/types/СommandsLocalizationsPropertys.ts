@@ -9,6 +9,7 @@ export type CommandsLocalizationsPropertys = {
 	[CommandsIds.TICKETS_SETTINGS]: DefaultCommandLocalizationPropertys,
 	[CommandsIds.START]: DefaultCommandLocalizationPropertys,
 	[CommandsIds.START_TICKETS]: DefaultCommandLocalizationPropertys,
+	[CommandsIds.RE_SENDERS_SETTINGS]: DefaultCommandLocalizationPropertys
 }
 
 interface DefaultCommandLocalizationPropertys {

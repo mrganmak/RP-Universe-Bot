@@ -37,4 +37,12 @@ export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.START_ABOUT_ME]: 'Приветствую тебя, дорогой друг!\nЯ — интеллектуальная машина, которая поможет тебе управлять твоим РП сервером.\nПодробную информацию ты можешь найти, перейдя по ссылке на гитхаб\nПосле прохождения первичной настройки тебе откроются новые команды, при помощи которых ты сможешь настроить меня конкретно под свой сервер.',
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'Для начала настроим язык сервера.',
 	[TextsLocalizationsIds.START_FINAL]: 'Первичные настройки завершены\nТеперь вы можете написать в чат / и посмотреть на список доступных команд',
+
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_LABEL]: 'Добавить переотправщик',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_DESCRIPTION]: 'Добавить переотправщик сообщений в канал от лица бота',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_DELETE_LABEL]: 'Удалить переотправщик',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_DELETE_DESCRIPTION]: 'Удалить уже созданный переотправщик',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_EMBED_LABLE]: 'Настройка переотправщика',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_EMBED_DESCRIPTION]: 'Ниже вы можете выбрать то, что вам нужно изменить',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_NO_RE_SENDERS_FOR_DELETE_ERROR]: 'Ошибка! У вас нет переотпращиков для удаления',
 }

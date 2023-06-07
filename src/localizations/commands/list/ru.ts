@@ -31,6 +31,9 @@ export const ruCommandsLocalization: CommandsLocalization = {
 	[CommandsIds.START_TICKETS]: {
 		name: 'старт_тикеты',
 		description: 'Первичные настройки бота для тикетов',
+	},
+	[CommandsIds.RE_SENDERS_SETTINGS]: {
+		name: 'настройки_переотправщика',
+		description: 'Настройки для переотправки сообщений в каналах от лица бота',
 	}
-
 }

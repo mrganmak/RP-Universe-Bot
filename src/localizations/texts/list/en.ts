@@ -37,4 +37,12 @@ export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.START_ABOUT_ME]: 'Greetings, dear friend!\nI am an intelligent machine that will help you manage your RP server.\nYou can find detailed information by clicking on the github link.\nAfter going through the initial setup, new commands will open for you, with which you can configure me specifically for your guild.',
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'First, let\'s set up the guild language.',
 	[TextsLocalizationsIds.START_FINAL]: 'Initial settings completed\nNow you can chat / and look at the list of available commands',
+
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_LABEL]: 'Add resender',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_DESCRIPTION]: 'Add a message resender to the channel on behalf of the bot',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_DELETE_LABEL]: 'Delete resender',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_DELETE_DESCRIPTION]: 'Delete an already created resender',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_EMBED_LABLE]: 'Resender settings',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_EMBED_DESCRIPTION]: 'Below you can choose what you need to change',
+	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_NO_RE_SENDERS_FOR_DELETE_ERROR]: 'Error! You don\'t have any resenders to delete',
 };
