@@ -2,11 +2,11 @@ import { GuildChannel, GuildMember, PermissionResolvable, PermissionsBitField } 
 
 export class PermissionsChecker {
 	public static checkOnMissingPermissions(neededPermissions: PermissionResolvable[], targetMember: GuildMember, targetChannel: GuildChannel): boolean {
-		return this._getMissingPermissions(neededPermissions, targetMember, targetChannel).length > 0;
+		return (PermissionsChecker._getMissingPermissions(neededPermissions, targetMember, targetChannel).length > 0);
 	}
 
 	public static getMissingPermissions(neededPermissions: PermissionResolvable[], targetMember: GuildMember, targetChannel: GuildChannel): ReturnType<PermissionsBitField['toArray']> {
-		return this._getMissingPermissions(neededPermissions, targetMember, targetChannel);
+		return PermissionsChecker._getMissingPermissions(neededPermissions, targetMember, targetChannel);
 	}
 
 	private static _getMissingPermissions(neededPermissions: PermissionResolvable[], targetMember: GuildMember, targetChannel: GuildChannel): ReturnType<PermissionsBitField['toArray']> {
