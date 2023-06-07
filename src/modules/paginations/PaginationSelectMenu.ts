@@ -188,7 +188,7 @@ interface PaginationSelectMenuSettings {
 	placeholder?: Partial<APIStringSelectComponent>['placeholder'];
 }
 
-type PaginationSelectMenuOptions = PaginationSelectMenuDefaultOptions | PaginationSelectMenuWithLocalizationOptions;
+export type PaginationSelectMenuOptions = PaginationSelectMenuDefaultOptions | PaginationSelectMenuWithLocalizationOptions;
 
 interface PaginationSelectMenuDefaultOptions {
 	isLocalizationRequer: false;
