@@ -25,3 +25,16 @@ export const ticketsSettingsSelectMenuComponents: SelectMenuOptionsWithLocalizat
 		value: 'change_category'
 	}
 ];
+
+export const reSendingSettingsSelectMenuComponents: SelectMenuOptionsWithLocalizations = [
+	{
+		label: TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_LABEL,
+		description: TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_DESCRIPTION,
+		value: 'add_re_sender'
+	},
+	{
+		label: TextsLocalizationsIds.RE_SENDERS_SETTINGS_DELETE_LABEL,
+		description: TextsLocalizationsIds.RE_SENDERS_SETTINGS_DELETE_DESCRIPTION,
+		value: 'delete_re_sender'
+	}
+];
