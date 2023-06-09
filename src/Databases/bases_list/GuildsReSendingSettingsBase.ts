@@ -80,6 +80,7 @@ interface GuildReSenderDefault {
 	channelId: Snowflake;
 	isNeedToCreateAThread: boolean;
 	emojisForStartReactions?: Array<EmojiResolvable>;
+	logChannelId?: string;
 	webhookSettings?: WebhookSettings;
 }
 
