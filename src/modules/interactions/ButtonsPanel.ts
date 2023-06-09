@@ -100,4 +100,3 @@ interface ButtonsPanelButtonSettingsWithValueReturn extends ButtonsPanelButtonSe
 	type: 'value';
 	value: string;
 }
-
