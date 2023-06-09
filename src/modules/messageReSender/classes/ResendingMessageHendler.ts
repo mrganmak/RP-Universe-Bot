@@ -65,6 +65,14 @@ export class ResendingMessageHendler {
 				await message.react(emoji).catch(console.error);
 			}
 		}
+
+		if (this._settings.logChannelId) {
+			const channel = await this._message.guild?.channels.fetch(this._settings.logChannelId).catch(() => {});
+
+			if (channel && channel.isTextBased()) {
+				channel.send(`${this._message.author.toString()}: \n\`\`\`${this._message.content}\`\`\``).catch(() => {});
+			}
+		}
 	}
 
 	private async _handleEmbedCounter(): Promise<void> {
