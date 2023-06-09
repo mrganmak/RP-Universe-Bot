@@ -137,7 +137,7 @@ export class TicketsCommndInteractions {
 				: null
 			)
 			: null
-		) ?? messageSettings.title;
+		) ?? messageSettings.description;
 		messageSettings.buttonText = (
 			buttonTextField.type === ComponentType.TextInput
 			? (
@@ -146,7 +146,7 @@ export class TicketsCommndInteractions {
 				: null
 			)
 			: null
-		) ?? messageSettings.title;
+		) ?? messageSettings.buttonText;
 
 		return messageSettings;
 	}
