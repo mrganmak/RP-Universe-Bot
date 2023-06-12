@@ -32,7 +32,7 @@ export class Util {
 		const membersIds: Snowflake[] = [];
 
 		for(const roleId of roleIds) {
-			const membersThatHaveRole = await this.getMembersByRole(guild, roleId);
+			const membersThatHaveRole = await Util.getMembersByRole(guild, roleId);
 			if (!membersThatHaveRole) continue;
 
 			for (const member of membersThatHaveRole) {
@@ -57,7 +57,7 @@ export class Util {
 	}
 
 	public static async hasMemberHaveRoles(member: GuildMember, roleIds: Snowflake[]): Promise<boolean> {
-		for (const roleId of roleIds) if (await this.hasMemberHaveRole(member, roleId)) return true;
+		for (const roleId of roleIds) if (await Util.hasMemberHaveRole(member, roleId)) return true;
 		return false;
 	}
 

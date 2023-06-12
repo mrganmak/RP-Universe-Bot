@@ -1,6 +1,5 @@
 import { CommandsLocalization, CommandsIds } from "../../../index.js";
 
-
 export const ruCommandsLocalization: CommandsLocalization = {
 	[CommandsIds.TEST]: {
 		name: 'тест',
