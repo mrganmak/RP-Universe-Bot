@@ -100,7 +100,7 @@ export class ResendingMessageHendler {
 			.setFooter(
 				this._settings.isAnonymously
 				? { iconURL: process.env.ICON_FOR_ANONYMOUSLY_RE_SENDING_MESSAGE, text: 'Аноним' }
-				: { iconURL: Util.getUserAvatarUrl(this._message.author), text: this._message.member?.nickname ?? 'Аноним' }
+				: { iconURL: Util.getUserAvatarUrl(this._message.author), text: this._message.member?.nickname ?? this._message.author.username ?? 'Аноним' }
 			);
 
 		if (this._settings.title) embed.setTitle(this._settings.title.replace('{COUNTER}', String(this._settings.counter ?? 0)));
