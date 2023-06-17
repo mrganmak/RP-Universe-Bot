@@ -22,31 +22,50 @@ export class ResendingMessageHendler {
 			: this._message.channel.send.bind(this._message.channel)
 		);
 
-		const contentOrEmbed = (this._settings.isInEmbed ? this._createEmbed(this._message.content) : this._message.content);
+		const contentOrEmbed = (
+			this._message.content.length <= 0
+			? null
+			: (this._settings.isInEmbed ? this._createEmbed(this._message.content) : this._message.content)
+		);
 		const replyedMessage = await this._message.fetchReference().catch(() => { });
+		const attachments = this._message.attachments;
 
 		const resolvedMessage = await sendingMessageFunction(Object.assign({ },
 			(
-				replyedMessage
-				? { reply: { messageReference: replyedMessage, failIfNotExists: false } }
-				: {}
+				webhook != null
+				? { }
+				: (
+					replyedMessage
+					? { reply: { messageReference: replyedMessage, failIfNotExists: false } }
+					: {}
+				)
 			),
 			(
-				typeof contentOrEmbed === 'string'
-				? { content: contentOrEmbed }
-				: { embeds: [contentOrEmbed] }
-			),
+				contentOrEmbed != null
+				? (
+					typeof contentOrEmbed === 'string'
+					? (
+						attachments.size > 0
+						? { content: contentOrEmbed, files: Array.from(attachments.values()) }
+						: { content: contentOrEmbed }
+					)
+					: { embeds: [contentOrEmbed] }
+				)
+				: { files: Array.from(attachments.values()) }
+			)
 		));
 
 		const message = await this._message.channel.messages.fetch(resolvedMessage.id).catch(() => { });
 		if (!message) return;
 
-		const attachments = this._message.attachments;
-		if (attachments.size > 0) {	
-			sendingMessageFunction({
-				reply: { messageReference: message, failIfNotExists: false },
-				files: Array.from(attachments.values())
-			});
+		if (attachments.size > 0 && contentOrEmbed != null && typeof contentOrEmbed === 'object') {
+			sendingMessageFunction(Object.assign({ files: Array.from(attachments.values()) }, 
+				(
+					webhook != null
+					? { }
+					: { reply: { messageReference: message, failIfNotExists: false }, }
+				)
+			));
 		}
 
 		if (this._settings.isNeedToCreateAThread) message.startThread({
