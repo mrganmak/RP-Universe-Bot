@@ -25,7 +25,7 @@ export class ResendingMessageHendler {
 		const contentOrEmbed = (
 			this._message.content.length <= 0
 			? null
-			: (this._settings.isInEmbed ? this._createEmbed(this._message.content) : this._message.content)
+			: (this._settings.isInEmbed ? await this._createEmbed(this._message.content) : this._message.content)
 		);
 		const replyedMessage = await this._message.fetchReference().catch(() => { });
 		const attachments = this._message.attachments;
@@ -107,8 +107,9 @@ export class ResendingMessageHendler {
 		}
 	}
 
-	private _createEmbed(content: string, image?: Attachment): EmbedBuilder {
+	private async _createEmbed(content: string, image?: Attachment): Promise<EmbedBuilder> {
 		if (!this._settings.isInEmbed) throw new Error('Something went wrong in ResendingMessageHendler _createEmbed');
+		const guildLanguage = await getGuildLanguage(this._message.guild?.id ?? '0');
 
 		const embed = new EmbedBuilder();
 
@@ -118,8 +119,18 @@ export class ResendingMessageHendler {
 			.setDescription(content)
 			.setFooter(
 				this._settings.isAnonymously
-				? { iconURL: process.env.ICON_FOR_ANONYMOUSLY_RE_SENDING_MESSAGE, text: 'Аноним' }
-				: { iconURL: Util.getUserAvatarUrl(this._message.author), text: this._message.member?.nickname ?? this._message.author.username ?? 'Аноним' }
+				? { 
+					iconURL: process.env.ICON_FOR_ANONYMOUSLY_RE_SENDING_MESSAGE,
+					text: getLocalizationForText(TextsLocalizationsIds.RE_SENDERS_EMBED_ANONYMOUS, guildLanguage)
+				}
+				: {
+					iconURL: Util.getUserAvatarUrl(this._message.author),
+					text: (
+						this._message.member?.nickname
+						?? this._message.author.username
+						?? getLocalizationForText(TextsLocalizationsIds.RE_SENDERS_EMBED_ANONYMOUS, guildLanguage)
+					)
+				}
 			);
 
 		if (this._settings.title) embed.setTitle(this._settings.title.replace('{COUNTER}', String(this._settings.counter ?? 0)));
