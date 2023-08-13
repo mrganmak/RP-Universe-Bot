@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { GuildsReSendingSettingsBase, ResendingMessageHendler } from "../../index.js";
+import { GuildsReSendingSettingsBase, ResendingMessageHendler } from "../../../index.js";
 
 export class MessageReSender {
 	public static async hasMassageNeedToReSend(message: Message): Promise<boolean> {

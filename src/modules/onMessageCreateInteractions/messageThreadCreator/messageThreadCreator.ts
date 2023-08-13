@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { GuildsThreadsCreatorBase, TextsLocalizationsIds, getGuildLanguage, getLocalizationForText } from "../../index.js";
+import { GuildsThreadsCreatorBase, TextsLocalizationsIds, getGuildLanguage, getLocalizationForText } from "../../../index.js";
 
 export class MessageThreadCreator {
 	public static async hasMassageNeedToCreateAThread(message: Message): Promise<boolean> {

@@ -1,5 +1,5 @@
 import { Attachment, EmbedBuilder, Message, WebhookClient, resolveColor } from "discord.js";
-import { GuildReSender, GuildsReSendingSettingsBase, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText } from "../../../index.js";
+import { GuildReSender, GuildsReSendingSettingsBase, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText } from "../../../../index.js";
 
 export class ResendingMessageHendler {
 	constructor(private _message: Message, private _settings: GuildReSender) {}
