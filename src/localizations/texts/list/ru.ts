@@ -46,4 +46,5 @@ export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_EMBED_DESCRIPTION]: 'Ниже вы можете выбрать то, что вам нужно изменить',
 	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_NO_RE_SENDERS_FOR_DELETE_ERROR]: 'Ошибка! У вас нет переотпращиков для удаления',
 	[TextsLocalizationsIds.RE_SENDERS_THREAD_DEFAULT_TITLE]: 'Обсуждение',
+	[TextsLocalizationsIds.RE_SENDERS_EMBED_ANONYMOUS]: 'Аноним',
 }

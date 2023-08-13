@@ -1,5 +1,5 @@
 import { ArgsOf, Discord, On } from "discordx";
-import { MessageReSender } from "../../index.js";
+import { MessageReSender, MessageThreadCreator } from "../../index.js";
 import { Events } from "discord.js";
 
 @Discord()
@@ -9,5 +9,6 @@ class onMessageCreate {
 		if (message.author.bot) return;
 
 		if (await MessageReSender.hasMassageNeedToReSend(message)) return MessageReSender.handleMessage(message);
+		if (await MessageThreadCreator.hasMassageNeedToCreateAThread(message)) return MessageThreadCreator.handleMessage(message);
 	}
 }
