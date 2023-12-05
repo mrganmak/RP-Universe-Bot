@@ -36,7 +36,7 @@ class ReSenedersSettingsCommand {
 		const guildLanguage = await getGuildLanguage(interaction.guild.id);
 		const base = new GuildsReSendingSettingsBase();
 
-		if (!await base.getByGuildId(interaction.guild.id)) await base.addSettings({ guildId: interaction.guild.id, reSenders: {} });
+		if (!await base.getByGuildId(interaction.guild.id)) await base.addSettings({ guildId: interaction.guild.id, reSenders: { } });
 
 		const embed = new EmbedBuilder();
 		embed
