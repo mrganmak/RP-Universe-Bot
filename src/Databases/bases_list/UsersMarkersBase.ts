@@ -13,7 +13,7 @@ export class UsersMarkersBase {
 		UsersMarkersBase._instance = this;
 
 		this._database = MongoBase.database;
-		this._collection = this._database.collection<UserMarkersBase>(process.env.DB_GUILDS_IDENTIFIRES);
+		this._collection = this._database.collection<UserMarkersBase>(process.env.DB_GUILDS_USERS_MARKERS);
 	}
 
 	public async getByUserId(userId: Snowflake): Promise<UserMarkersBase | null> {
