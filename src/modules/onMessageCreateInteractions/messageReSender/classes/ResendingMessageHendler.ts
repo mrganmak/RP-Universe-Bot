@@ -1,5 +1,5 @@
-import { Attachment, EmbedBuilder, Message, WebhookClient, resolveColor } from "discord.js";
-import { GuildReSender, GuildsReSendingSettingsBase, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText } from "../../../../index.js";
+import { EmbedBuilder, Message, WebhookClient, resolveColor } from "discord.js";
+import { GuildReSender, GuildsReSendingSettingsBase, LocalizationsLanguages, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText } from "../../../../index.js";
 
 export class ResendingMessageHendler {
 	constructor(private _message: Message, private _settings: GuildReSender) {}
@@ -10,12 +10,7 @@ export class ResendingMessageHendler {
 		if (this._settings.isInEmbed && this._settings.counter != null) await this._handleEmbedCounter();
 		const guildLanguage = await getGuildLanguage(this._message.guild?.id ?? '0');
 		
-		const webhook = (
-			this._settings.webhookSettings
-			? new WebhookClient({ id: this._settings.webhookSettings.id, token: this._settings.webhookSettings.token })
-			: null
-		);
-
+		const webhook = this._getWebhook();
 		const sendingMessageFunction = (
 			webhook
 			? webhook.send.bind(webhook)
@@ -25,7 +20,7 @@ export class ResendingMessageHendler {
 		const contentOrEmbed = (
 			this._message.content.length <= 0
 			? null
-			: (this._settings.isInEmbed ? await this._createEmbed(this._message.content) : this._message.content)
+			: (this._settings.isInEmbed ? await this._createEmbeds(this._message.content) : this._message.content)
 		);
 		const replyedMessage = await this._message.fetchReference().catch(() => { });
 		const attachments = this._message.attachments;
@@ -33,7 +28,7 @@ export class ResendingMessageHendler {
 		const resolvedMessage = await sendingMessageFunction(Object.assign({ },
 			(
 				webhook != null
-				? { }
+				? {}
 				: (
 					replyedMessage
 					? { reply: { messageReference: replyedMessage, failIfNotExists: false } }
@@ -49,7 +44,7 @@ export class ResendingMessageHendler {
 						? { content: contentOrEmbed, files: Array.from(attachments.values()) }
 						: { content: contentOrEmbed }
 					)
-					: { embeds: [contentOrEmbed] }
+					: { embeds: contentOrEmbed }
 				)
 				: { files: Array.from(attachments.values()) }
 			)
@@ -62,7 +57,7 @@ export class ResendingMessageHendler {
 			sendingMessageFunction(Object.assign({ files: Array.from(attachments.values()) }, 
 				(
 					webhook != null
-					? { }
+					? {}
 					: { reply: { messageReference: message, failIfNotExists: false }, }
 				)
 			));
@@ -94,6 +89,14 @@ export class ResendingMessageHendler {
 		}
 	}
 
+	private _getWebhook(): null | WebhookClient {
+		return (
+			this._settings.webhookSettings
+			? new WebhookClient({ id: this._settings.webhookSettings.id, token: this._settings.webhookSettings.token })
+			: null
+		);
+	}
+
 	private async _handleEmbedCounter(): Promise<void> {
 		if (!this._settings.isInEmbed) throw new Error('Something went wrong in ResendingMessageHendler _handleEmbedCounter');
 
@@ -107,36 +110,53 @@ export class ResendingMessageHendler {
 		}
 	}
 
-	private async _createEmbed(content: string, image?: Attachment): Promise<EmbedBuilder> {
-		if (!this._settings.isInEmbed) throw new Error('Something went wrong in ResendingMessageHendler _createEmbed');
+	private async _createEmbeds(content: string): Promise<EmbedBuilder[]> {
+		const messageContentsBy4096Symbols = content.match(/.{1,4096}/g);
+		if (!this._settings.isInEmbed || !messageContentsBy4096Symbols) throw new Error('Something went wrong in ResendingMessageHendler _createEmbeds');
 		const guildLanguage = await getGuildLanguage(this._message.guild?.id ?? '0');
+		const embeds: EmbedBuilder[] = []; 
+
+		for (const messageContentBy4096Symbols of messageContentsBy4096Symbols) {
+			const embed = this._createEmbed(messageContentBy4096Symbols);
+			embeds.push(embed);
+		}
+
+		return this._getNormolizedEmbeds(embeds, guildLanguage);
+	}
+
+	private _createEmbed(content: string): EmbedBuilder {
+		if (!this._settings.isInEmbed) throw new Error('Something went wrong in ResendingMessageHendler _createEmbeds');
 
 		const embed = new EmbedBuilder();
 
 		embed
 			.setTimestamp(new Date())
 			.setColor((this._settings.colorInHex == 'random' ? resolveColor('Random') : resolveColor(this._settings.colorInHex)))
-			.setDescription(content)
-			.setFooter(
-				this._settings.isAnonymously
-				? { 
-					iconURL: process.env.ICON_FOR_ANONYMOUSLY_RE_SENDING_MESSAGE,
-					text: getLocalizationForText(TextsLocalizationsIds.RE_SENDERS_EMBED_ANONYMOUS, guildLanguage)
-				}
-				: {
-					iconURL: Util.getUserAvatarUrl(this._message.author),
-					text: (
-						this._message.member?.nickname
-						?? this._message.author.username
-						?? getLocalizationForText(TextsLocalizationsIds.RE_SENDERS_EMBED_ANONYMOUS, guildLanguage)
-					)
-				}
-			);
-
-		if (this._settings.title) embed.setTitle(this._settings.title.replace('{COUNTER}', String(this._settings.counter ?? 0)));
-
-		if (image) embed.setImage(image.proxyURL);
+			.setDescription(content);
 
 		return embed;
+	}
+
+	private _getNormolizedEmbeds(embeds: EmbedBuilder[], guildLanguage: LocalizationsLanguages): EmbedBuilder[] {
+		if (!this._settings.isInEmbed) throw new Error('Something went wrong in ResendingMessageHendler _createEmbeds');
+
+		if (this._settings.title) embeds[0].setTitle(this._settings.title.replace('{COUNTER}', String(this._settings.counter ?? 0)));
+		embeds[embeds.length-1].setFooter(
+			this._settings.isAnonymously
+			? { 
+				iconURL: process.env.ICON_FOR_ANONYMOUSLY_RE_SENDING_MESSAGE,
+				text: getLocalizationForText(TextsLocalizationsIds.RE_SENDERS_EMBED_ANONYMOUS, guildLanguage)
+			}
+			: {
+				iconURL: Util.getUserAvatarUrl(this._message.author),
+				text: (
+					this._message.member?.nickname
+					?? this._message.author.username
+					?? getLocalizationForText(TextsLocalizationsIds.RE_SENDERS_EMBED_ANONYMOUS, guildLanguage)
+				)
+			}
+		);
+
+		return embeds;
 	}
 }
