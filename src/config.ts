@@ -1,5 +1,5 @@
 import { ButtonStyle } from "discord.js";
-import { UserConfirmationInteractionButtonSettings, TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations } from "./index.js";
+import { UserConfirmationInteractionButtonSettings, TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, MarkerTypes } from "./index.js";
 
 export const devMode = true;
 
@@ -38,3 +38,27 @@ export const reSendingSettingsSelectMenuComponents: SelectMenuOptionsWithLocaliz
 		value: 'delete_re_sender'
 	}
 ];
+
+export const selectMarkerTypeSelectMenuComponents: SelectMenuOptionsWithLocalizations = [
+	{
+		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_LABLE,
+		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_DESCRIPTION,
+		value: `${MarkerTypes.BLACK}`
+	},
+	{
+		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_LABLE,
+		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_DESCRIPTION,
+		value: `${MarkerTypes.RED}`
+	},
+	{
+		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_LABLE,
+		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_DESCRIPTION,
+		value: `${MarkerTypes.YELLOW}`
+	},
+	{
+		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_LABLE,
+		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_DESCRIPTION,
+		value: `${MarkerTypes.GREEN}`
+	}
+];
+
