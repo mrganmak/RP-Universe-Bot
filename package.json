@@ -17,13 +17,15 @@
     "crypto": "^1.0.1",
     "discord.js": "^14.11.0",
     "discordx": "^11.7.1",
+    "djs-button-pages": "^4.0.1",
     "dotenv": "^16.0.3",
     "generate-api-key": "^1.0.2",
-    "mongodb": "^5.1.0"
+    "mongodb": "^5.1.0",
+    "ytranslate": "^1.0.0"
   },
   "type": "module",
   "devDependencies": {
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.0.2",
     "typescript": "^5.0.0-beta"
   }
 }
