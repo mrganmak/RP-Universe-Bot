@@ -1,19 +1,19 @@
 import { ActionRowBuilder, MessageActionRowComponentBuilder, ButtonBuilder, StringSelectMenuBuilder } from "@discordjs/builders";
-import { APISelectMenuOption, APIStringSelectComponent, ButtonInteraction, ButtonStyle, CommandInteraction, ComponentType, InteractionCollector, Message, StringSelectMenuInteraction, TextChannel, User, VoiceChannel } from "discord.js";
+import { APISelectMenuOption, APIStringSelectComponent, ButtonInteraction, ButtonStyle, RepliableInteraction, ComponentType, InteractionCollector, Message, StringSelectMenuInteraction, TextChannel, User, VoiceChannel, BaseInteraction } from "discord.js";
 import { DEFAULT_SERVER_LANGUAGE, getLocalizationForText, SelectMenuOptionsWithLocalizations, ValueOf, LocalizationsLanguages } from "../../index.js";
 import EventEmitter from "events";
 
 export class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends EventEmitter {
 	public static create<T extends PaginationSelectMenuOptions>(message: Message, author: User, options: T, isNeedMessageDelete?: boolean): Promise<PaginationSelectMenu<T>>;
-	public static create<T extends PaginationSelectMenuOptions>(interaction: CommandInteraction, author: User, options: T): Promise<PaginationSelectMenu<T>>;
+	public static create<T extends PaginationSelectMenuOptions>(interaction: RepliableInteraction, author: User, options: T): Promise<PaginationSelectMenu<T>>;
 	public static create<T extends PaginationSelectMenuOptions>(channel: TextChannel | VoiceChannel, author: User, options: T): Promise<PaginationSelectMenu<T>>;
-	public static async create<T extends PaginationSelectMenuOptions>(data: TextChannel | VoiceChannel | CommandInteraction | Message, author: User, options: T, isNeedMessageDelete?: boolean): Promise<PaginationSelectMenu<T>> {
+	public static async create<T extends PaginationSelectMenuOptions>(data: TextChannel | VoiceChannel | RepliableInteraction | Message, author: User, options: T, isNeedMessageDelete?: boolean): Promise<PaginationSelectMenu<T>> {
 		const selectMenuInteractionBuilder = new SelectMenuInteractionBuilder(options);
 
 		if (data instanceof Message) {
 			const message = await data.edit({ components: selectMenuInteractionBuilder.components });
 			return new this(message, author, selectMenuInteractionBuilder, (isNeedMessageDelete ?? true));
-		} else if (data instanceof CommandInteraction) {
+		} else if (data instanceof BaseInteraction) {
 			if (data.replied || data.deferred) await data.editReply({ components: selectMenuInteractionBuilder.components });
 			else await data.reply({ components: selectMenuInteractionBuilder.components, fetchReply: true });
 			const message = await data.fetchReply();
@@ -25,16 +25,16 @@ export class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends
 		}
 	}
 
-	private _messageOrInteraction: Message | CommandInteraction;
+	private _messageOrInteraction: Message | RepliableInteraction;
 	private _selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>;
 	private _selectMenuCollector: InteractionCollector<StringSelectMenuInteraction>;
 	private _buttonCollector: InteractionCollector<ButtonInteraction>;
-	private _answer: string[] | undefined;
+	private _answer: StringSelectMenuInteraction | undefined;
 	private _isNeedMessageDelete: boolean;
 
 	private constructor(message: Message, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>, isNeedMessageDelete?: boolean)
-	private constructor(interaction: CommandInteraction, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>, isNeedMessageDelete: boolean, interactionMessage: Message)
-	private constructor(messageOrInteraction: Message | CommandInteraction, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>, isNeedMessageDelete: boolean = true, interactionMessage?: Message) {
+	private constructor(interaction: RepliableInteraction, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>, isNeedMessageDelete: boolean, interactionMessage: Message)
+	private constructor(messageOrInteraction: Message | RepliableInteraction, author: User, selectMenuInteractionBuilder: SelectMenuInteractionBuilder<T>, isNeedMessageDelete: boolean = true, interactionMessage?: Message) {
 		super();
 
 		this._isNeedMessageDelete = isNeedMessageDelete;
@@ -49,7 +49,7 @@ export class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends
 		this._buttonCollector.on('collect', (interaction) => (this._onButtonCollect(interaction)));
 	}
 
-	public getUserAnswer(): Promise<string[]> {
+	public getUserAnswer(): Promise<StringSelectMenuInteraction> {
 		return new Promise((resolve) => {
 			if (this._answer) return resolve(this._answer);
 			this.on('collect', (answer) => (resolve(answer)));
@@ -57,8 +57,6 @@ export class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends
 	}
 
 	private async _onSelectMenuCollect(interaction: StringSelectMenuInteraction): Promise<void> {
-		await interaction.deferUpdate();
-
 		if (this._messageOrInteraction instanceof Message) {
 			if (this._messageOrInteraction.deletable && this._isNeedMessageDelete) await this._messageOrInteraction.delete().catch(() => {});
 			else if (this._messageOrInteraction.editable && !this._isNeedMessageDelete) await this._messageOrInteraction.edit({ components: [] });	
@@ -66,7 +64,7 @@ export class PaginationSelectMenu<T extends PaginationSelectMenuOptions> extends
 			await this._messageOrInteraction.editReply({ components: [] });
 		}
 
-		this._answer = interaction.values;
+		this._answer = interaction;
 
 		this.emit('collect', this._answer);
 		this._buttonCollector.stop();

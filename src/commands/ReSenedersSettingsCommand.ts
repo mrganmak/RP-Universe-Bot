@@ -31,7 +31,7 @@ class ReSenedersSettingsCommand {
 	async reSenedersSettingsCommand(
 		interaction: CommandInteraction
 	) {
-		if (!interaction.guild) return;
+		if (!interaction.guild || !interaction.isRepliable()) return;
 		if (!interaction.replied && !interaction.deferred) await interaction.deferReply({ ephemeral: true });
 		const guildLanguage = await getGuildLanguage(interaction.guild.id);
 		const base = new GuildsReSendingSettingsBase();
@@ -50,14 +50,14 @@ class ReSenedersSettingsCommand {
 			choices: reSendingSettingsSelectMenuComponents,
 			language: guildLanguage
 		});
-		const answer = (await paginationSelectMenu.getUserAnswer())[0];
+		const answer = (await paginationSelectMenu.getUserAnswer()).values[0];
 
 		if (answer === 'delete_re_sender') return await this._deleteReSender(interaction);
 		else if (answer === 'add_re_sender') return await this._addReSender(interaction);
 	}
 
 	private async _deleteReSender(interaction: CommandInteraction) {
-		if (!interaction.guild) return;
+		if (!interaction.guild || !interaction.isRepliable()) return;
 		const base = new GuildsReSendingSettingsBase();
 		const guildSettings = await base.getByGuildId(interaction.guild.id);
 		if (!guildSettings) return;
@@ -87,7 +87,7 @@ class ReSenedersSettingsCommand {
 		}
 
 		const paginationSelectMenu = await PaginationSelectMenu.create(interaction, interaction.user, options);
-		const answer = (await paginationSelectMenu.getUserAnswer())[0];
+		const answer = (await paginationSelectMenu.getUserAnswer()).values[0];
 
 		guildSettings.reSenders = Object.fromEntries(Object.entries(guildSettings.reSenders).filter(([id]) => (id !== answer)));
 		await base.changeSettings(guildSettings);

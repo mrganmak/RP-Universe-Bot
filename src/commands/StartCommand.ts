@@ -30,7 +30,7 @@ class StartCommand {
 		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
 	async test(interaction: CommandInteraction) {
-		if (!interaction.guild) return;
+		if (!interaction.guild || !interaction.isRepliable()) return;
 
 		const content = [
 			...getAllLocalizationsForText(TextsLocalizationsIds.START_ABOUT_ME, { isLangugageEmojiNeeded: true }),
@@ -44,7 +44,7 @@ class StartCommand {
 			isLocalizationRequer: false,
 			choices: choices
 		});
-		const answer = (await selectMenu.getUserAnswer())[0] as unknown as LocalizationsLanguages;
+		const answer = (await selectMenu.getUserAnswer()).values[0] as unknown as LocalizationsLanguages;
 
 		const settingsBase = new GuildsLocalizationSettingsBase();
 		await settingsBase.addSettings({ guildId: interaction.guild.id, language: answer });
