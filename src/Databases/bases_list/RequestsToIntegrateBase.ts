@@ -15,8 +15,10 @@ export class RequestsToIntegrateBase {
 
 		this._database = MongoBase.database;
 		this._collection = this._database.collection<RequestToIntegrateBase>(process.env.DB_REQUESTS_TO_INTEGRATE_MODULES);
+	}
 
-		this._collection.find().forEach((settings) => {
+	public async init(): Promise<void> {
+		return this._collection.find().forEach((settings) => {
 			this._localBase.set(settings.guildId, settings);
 		});
 	}
@@ -36,8 +38,8 @@ export class RequestsToIntegrateBase {
 	}
 
 	public async addRequest(guildId: Snowflake, moduleName: GuildModules, data: RequestData): Promise<UpdateResult> {
-		const requestsById = (await this.getByGuildId(guildId) ?? { guildId, [moduleName]: data });
-		requestsById[moduleName] = data;
+		const requestsById = (await this.getByGuildId(guildId) ?? { guildId, requests: { [moduleName]: data } });
+		requestsById.requests[moduleName] = data;
 
 		this._localBase.set(guildId, requestsById);
 
@@ -51,26 +53,29 @@ export class RequestsToIntegrateBase {
 	public async removeRequest(guildId: Snowflake, moduleName: GuildModules): Promise<UpdateResult | null> {
 		const requestsById = await this.getByGuildId(guildId);
 
-		if (!requestsById || !requestsById[moduleName]) return null;
+		if (!requestsById || !requestsById.requests[moduleName]) return null;
 
-		const filteredRequestsEntries = Object.entries(requestsById).filter(([key]) => (key !== String(moduleName)));
-		const filteredRequests = Object.fromEntries(filteredRequestsEntries) as unknown as RequestToIntegrateBase;
+		const filteredRequestsEntries = Object.entries(requestsById.requests).filter(([key]) => (key !== String(moduleName)));
+		requestsById.requests = Object.fromEntries(filteredRequestsEntries);
 
-		this._localBase.set(guildId, filteredRequests);
+		this._localBase.set(guildId, requestsById);
 
 		return await this._collection.updateOne(
 			{ guildId: guildId },
-			{ $set: filteredRequests },
+			{ $set: requestsById },
 			{ upsert: true }
 		);
 	}
 }
 
-interface RequestToIntegrateBase extends Partial<Record<GuildModules, RequestData>> {
+interface RequestToIntegrateBase {
 	guildId: Snowflake;
+	requests: Partial<Record<GuildModules, RequestData>>;
 }
 
-interface RequestData {
+export interface RequestData {
+	guildId: Snowflake;
 	requestMessageId: Snowflake;
 	senderChannelId: Snowflake;
+	moduleName: GuildModules;
 }
