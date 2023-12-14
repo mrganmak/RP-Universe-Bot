@@ -15,27 +15,23 @@ import {
 } from '../index.js';
 
 
-const {
-	name,
-	description,
-	targetUserName,
-	targetUserDescription
-} = getLocalizationForCommand(CommandsIds.USER_MARKERS_INFO, DEFAULT_SERVER_LANGUAGE);
+const userMarkersInfoCommandLocalizationPropertys = getLocalizationForCommand(CommandsIds.USER_MARKERS_INFO, DEFAULT_SERVER_LANGUAGE);
+const startMarkersCommandLocalizationPropertys = getLocalizationForCommand(CommandsIds.START_MARKERS, DEFAULT_SERVER_LANGUAGE);
 
 @Discord()
-@Category(CommandsCategoriesIds.ONLY_IN_INITED_GUILDS)
-class UserMarkersinfo {
+@Category(CommandsCategoriesIds.ONLY_WITH_MARKERS_INITED)
+class UserMarkersSystem {
 	@Slash({
-		name,
-		description,
+		name: userMarkersInfoCommandLocalizationPropertys.name,
+		description: userMarkersInfoCommandLocalizationPropertys.description,
 		nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.USER_MARKERS_INFO, 'name', [LocalizationsLanguages.EN]),
 		descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.USER_MARKERS_INFO, 'description', [LocalizationsLanguages.EN]),
 		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
 	async userMarkersInfo(
 		@SlashOption({
-			name: targetUserName,
-			description: targetUserDescription,
+			name: userMarkersInfoCommandLocalizationPropertys.targetUserName,
+			description: userMarkersInfoCommandLocalizationPropertys.targetUserDescription,
 			required: true,
 			type: ApplicationCommandOptionType.User,
 			nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.USER_MARKERS_INFO, 'targetUserName', [LocalizationsLanguages.EN]),
@@ -55,5 +51,19 @@ class UserMarkersinfo {
 
 		const info = new MarkersInfoInteraction(member, interaction, markers, language);
 		info.sendInfo();
+	}
+
+	@Slash({
+		name: startMarkersCommandLocalizationPropertys.name,
+		description: startMarkersCommandLocalizationPropertys.description,
+		nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.USER_MARKERS_INFO, 'name', [LocalizationsLanguages.EN]),
+		descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.USER_MARKERS_INFO, 'description', [LocalizationsLanguages.EN]),
+		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
+	})
+	async startMarkers(
+		interaction: ChatInputCommandInteraction
+	) {
+		if (!interaction.guild) return;
+		if (!interaction.replied && !interaction.deferred) await interaction.deferReply({ ephemeral: true });
 	}
 }
