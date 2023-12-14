@@ -15,6 +15,7 @@ declare global {
 			ICON_FOR_ANONYMOUSLY_RE_SENDING_MESSAGE: string;
 			DB_GUILDS_USERS_MARKERS: string;
 			YANDEX_API_KEY: string;
+			DB_REQUESTS_TO_INTEGRATE_MODULES: string;
 		}
 	}
 }
