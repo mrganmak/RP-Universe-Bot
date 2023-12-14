@@ -58,7 +58,7 @@ export class CommandsIniter {
 		await CommandsIniter._initScopes();
 
 		CommandsIniter._changeCommands();
-	
+
 		await CommandsIniter._client.initApplicationCommands();
 	}
 
