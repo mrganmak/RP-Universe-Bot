@@ -1,6 +1,14 @@
 import { ButtonStyle } from "discord.js";
 import { UserConfirmationInteractionButtonSettings, TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, MarkerTypes } from "./index.js";
 
+export const guildsIds = {
+	hubGuildId: '1079448420630139023'
+}
+
+export const channelsIds = {
+	requestsToIntegrateBaseChannelId: '1184891567773843578'
+}
+
 export const devMode = true;
 
 export const userConfirmationInteractionButtonsSettings: UserConfirmationInteractionButtonSettings[] = [
