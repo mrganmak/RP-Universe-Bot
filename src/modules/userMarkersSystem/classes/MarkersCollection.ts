@@ -1,5 +1,5 @@
 import { Snowflake, User } from "discord.js";
-import { Marker, MarkerData, UsersMarkersBase } from "./../../../index.js";
+import { INTEGRITY_LEVEL_MAX_VALUE, INTEGRITY_LEVEL_MIN_VALUE, Marker, MarkerData, UsersMarkersBase } from "./../../../index.js";
 
 export class MarkersCollection {
 	constructor(
@@ -9,11 +9,26 @@ export class MarkersCollection {
 
 	}
 
+	public get length(): number {
+		this._filterMarkersOnNonExists();
+		return Object.values(this._markers).length;
+	}
+
 	public async addMarker(data: MarkerData): Promise<void> {
 		const base = new UsersMarkersBase();
 		await base.addMarkerForUser(this.user.id, data);
-		const marker = new Marker(this.user.id, data.guildId, data.markerType, data.reason);
+
+		const marker = new Marker(this.user.id, data.guildId, data.markerType, data.reason, data.hiddenInGuilds);
 		this._markers[data.guildId] = marker;
+	}
+
+	public async removeMarker(guildId: Snowflake): Promise<void> {
+		if (!this.hasMarkerInGuild(guildId)) return;
+		const base = new UsersMarkersBase();
+		await base.deleteMarkerFromUserByGuildId(this.user.id, guildId);
+
+		const filteredMarkers = Object.values(this._markers).filter((marker) => (marker.guildId !== guildId));
+		this._markers = Object.fromEntries(filteredMarkers.map((marker) => [guildId, marker]));
 	}
 
 	public hasMarkerInGuild(guildId: Snowflake): boolean {
@@ -26,8 +41,9 @@ export class MarkersCollection {
 		else return this._markers[guildId];
 	}
 
-	public getAllMarkers(): Markers {
+	public getAllMarkers(guildId?: Snowflake): Markers {
 		this._filterMarkersOnNonExists();
+		if (guildId) return this._getMarkersFilteredByNotHiddenInGuild(guildId);
 		return this._markers;
 	}
 
@@ -37,16 +53,34 @@ export class MarkersCollection {
 		this._markers = filteredMarkers;
 	}
 
-	public getSumOfIntegrityPoints(): number {
-		const markers = Object.values(this._markers);
+	public getUserIntegrityLevel(guildId?: Snowflake): number {
+		const sumOfIntegrityPoints = (this.getSumOfIntegrityPoints(guildId));
+		return (
+			sumOfIntegrityPoints <= INTEGRITY_LEVEL_MIN_VALUE
+			? INTEGRITY_LEVEL_MIN_VALUE
+			: (
+				sumOfIntegrityPoints >= INTEGRITY_LEVEL_MAX_VALUE
+				? INTEGRITY_LEVEL_MAX_VALUE
+				: sumOfIntegrityPoints
+			)
+		);
+	}
+
+	public getSumOfIntegrityPoints(guildId?: Snowflake): number {
+		const markers = (Object.values(guildId ? this._getMarkersFilteredByNotHiddenInGuild(guildId) : this._markers));
 		if (markers.length <= 0) return 0;
 		else return markers.reduce((sum, marker) => (sum + marker.integrityPoint), 0);
 	}
 
-	public getAverageOfIntegrityPoints(): number {
-		const markers = Object.values(this._markers);
+	public getAverageOfIntegrityPoints(guildId?: Snowflake): number {
+		const markers = (Object.values(guildId ? this._getMarkersFilteredByNotHiddenInGuild(guildId) : this._markers));
 		if (markers.length <= 0) return 0;
-		else return (this.getSumOfIntegrityPoints() / markers.length);
+		else return (this.getSumOfIntegrityPoints(guildId) / markers.length);
+	}
+
+	private _getMarkersFilteredByNotHiddenInGuild(guildId: Snowflake): Markers {
+		const filteredMarkers = Object.values(this._markers).filter((marker) => (!marker.isHiddenInGuild(guildId)));
+		return Object.fromEntries(filteredMarkers.map((marker) => ([marker.guildId, marker])));
 	}
 }
 
