@@ -12,6 +12,8 @@ import {
 	getGuildLanguage,
 	userDoNotHaveMarkersErrorHandler,
 	MarkersInfoInteraction,
+	ModulesSystem,
+	GuildModules,
 } from '../index.js';
 
 
@@ -52,12 +54,16 @@ class UserMarkersSystem {
 		const info = new MarkersInfoInteraction(member, interaction, markers, language);
 		info.sendInfo();
 	}
+}
 
+@Discord()
+@Category(CommandsCategoriesIds.ONLY_WITH_MARKERS_NOT_INITED)
+class StartUserMarkersSystem {
 	@Slash({
 		name: startMarkersCommandLocalizationPropertys.name,
 		description: startMarkersCommandLocalizationPropertys.description,
-		nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.USER_MARKERS_INFO, 'name', [LocalizationsLanguages.EN]),
-		descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.USER_MARKERS_INFO, 'description', [LocalizationsLanguages.EN]),
+		nameLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.START_MARKERS, 'name', [LocalizationsLanguages.EN]),
+		descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.START_MARKERS, 'description', [LocalizationsLanguages.EN]),
 		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
 	async startMarkers(
@@ -65,5 +71,7 @@ class UserMarkersSystem {
 	) {
 		if (!interaction.guild) return;
 		if (!interaction.replied && !interaction.deferred) await interaction.deferReply({ ephemeral: true });
+
+		ModulesSystem.requestToIntegrateModule(interaction, GuildModules.MARKERS);
 	}
 }
