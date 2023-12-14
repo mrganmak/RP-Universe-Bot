@@ -33,6 +33,20 @@ export class CommandsIniter {
 			moduleNameInBase: GuildModules.TICKETS,
 			targetToggleValue: false,
 			dependentScope: 'guildsWithInitedTickets'
+		},
+		guildsWithInitedMarkers: {
+			category: CommandsCategoriesIds.ONLY_WITH_MARKERS_INITED,
+			guilds: new Set(),
+			moduleNameInBase: GuildModules.MARKERS,
+			targetToggleValue: true,
+			dependentScope: 'guildsWithNotInitedMarkers'
+		},
+		guildsWithNotInitedMarkers: {
+			category: CommandsCategoriesIds.ONLY_WITH_MARKERS_NOT_INITED,
+			guilds: new Set(),
+			moduleNameInBase: GuildModules.MARKERS,
+			targetToggleValue: false,
+			dependentScope: 'guildsWithInitedMarkers'
 		}
 	};
 
@@ -143,7 +157,13 @@ export class CommandsIniter {
 
 type GuildsScopes = Record<GuildScopesKeys, GuildScope>;
 
-type GuildScopesKeys = 'initedGuilds' | 'notInitedGuilds' | 'guildsWithInitedTickets' | 'guildsWithNotInitedTickets';
+type GuildScopesKeys = 
+	'initedGuilds'
+	| 'notInitedGuilds'
+	| 'guildsWithInitedTickets'
+	| 'guildsWithNotInitedTickets'
+	| 'guildsWithInitedMarkers'
+	| 'guildsWithNotInitedMarkers';
 
 interface GuildScope {
 	category: CommandsCategoriesIds;
