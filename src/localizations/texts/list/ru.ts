@@ -79,4 +79,8 @@ export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.USER_MARKERS_ADD_MARKER_SUCCESS]: 'Маркер успешно добавлен!',
 	[TextsLocalizationsIds.USER_MARKERS_REMOVE_MARKER_CONFIRMATION]: 'Вы точно хотите удалить маркер?',
 	[TextsLocalizationsIds.USER_MARKERS_REMOVE_MARKER_SUCCESS]: 'Маркер успешно удалён!',
+
+	[TextsLocalizationsIds.REQUEST_SUCCESS_SENT]: 'Запрос успешно отправлен, ожидайте ответа.',
+	[TextsLocalizationsIds.REQUEST_APPROVED_TEXT]: 'Ваш запрос на добавление модуля был одобрен.',
+	[TextsLocalizationsIds.REQUEST_REJECTED_TEXT]: 'Ваш запрос на добавление модуля был отклонён.',
 }

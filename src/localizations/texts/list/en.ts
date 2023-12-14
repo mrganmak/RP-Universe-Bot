@@ -80,4 +80,7 @@ export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.USER_MARKERS_REMOVE_MARKER_CONFIRMATION]: 'Are you sure you want to delete the marker?',
 	[TextsLocalizationsIds.USER_MARKERS_REMOVE_MARKER_SUCCESS]: 'The marker has been successfully deleted!',
 
+	[TextsLocalizationsIds.REQUEST_SUCCESS_SENT]: 'The request has been successfully submitted. Please await a response.',
+	[TextsLocalizationsIds.REQUEST_APPROVED_TEXT]: 'Your request to add the module has been approved.',
+	[TextsLocalizationsIds.REQUEST_REJECTED_TEXT]: 'Your request to add the module has been rejected.',
 };
