@@ -1,4 +1,4 @@
-import { Snowflake } from "discord.js";
+import { Colors, Snowflake } from "discord.js";
 import { MongoBase } from "../MongoBase.js";
 import { Collection, DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
 
@@ -44,13 +44,14 @@ export class UsersMarkersBase {
 		if (existedMarker) {
 			existedMarker.markerType = marker.markerType;
 			existedMarker.reason = marker.reason;
+			existedMarker.hiddenInGuilds = marker.hiddenInGuilds
 		} else {
 			userMarkersData.markers.push(marker);
 		}
 
 		return await this._collection.updateOne(
 			{ userId },
-			{ $set: { userMarkersData } },
+			{ $set: userMarkersData },
 			{ upsert: false }
 		);
 	}
@@ -71,7 +72,7 @@ export class UsersMarkersBase {
 
 		return await this._collection.updateOne(
 			{ userId },
-			{ $set: { userMarkersData } },
+			{ $set: userMarkersData },
 			{ upsert: false }
 		);
 	}
@@ -86,6 +87,7 @@ export interface MarkerData {
 	guildId: Snowflake;
 	markerType: MarkerTypes
 	reason: string;
+	hiddenInGuilds: Snowflake[];
 }
 
 export enum MarkerTypes {
@@ -93,4 +95,11 @@ export enum MarkerTypes {
 	RED,
 	YELLOW,
 	GREEN = 1
+}
+
+export const markersColors = {
+	[MarkerTypes.BLACK]: Colors.NotQuiteBlack,
+	[MarkerTypes.RED]: Colors.Red,
+	[MarkerTypes.YELLOW]: Colors.Yellow,
+	[MarkerTypes.GREEN]: Colors.Green,
 }
