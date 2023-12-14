@@ -10,7 +10,8 @@ export type CommandsLocalizationsPropertys = {
 	[CommandsIds.START]: DefaultCommandLocalizationPropertys,
 	[CommandsIds.START_TICKETS]: DefaultCommandLocalizationPropertys,
 	[CommandsIds.RE_SENDERS_SETTINGS]: DefaultCommandLocalizationPropertys,
-	[CommandsIds.USER_MARKERS_INFO]: UserMarkersInfoCommandLocalizationPropertys
+	[CommandsIds.USER_MARKERS_INFO]: UserMarkersInfoCommandLocalizationPropertys,
+	[CommandsIds.START_MARKERS]: DefaultCommandLocalizationPropertys,
 }
 
 interface DefaultCommandLocalizationPropertys {

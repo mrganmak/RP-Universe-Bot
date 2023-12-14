@@ -40,5 +40,9 @@ export const enCommandsLocalization: CommandsLocalization = {
 		description: 'Shows information on user markers',
 		targetUserName: 'target_user',
 		targetUserDescription: 'User to request information from'
-	}
+	},
+	[CommandsIds.START_MARKERS]: {
+		name: 'start_markers',
+		description: 'Submit a request to integrate the marker system',
+	},
 }

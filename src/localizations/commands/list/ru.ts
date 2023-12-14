@@ -40,5 +40,9 @@ export const ruCommandsLocalization: CommandsLocalization = {
 		description: 'Показывает информацию по маркерам пользователя',
 		targetUserName: 'цель',
 		targetUserDescription: 'Пользователь, у которого нужно запросить информацию'
-	}
+	},
+	[CommandsIds.START_MARKERS]: {
+		name: 'старт_маркеры',
+		description: 'Отправить заявку на подключение системы маркеров',
+	},
 }
