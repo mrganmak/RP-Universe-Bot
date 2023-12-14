@@ -17,8 +17,8 @@ export enum CommandsCategoriesIds {
 	ONLY_IN_NOT_INITED_GUILDS = 'only_in_not_inited_guilds',
 	ONLY_WITH_TICKETS_INITED = 'only_with_tickets_inited',
 	ONLY_WITH_TICKETS_NOT_INITED = 'only_with_tickets_not_inited',
-	ONLY_WITH_MARKERS_INITED = 'only_with_tickets_inited',
-	ONLY_WITH_MARKERS_NOT_INITED = 'only_with_tickets_not_inited',
+	ONLY_WITH_MARKERS_INITED = 'only_with_markers_inited',
+	ONLY_WITH_MARKERS_NOT_INITED = 'only_with_markers_not_inited',
 }
 
 export enum LocalizationsLanguages {
