@@ -141,7 +141,10 @@ export class MarkersInfoInteraction {
 		const embeds = [];
 
 		for (const marker of Object.values(this._markers.getAllMarkers())) {
-			const guild = await this._interaction.client.shard?.broadcastEval(findGuildInClient, { context: { id: marker.guildId } }) as unknown as Guild[];
+			const guild = await this._interaction.client.shard?.broadcastEval(
+				findGuildInClient,
+				{ context: { id: marker.guildId }
+			}).catch(() => {}) as unknown as Guild[];
 			if (!guild) continue;
 			const translatedReason = await Translator.translate(marker.reason, { key: process.env.YANDEX_API_KEY, to: this._language.split('-')[0] });
 
