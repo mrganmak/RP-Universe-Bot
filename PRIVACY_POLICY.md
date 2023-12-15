@@ -23,6 +23,11 @@ The data collection in the "RP Universe" bot is aimed at the following purposes:
 ##  Data Retention
 **RP Universe** envisages long-term storage of collected data. This includes user, channel, and guild identifiers, as well as data sent by users in the process of interacting with the bot. Currently, there is no mechanism for automatic data deletion. Users can request the deletion of their data by contacting the bot's administration.
 
+##  Sharing Information with Third Parties
+As part of the 'RP Universe' bot's operations, we may transmit textual data to third-party services for translation into other languages. This is done to ensure multilingual support and enhance interactions between users from different countries. We carefully select our external partners and strive to ensure that the use of third-party services is safe and complies with our privacy standards.
+
+Please note that when transmitting data to third-party services for translation, we limit it to the minimum necessary amount of information and ensure its protection at each stage of processing.
+
 ## Security Measures
 We make every effort to protect user data. The following security measures are applied:
 - **Data Encryption:** All collected data are encrypted to prevent unauthorized access.
