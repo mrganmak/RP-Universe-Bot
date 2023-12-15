@@ -6,7 +6,9 @@ export enum CommandsIds {
 	TICKETS_SETTINGS,
 	START,
 	START_TICKETS,
-	RE_SENDERS_SETTINGS
+	RE_SENDERS_SETTINGS,
+	USER_MARKERS_INFO,
+	START_MARKERS,
 }
 
 export enum CommandsCategoriesIds {
@@ -14,7 +16,9 @@ export enum CommandsCategoriesIds {
 	ONLY_IN_INITED_GUILDS = 'only_in_inited_guilds',
 	ONLY_IN_NOT_INITED_GUILDS = 'only_in_not_inited_guilds',
 	ONLY_WITH_TICKETS_INITED = 'only_with_tickets_inited',
-	ONLY_WITH_TICKETS_NOT_INITED = 'only_with_tickets_not_inited'
+	ONLY_WITH_TICKETS_NOT_INITED = 'only_with_tickets_not_inited',
+	ONLY_WITH_MARKERS_INITED = 'only_with_markers_inited',
+	ONLY_WITH_MARKERS_NOT_INITED = 'only_with_markers_not_inited',
 }
 
 export enum LocalizationsLanguages {
@@ -24,7 +28,8 @@ export enum LocalizationsLanguages {
 
 export enum GuildModules {
 	INITED_GUILD = 'isGuildInited',
-	TICKETS = 'isTicketsModuleInited'
+	TICKETS = 'isTicketsModuleInited',
+	MARKERS = 'isMarkersModuleInited'
 }
 
 export enum ButtosPanelSSettingsIds { }

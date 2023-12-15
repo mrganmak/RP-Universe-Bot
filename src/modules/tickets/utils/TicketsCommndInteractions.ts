@@ -69,7 +69,7 @@ export class TicketsCommndInteractions {
 		const messageEmbed = new EmbedBuilder();
 		messageEmbed
 			.setTitle('Отправить сообщение')
-			.setDescription('Нажмите снизу, чтобы отправить сообщение в канал для тикетов');
+			.setDescription('Нажмите снизу, чтобы отправить сообщение в канал для тикетов'); //TODO
 		const sendMessageButton = new ButtonBuilder().setLabel('Отправить').setCustomId('selectmenu').setStyle(ButtonStyle.Success);
 		await interaction.editReply({ embeds: [messageEmbed], components: [new ActionRowBuilder<ButtonBuilder>().addComponents(sendMessageButton)] });
 

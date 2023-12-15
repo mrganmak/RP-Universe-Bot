@@ -1,4 +1,4 @@
-import { CommandInteraction, EmbedBuilder, PermissionsBitField } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
 import { Category } from "@discordx/utilities";
 import {
@@ -27,7 +27,7 @@ class GenerateAPIKeyCommand {
 		descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.GENERATE_API_KEY, 'description', [LocalizationsLanguages.EN]),
 		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
-	async generateAPIKey(interaction: CommandInteraction) {
+	async generateAPIKey(interaction: ChatInputCommandInteraction) {
 		if (!interaction.guild) return;
 		await interaction.deferReply({ ephemeral: true });
 		const base = new GuildsIdentifiersBase();

@@ -34,5 +34,15 @@ export const ruCommandsLocalization: CommandsLocalization = {
 	[CommandsIds.RE_SENDERS_SETTINGS]: {
 		name: 'настройки_переотправщика',
 		description: 'Настройки для переотправки сообщений в каналах от лица бота',
-	}
+	},
+	[CommandsIds.USER_MARKERS_INFO]: {
+		name: 'маркеры_пользователя',
+		description: 'Показывает информацию по маркерам пользователя',
+		targetUserName: 'цель',
+		targetUserDescription: 'Пользователь, у которого нужно запросить информацию'
+	},
+	[CommandsIds.START_MARKERS]: {
+		name: 'старт_маркеры',
+		description: 'Отправить заявку на подключение системы маркеров',
+	},
 }

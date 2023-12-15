@@ -9,7 +9,9 @@ export type CommandsLocalizationsPropertys = {
 	[CommandsIds.TICKETS_SETTINGS]: DefaultCommandLocalizationPropertys,
 	[CommandsIds.START]: DefaultCommandLocalizationPropertys,
 	[CommandsIds.START_TICKETS]: DefaultCommandLocalizationPropertys,
-	[CommandsIds.RE_SENDERS_SETTINGS]: DefaultCommandLocalizationPropertys
+	[CommandsIds.RE_SENDERS_SETTINGS]: DefaultCommandLocalizationPropertys,
+	[CommandsIds.USER_MARKERS_INFO]: UserMarkersInfoCommandLocalizationPropertys,
+	[CommandsIds.START_MARKERS]: DefaultCommandLocalizationPropertys,
 }
 
 interface DefaultCommandLocalizationPropertys {
@@ -20,4 +22,9 @@ interface DefaultCommandLocalizationPropertys {
 interface SetServerLanguageCommandLocalizationPropertys extends DefaultCommandLocalizationPropertys {
 	languageChooseName: VerifyName<string>
 	languageChooseDescription: NotEmpty<string>
+}
+
+interface UserMarkersInfoCommandLocalizationPropertys extends DefaultCommandLocalizationPropertys {
+	targetUserName: VerifyName<string>
+	targetUserDescription: NotEmpty<string>
 }

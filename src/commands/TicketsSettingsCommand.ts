@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ChannelSelectMenuBuilder, ChannelType, CommandInteraction, ComponentType, EmbedBuilder, PermissionsBitField } from "discord.js";
+import { ActionRowBuilder, ChannelSelectMenuBuilder, ChannelType, ChatInputCommandInteraction, ComponentType, EmbedBuilder, PermissionsBitField } from "discord.js";
 import { Discord, Slash } from "discordx";
 import { Category } from "@discordx/utilities";
 import {
@@ -27,7 +27,7 @@ class TicketsSettingsCommand {
 		descriptionLocalizations: getAllLocalizationsForCommandProperty(CommandsIds.TICKETS_SETTINGS, 'description', [LocalizationsLanguages.EN]),
 		defaultMemberPermissions: PermissionsBitField.Flags.Administrator
 	})
-	async ticketSettings(interaction: CommandInteraction) {
+	async ticketSettings(interaction: ChatInputCommandInteraction) {
 		if (!interaction.guild) return;
 		if (!interaction.replied && !interaction.deferred) await interaction.deferReply({ ephemeral: true });
 		const guildLanguage = await getGuildLanguage(interaction.guild.id);
@@ -44,7 +44,7 @@ class TicketsSettingsCommand {
 			choices: ticketsSettingsSelectMenuComponents,
 			language: guildLanguage
 		});
-		const answer = await paginationSelectMenu.getUserAnswer();
+		const answer = (await paginationSelectMenu.getUserAnswer()).values;
 		
 		if (answer[0] === 'change_category') {
 			const changeCategoryEmbed = new EmbedBuilder();

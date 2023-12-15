@@ -34,5 +34,15 @@ export const enCommandsLocalization: CommandsLocalization = {
 	[CommandsIds.RE_SENDERS_SETTINGS]: {
 		name: 're_senders_settings',
 		description: 'Settings for forwarding messages in channels on behalf of a bot',
-	}
+	},
+	[CommandsIds.USER_MARKERS_INFO]: {
+		name: 'user_markers_info',
+		description: 'Shows information on user markers',
+		targetUserName: 'target_user',
+		targetUserDescription: 'User to request information from'
+	},
+	[CommandsIds.START_MARKERS]: {
+		name: 'start_markers',
+		description: 'Submit a request to integrate the marker system',
+	},
 }

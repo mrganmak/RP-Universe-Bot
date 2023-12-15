@@ -1,10 +1,14 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, CommandInteraction, ComponentType, InteractionCollector, Message, MessageComponentCollectorOptions, StageChannel, TextBasedChannel, User } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, RepliableInteraction, ComponentType, InteractionCollector, Message, MessageComponentCollectorOptions, StageChannel, TextBasedChannel, User, BaseInteraction, EmbedBuilder } from "discord.js";
 import { TextsLocalizationsIds, getLocalizationForText, DEFAULT_SERVER_LANGUAGE, LocalizationsLanguages, userConfirmationInteractionButtonsSettings } from "../../index.js";
 
 class UserConfirmation {
-	public static async create(data: User | TextBasedChannel | Message | CommandInteraction, options: UserConfirmationInteractionOptions): Promise<UserConfirmation> {
+	public static async create(data: User | TextBasedChannel | Message | RepliableInteraction, options: UserConfirmationInteractionOptions): Promise<UserConfirmation> {
 		if (data instanceof User) {
-			const dmMessage = await data.send({ content: options.content, components: [this._createButtons(options.language ?? DEFAULT_SERVER_LANGUAGE)] }).catch(() => { });
+			const dmMessage = await data.send({
+				content: options.content,
+				embeds: options.embeds ?? [],
+				components: [this._createButtons(options.language ?? DEFAULT_SERVER_LANGUAGE)]
+			}).catch(() => { });
 			if (!dmMessage) throw new Error('Can\'t send message to this user');
 
 			return new this(dmMessage, options);
@@ -13,15 +17,27 @@ class UserConfirmation {
 			await data.edit({ components: [this._createButtons(options.language ?? DEFAULT_SERVER_LANGUAGE)] });
 
 			return new this(data, options);
-		} else if (data instanceof CommandInteraction) {
-			if (data.replied || data.deferred) await data.editReply({ content: options.content, components: [this._createButtons(options.language ?? DEFAULT_SERVER_LANGUAGE)] });
-			else await data.reply({ content: options.content, components: [this._createButtons(options.language ?? DEFAULT_SERVER_LANGUAGE)] });
+		} else if (data instanceof BaseInteraction) {
+			if (data.replied || data.deferred) await data.editReply({
+				content: options.content,
+				embeds: options.embeds ?? [],
+				components: [this._createButtons(options.language ?? DEFAULT_SERVER_LANGUAGE)]
+			});
+			else await data.reply({
+				content: options.content,
+				embeds: options.embeds ?? [], 
+				components: [this._createButtons(options.language ?? DEFAULT_SERVER_LANGUAGE)]
+			});
 			const interactionMessage = await data.fetchReply();
 
 			return new this(data, options, interactionMessage);
 		} else {
 			if (data instanceof StageChannel) throw new Error('Can\'t send message to stage channel');
-			const message = await data.send({ content: options.content, components: [this._createButtons(options.language ?? DEFAULT_SERVER_LANGUAGE)] }).catch(() => { });
+			const message = await data.send({
+				content: options.content,
+				embeds: options.embeds ?? [],
+				components: [this._createButtons(options.language ?? DEFAULT_SERVER_LANGUAGE)]
+			}).catch(() => { });
 			if (!message) throw new Error('Something went wrong');
 
 			return new this(message, options);
@@ -43,13 +59,13 @@ class UserConfirmation {
 		return row;
 	}
 
-	private _messageOrInteraction: Message | CommandInteraction;
+	private _messageOrInteraction: Message | RepliableInteraction;
 	private _answer: UserAnswers | null = null;
 	private _buttonCollector!: InteractionCollector<ButtonInteraction>;
 
 	private constructor(message: Message, options: UserConfirmationInteractionOptions)
-	private constructor(interaction: CommandInteraction, options: UserConfirmationInteractionOptions, interactionMessage: Message)
-	private constructor(messageOrInteraction: Message | CommandInteraction, options: UserConfirmationInteractionOptions, interactionMessage?: Message) {
+	private constructor(interaction: RepliableInteraction, options: UserConfirmationInteractionOptions, interactionMessage: Message)
+	private constructor(messageOrInteraction: Message | RepliableInteraction, options: UserConfirmationInteractionOptions, interactionMessage?: Message) {
 		this._messageOrInteraction = messageOrInteraction;
 
 		const message = ((messageOrInteraction instanceof Message) ? messageOrInteraction : interactionMessage) as Message;
@@ -68,6 +84,7 @@ class UserConfirmation {
 	}
 
 	private _onCollect(interaction: ButtonInteraction) {
+		interaction.deferUpdate();
 		this._answer = (interaction.customId === 'confirm' ? 'confirm' : 'deny');
 		this._buttonCollector.stop();
 
@@ -83,8 +100,8 @@ class UserConfirmation {
 export async function getUserConfirmation(user: User, options: UserConfirmationInteractionOptions): Promise<UserAnswers>;
 export async function getUserConfirmation(channel: TextBasedChannel, options: UserConfirmationInteractionOptions): Promise<UserAnswers>;
 export async function getUserConfirmation(message: Message, options: UserConfirmationInteractionOptions): Promise<UserAnswers>;
-export async function getUserConfirmation(interaction: CommandInteraction, options: UserConfirmationInteractionOptions): Promise<UserAnswers>;
-export async function getUserConfirmation(data: User | TextBasedChannel | Message | CommandInteraction, options: UserConfirmationInteractionOptions): Promise<UserAnswers> {
+export async function getUserConfirmation(interaction: RepliableInteraction, options: UserConfirmationInteractionOptions): Promise<UserAnswers>;
+export async function getUserConfirmation(data: User | TextBasedChannel | Message | RepliableInteraction, options: UserConfirmationInteractionOptions): Promise<UserAnswers> {
 	const userConfirmation = await UserConfirmation.create(data, options);
 
 	return await userConfirmation.getUserAnswer();
@@ -101,6 +118,7 @@ interface UserConfirmationInteractionOptions extends MessageComponentCollectorOp
 	content: string;
 	language?: LocalizationsLanguages;
 	labels?: UserConfirmationButtonsLabels;
+	embeds?: EmbedBuilder[];
 }
 
 export type UserConfirmationButtonsLabels = Record<UserAnswers, TextsLocalizationsIds>;
