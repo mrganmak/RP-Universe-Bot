@@ -24,9 +24,16 @@ The data collection in the "RP Universe" bot is aimed at the following purposes:
 **RP Universe** envisages long-term storage of collected data. This includes user, channel, and guild identifiers, as well as data sent by users in the process of interacting with the bot. Currently, there is no mechanism for automatic data deletion. Users can request the deletion of their data by contacting the bot's administration.
 
 ##  Sharing Information with Third Parties
+### Introduction to Unifying Systems
+
+Before using 'Sharing Information with Third Parties,' it's important to understand that by 'unifying systems,' we mean the functionality of the bot that allows information and data to be shared between different Discord servers. This includes systems for tracking user activity, exchanging tags, and other features that promote interaction and coordination between servers.
+
+### Sharing Information with Third Parties
 As part of the 'RP Universe' bot's operations, we may transmit textual data to third-party services for translation into other languages. This is done to ensure multilingual support and enhance interactions between users from different countries. We carefully select our external partners and strive to ensure that the use of third-party services is safe and complies with our privacy standards.
 
 Please note that when transmitting data to third-party services for translation, we limit it to the minimum necessary amount of information and ensure its protection at each stage of processing.
+
+Additionally, please be aware that data may be shared with third parties as part of unifying systems. However, such data transfers are only made to users of these unifying systems.
 
 ## Security Measures
 We make every effort to protect user data. The following security measures are applied:
@@ -39,6 +46,8 @@ These measures help ensure the confidentiality and integrity of user data.
 Users have certain rights regarding their personal data:
 - **Request for Data Deletion:** Users can request the deletion of their data from our system.
 - **Module Selection:** Guild owners can control what data are collected by choosing modules that connect to their guilds. This allows users more control over the type of information collected.
+
+Server administrators can request the removal of data associated with their servers from our database. When such a request is fulfilled, the data will be deleted. However, please note that the bot's operation on that server will be immediately terminated, and all the bot's functionalities will no longer be available for that server. Users who have provided data on the server should take this aspect into account when requesting information removal.
 
 Users can contact us to manage their data or to obtain more information on how their data are used.
 
