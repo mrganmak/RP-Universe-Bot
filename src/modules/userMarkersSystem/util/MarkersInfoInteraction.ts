@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder, Guild, GuildMember, RepliableInteraction } from "discord.js";
-import { LocalizationsLanguages, MarkerEmbedBuilder, MarkersCollection, TextsLocalizationsIds, UsersMarkersSystem, Util, findGuildInClient, getLocalizationForText, getUserConfirmation, userDoNotHaveMarkersErrorHandler } from "../../../index.js"
+import { EmbedsLocalizationsIds, LocalizationsLanguages, MarkerEmbedBuilder, MarkersCollection, TextsLocalizationsIds, UsersMarkersSystem, Util, findGuildInClient, getLocalizationForEmbed, getLocalizationForText, getUserConfirmation, markersColors, userDoNotHaveMarkersErrorHandler } from "../../../index.js"
 import { ButtonWrapper, PaginationSent, PaginationWrapper } from "djs-button-pages";
 import { Translator } from "ytranslate";
 import { NextPageButton, PreviousPageButton  } from '@djs-button-pages/presets';
@@ -76,30 +76,16 @@ export class MarkersInfoInteraction {
 		const normalizedIntegrityLevel = userIntegrityLevel + (3 * 1000);
 		const markersLength = Object.values(this._markers.getAllMarkers(this._interaction.guild?.id)).length;
 
-		const embed = new EmbedBuilder();
-		embed
-			.setTitle(
-				getLocalizationForText(
-					TextsLocalizationsIds.USER_MARKERS_INFO_GENERAL_INFO_EMBED_TITLE,
-					this._language
-				).replace('{USER}', this._member.nickname ?? this._member.user.username)
-			)
-			.setFields([
-				{
-					name: getLocalizationForText(TextsLocalizationsIds.USER_MARKERS_INFO_MARKERS_COUNT_FIELD, this._language),
-					value: `${markersLength}`,
-					inline: true
-				},
-				{
-					name: getLocalizationForText(TextsLocalizationsIds.USER_MARKERS_INFO_INTEGRITY_FIELD, this._language),
-					value: `${userIntegrityLevel}`,
-					inline: true
-				},
-				{
-					name: getLocalizationForText(TextsLocalizationsIds.USER_MARKERS_INFO_INTEGRITY_SCALE_FIELD, this._language),
-					value: `**-3000** ${Util.createPercentBar({ length: 32, firstValue: normalizedIntegrityLevel, secondValue: 4000 - normalizedIntegrityLevel })} **1000**`
-				}
-			]);
+		const embed = getLocalizationForEmbed({
+			embedId: EmbedsLocalizationsIds.USER_MARKERS_INFO_GENERAL_INFO_EMBED,
+			language: this._language,
+			replaceValues: {
+				user: this._member.nickname ?? this._member.user.username,
+				markersLength: String(markersLength),
+				userIntegrityLevel: String(userIntegrityLevel),
+				integrityScale: `**-3000** ${Util.createPercentBar({ length: 32, firstValue: normalizedIntegrityLevel, secondValue: 4000 - normalizedIntegrityLevel })} **1000**`
+			}
+		});
 
 		return [embed];
 	}
@@ -144,7 +130,7 @@ export class MarkersInfoInteraction {
 			const guild = await this._interaction.client.shard?.broadcastEval(
 				findGuildInClient,
 				{ context: { id: marker.guildId }
-			}).catch(() => {}) as unknown as Guild[];
+			}).catch(console.error) as unknown as Guild[];
 			if (!guild) continue;
 			const translatedReason = await Translator.translate(marker.reason, { key: process.env.YANDEX_API_KEY, to: this._language.split('-')[0] });
 
