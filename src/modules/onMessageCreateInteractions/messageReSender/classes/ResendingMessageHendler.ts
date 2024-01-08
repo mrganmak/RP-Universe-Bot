@@ -22,7 +22,7 @@ export class ResendingMessageHendler {
 			? null
 			: (this._settings.isInEmbed ? await this._createEmbeds(this._message.content) : this._message.content)
 		);
-		const replyedMessage = await this._message.fetchReference().catch(() => { });
+		const replyedMessage = await this._message.fetchReference().catch(() => {});
 		const attachments = this._message.attachments;
 
 		const resolvedMessage = await sendingMessageFunction(Object.assign({ },
@@ -50,7 +50,7 @@ export class ResendingMessageHendler {
 			)
 		));
 
-		const message = await this._message.channel.messages.fetch(resolvedMessage.id).catch(() => { });
+		const message = await this._message.channel.messages.fetch(resolvedMessage.id).catch(console.error);
 		if (!message) return;
 
 		if (attachments.size > 0 && contentOrEmbed != null && typeof contentOrEmbed === 'object') {
@@ -81,10 +81,10 @@ export class ResendingMessageHendler {
 		}
 
 		if (this._settings.logChannelId) {
-			const channel = await this._message.guild?.channels.fetch(this._settings.logChannelId).catch(() => {});
+			const channel = await this._message.guild?.channels.fetch(this._settings.logChannelId).catch(console.error);
 
 			if (channel && channel.isTextBased()) {
-				channel.send(`${this._message.author.toString()}: \n\`\`\`${this._message.content}\`\`\``).catch(() => {});
+				channel.send(`${this._message.author.toString()}: \n\`\`\`${this._message.content}\`\`\``).catch(console.error);
 			}
 		}
 	}
