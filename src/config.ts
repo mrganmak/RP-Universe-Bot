@@ -1,5 +1,5 @@
 import { ButtonStyle } from "discord.js";
-import { UserConfirmationInteractionButtonSettings, TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, MarkerTypes } from "./index.js";
+import { TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, UserConfirmationInteractionButtonsSettings } from "./index.js";
 
 export const guildsIds = {
 	hubGuildId: '1079448420630139023'
@@ -11,18 +11,18 @@ export const channelsIds = {
 
 export const devMode = true;
 
-export const userConfirmationInteractionButtonsSettings: UserConfirmationInteractionButtonSettings[] = [
-	{
-		label: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_NO,
-		style: ButtonStyle.Danger,
-		customId: 'deny'
-	},
-	{
+export const userConfirmationInteractionButtonsSettings: UserConfirmationInteractionButtonsSettings = {
+	'confirm': {
 		label: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_YES,
 		style: ButtonStyle.Success,
 		customId: 'confirm'
+	},
+	'deny': {
+		label: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_NO,
+		style: ButtonStyle.Danger,
+		customId: 'deny'
 	}
-];
+};
 
 export const buttonsPanelsSettings: ButtonsPanelsSettings = { }
 
@@ -44,29 +44,6 @@ export const reSendingSettingsSelectMenuComponents: SelectMenuOptionsWithLocaliz
 		label: TextsLocalizationsIds.RE_SENDERS_SETTINGS_DELETE_LABEL,
 		description: TextsLocalizationsIds.RE_SENDERS_SETTINGS_DELETE_DESCRIPTION,
 		value: 'delete_re_sender'
-	}
-];
-
-export const selectMarkerTypeSelectMenuComponents: SelectMenuOptionsWithLocalizations = [
-	{
-		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_LABLE,
-		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_DESCRIPTION,
-		value: `${MarkerTypes.BLACK}`
-	},
-	{
-		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_LABLE,
-		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_DESCRIPTION,
-		value: `${MarkerTypes.RED}`
-	},
-	{
-		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_LABLE,
-		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_DESCRIPTION,
-		value: `${MarkerTypes.YELLOW}`
-	},
-	{
-		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_LABLE,
-		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_DESCRIPTION,
-		value: `${MarkerTypes.GREEN}`
 	}
 ];
 
