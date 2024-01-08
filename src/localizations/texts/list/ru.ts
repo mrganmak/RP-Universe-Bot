@@ -7,6 +7,10 @@ export const ruTextsLocaliztion: TextsLocalization = {
 
 	[TextsLocalizationsIds.SET_SERVER_LANGUAGE_MESSAGE_TEXT]: 'Русский язык установлен для вашего сервера',
 
+	[TextsLocalizationsIds.BOT_MISSING_DEFAULT_PERMISSIONS_ERROR]: 'Перед тем, как использовать бота, вам нужно предоставить ему следующие права: ',
+
+	[TextsLocalizationsIds.DATA_COLLECTION_POLL_MODAL_MENU_MESSAGE_BUTTON]: 'Отправить',
+
 	[TextsLocalizationsIds.GENERATE_API_KEY_EMBED_LABLE]: 'Генератор ключей',
 	[TextsLocalizationsIds.GENERATE_API_KEY_EMBED_DESCRIPTION]: 'ВНИМАНИЕ! Сохраните ваш ключ. Ключи не хранятся в базе данных. Поэтому, если вы потеряет ключ, вам будет необходимо генерировать новый',
 	[TextsLocalizationsIds.GENERATE_API_KEY_EMBED_KEY_FIELD_NAME]: 'Ваш ключ',
@@ -15,7 +19,10 @@ export const ruTextsLocaliztion: TextsLocalization = {
 
 	[TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_YES]: 'Да',
 	[TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_NO]: 'Нет',
+	[TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_CONTINUE]: 'продолжить',
+	[TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_DECLINE]: 'отклонить',
 
+	[TextsLocalizationsIds.TICKETS_CHANNEL_NAME]: 'Тикет ',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_EMBED_LABLE]: 'Настройки системы тикетов',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_EMBED_DESCRIPTION]: 'Вы можете изменить каждую из настроек ниже\nПросто выберите нужное',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_SELECT_MENU_PLACEHOLDER]: 'Что вы хотите изменить?',
@@ -36,7 +43,9 @@ export const ruTextsLocaliztion: TextsLocalization = {
 
 	[TextsLocalizationsIds.START_ABOUT_ME]: 'Приветствую тебя, дорогой друг!\nЯ — интеллектуальная машина, которая поможет тебе управлять твоим РП сервером.\nПодробную информацию ты можешь найти, перейдя по ссылке на гитхаб\nПосле прохождения первичной настройки тебе откроются новые команды, при помощи которых ты сможешь настроить меня конкретно под свой сервер.',
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'Для начала настроим язык сервера.',
-	[TextsLocalizationsIds.START_FINAL]: 'Первичные настройки завершены\nТеперь вы можете написать в чат / и посмотреть на список доступных команд',
+	[TextsLocalizationsIds.START_PRIVACY_POLICY]: 'Нажимая "продолжить", вы подтверждаете, что ознакомились с условиями эксплуатации и политикой конфиденциальности, а так же даёте согласие на сбор и хранение в базе данных идентификатора вашего дискорд-сервера и предпочитаемого языка локализации.\nПолитика конфиденциальности: https://docs.google.com/document/d/1eVOgm8ljx7QW8MA8LFPV_xninhOXWONe8mtuzd8RFzE/edit?usp=sharing\nУсловия эксплуатации: https://docs.google.com/document/d/1VtJ3IEwLkJe4Gdp5btu8yH89GjCskMPjdGyudvZHUko/edit?usp=sharing',
+	[TextsLocalizationsIds.START_SUCCESS_FINAL]: 'Первичные настройки завершены!\nТеперь вы можете написать в чат / и посмотреть на список доступных команд.',
+	[TextsLocalizationsIds.START_DECLINE_FINAL]: 'Процесс запуска бота на этом сервере остановлен.',
 
 	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_LABEL]: 'Добавить переотправщик',
 	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_DESCRIPTION]: 'Добавить переотправщик сообщений в канал от лица бота',
@@ -49,14 +58,7 @@ export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.RE_SENDERS_EMBED_ANONYMOUS]: 'Аноним',
 
 	[TextsLocalizationsIds.USER_MARKERS_INFO_USER_DO_NOT_HAVE_MARKERS]: 'У этого пользователя пока нет маркеров!\nХотите добавить новый?',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_GENERAL_INFO_EMBED_TITLE]: 'Информация по {USER}',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_MARKERS_COUNT_FIELD]: 'Кол-во маркеров',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_INTEGRITY_FIELD]: 'Порядочность',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_INTEGRITY_SCALE_FIELD]: 'Шкала порядочности',
 	[TextsLocalizationsIds.USER_MARKERS_INFO_LIST_OF_MARKERS_BUTTON]: 'Список маркеров',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_GUILD_FIELD]: 'Сервер',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_IMPACT_ON_INTEGRITY_FIELD]: 'Влияние на порядочность',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_REASON_FIELD]: 'Причина',
 	[TextsLocalizationsIds.USER_MARKERS_INFO_GENERAL_INFO]: 'Общая информация',
 	[TextsLocalizationsIds.USER_MARKERS_INFO_ADD_MARKER_BUTTON]: 'Добавить маркер',
 	[TextsLocalizationsIds.USER_MARKERS_INFO_REMOVE_MARKER_BUTTON]: 'Удалить маркер',
@@ -72,6 +74,7 @@ export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_LABLE]: 'Зелёный',
 	[TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_DESCRIPTION]: 'Отличное поведение, содействие администрации, помощь в организации ивентов и т.д.',
 	[TextsLocalizationsIds.USER_MARKERS_SELECT_MARKER_TYPE_TEXT]: 'Выберите тип маркера, который вы хотите выдать',
+	[TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_MODAL_MESSAGE_TEXT]: 'Нажмите на кнопку "отправить", чтобы задать последние параметры маркера и отправить его в систему',
 	[TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_MODAL_TEXT]: 'Причина выдачи маркера',
 	[TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_TEXT]: 'Ваша причина',
 	[TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_PLACEHOLDER]: 'Краткое описание того, что сделал игрок, чтобы получить этот маркер.',
@@ -80,6 +83,13 @@ export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.USER_MARKERS_REMOVE_MARKER_CONFIRMATION]: 'Вы точно хотите удалить маркер?',
 	[TextsLocalizationsIds.USER_MARKERS_REMOVE_MARKER_SUCCESS]: 'Маркер успешно удалён!',
 
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_WARNING_TEXT]: 'Нажимая на кнопку "продолжить", вы подтверждаете, что ознакомились со следующим:',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_COLLECTED_DATA]: 'В случае подключения данного модуля к вашему серверу, бот будет собирать и хранить следующие данные: ',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_SHARING_DATA]: 'В случае подключения данного модуля к вашему серверу, бот будет передавать третьим лицам следующее: ',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_LINKS]: 'Для более точной информации изучите Политику конфиденциальности и Условия эксплуатации\nПолитика конфиденциальности: https://docs.google.com/document/d/1eVOgm8ljx7QW8MA8LFPV_xninhOXWONe8mtuzd8RFzE/edit?usp=sharing\nУсловия эксплуатации: https://docs.google.com/document/d/1VtJ3IEwLkJe4Gdp5btu8yH89GjCskMPjdGyudvZHUko/edit?usp=sharing',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_MARKERS_COLLECTED]: 'Идентификатор гильдии, идентификатор пользователей, которым вы выдали маркеры и собранную информация о маркерах',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_MARKERS_SHARING]: 'Название гильдии, идентификаторы пользователей, которым вы выдали маркеры и собранную информация о маркерах',
+	[TextsLocalizationsIds.REQUEST_PROCCES_CANCELED]: 'Процесс отправки запроса отменён',
 	[TextsLocalizationsIds.REQUEST_SUCCESS_SENT]: 'Запрос успешно отправлен, ожидайте ответа.',
 	[TextsLocalizationsIds.REQUEST_APPROVED_TEXT]: 'Ваш запрос на добавление модуля был одобрен.',
 	[TextsLocalizationsIds.REQUEST_REJECTED_TEXT]: 'Ваш запрос на добавление модуля был отклонён.',

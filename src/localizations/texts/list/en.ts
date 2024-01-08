@@ -7,6 +7,10 @@ export const enTextsLocaliztion: TextsLocalization = {
 
 	[TextsLocalizationsIds.SET_SERVER_LANGUAGE_MESSAGE_TEXT]: 'English is set for your server',
 
+	[TextsLocalizationsIds.BOT_MISSING_DEFAULT_PERMISSIONS_ERROR]: 'Before using the bot, you need to grant it the following permissions: ',
+
+	[TextsLocalizationsIds.DATA_COLLECTION_POLL_MODAL_MENU_MESSAGE_BUTTON]: 'Send',
+
 	[TextsLocalizationsIds.GENERATE_API_KEY_EMBED_LABLE]: 'API Generator',
 	[TextsLocalizationsIds.GENERATE_API_KEY_EMBED_DESCRIPTION]: 'ATTENTION! Save your key. The keys are not stored in database. Therefore, if you lose the key, you will need to generate a new one.',
 	[TextsLocalizationsIds.GENERATE_API_KEY_EMBED_KEY_FIELD_NAME]: 'Your key',
@@ -15,7 +19,10 @@ export const enTextsLocaliztion: TextsLocalization = {
 
 	[TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_YES]: 'Yes',
 	[TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_NO]: 'No',
+	[TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_CONTINUE]: 'continue',
+	[TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_DECLINE]: 'decline',
 
+	[TextsLocalizationsIds.TICKETS_CHANNEL_NAME]: 'Ticket ',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_EMBED_LABLE]: 'Ticket system settings',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_EMBED_DESCRIPTION]: 'You can change each of the settings below\nJust select the one you want',
 	[TextsLocalizationsIds.TICKETS_SETTINGS_SELECT_MENU_PLACEHOLDER]: 'What do you want to change?',
@@ -36,7 +43,9 @@ export const enTextsLocaliztion: TextsLocalization = {
 
 	[TextsLocalizationsIds.START_ABOUT_ME]: 'Greetings, dear friend!\nI am an intelligent machine that will help you manage your RP server.\nYou can find detailed information by clicking on the github link.\nAfter going through the initial setup, new commands will open for you, with which you can configure me specifically for your guild.',
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'First, let\'s set up the guild language.',
-	[TextsLocalizationsIds.START_FINAL]: 'Initial settings completed\nNow you can chat / and look at the list of available commands',
+	[TextsLocalizationsIds.START_PRIVACY_POLICY]: 'By clicking "continue" you confirm that you have read the terms of use and the privacy policy and also consent to the collection and storage in the database of your Discord server identifier and preferred localization language.\nPrivacy policy: https://github.com/mrganmak/RP-Universe-Bot/blob/main/PRIVACY_POLICY.md\nTerms of use: https://github.com/mrganmak/RP-Universe-Bot/blob/main/TERMS_OF_USE.md',
+	[TextsLocalizationsIds.START_SUCCESS_FINAL]: 'Initial settings completed!\nNow you can chat / and look at the list of available commands.',
+	[TextsLocalizationsIds.START_DECLINE_FINAL]: 'The process of launching the bot on this server has been stopped.',
 
 	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_LABEL]: 'Add resender',
 	[TextsLocalizationsIds.RE_SENDERS_SETTINGS_ADD_DESCRIPTION]: 'Add a message resender to the channel on behalf of the bot',
@@ -49,14 +58,7 @@ export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.RE_SENDERS_EMBED_ANONYMOUS]: 'Anonymous',
 
 	[TextsLocalizationsIds.USER_MARKERS_INFO_USER_DO_NOT_HAVE_MARKERS]: 'This user does not have any markers yet!\nWant to add a new one?',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_GENERAL_INFO_EMBED_TITLE]: '{USER} information',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_MARKERS_COUNT_FIELD]: 'Number of markers',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_INTEGRITY_FIELD]: 'Integrity',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_INTEGRITY_SCALE_FIELD]: 'Integrity scale',
 	[TextsLocalizationsIds.USER_MARKERS_INFO_LIST_OF_MARKERS_BUTTON]: 'List of markers',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_GUILD_FIELD]: 'Server',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_IMPACT_ON_INTEGRITY_FIELD]: 'Imapct on integrity',
-	[TextsLocalizationsIds.USER_MARKERS_INFO_REASON_FIELD]: 'Reason',
 	[TextsLocalizationsIds.USER_MARKERS_INFO_GENERAL_INFO]: 'General information',
 	[TextsLocalizationsIds.USER_MARKERS_INFO_ADD_MARKER_BUTTON]: 'Add marker',
 	[TextsLocalizationsIds.USER_MARKERS_INFO_REMOVE_MARKER_BUTTON]: 'Remove marker',
@@ -72,6 +74,7 @@ export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_LABLE]: 'Green',
 	[TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_DESCRIPTION]: 'Excellent behavior, assistance to the administration, help in organizing events, and so on',
 	[TextsLocalizationsIds.USER_MARKERS_SELECT_MARKER_TYPE_TEXT]: 'Choose the type of marker you want to issue',
+	[TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_MODAL_MESSAGE_TEXT]: 'Click on the "send" button to set the latest marker parameters and send it to the system',
 	[TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_MODAL_TEXT]: 'The reason for issuing the marker',
 	[TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_TEXT]: 'Your reason',
 	[TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_PLACEHOLDER]: 'A brief description of what the player did to receive this marker.',
@@ -80,6 +83,13 @@ export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.USER_MARKERS_REMOVE_MARKER_CONFIRMATION]: 'Are you sure you want to delete the marker?',
 	[TextsLocalizationsIds.USER_MARKERS_REMOVE_MARKER_SUCCESS]: 'The marker has been successfully deleted!',
 
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_WARNING_TEXT]: 'By clicking the "continue" button, you confirm that you have read and understood the following:',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_COLLECTED_DATA]: 'In the case of connecting this module to your server, the bot will collect and store the following data: ',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_SHARING_DATA]: 'In the case of connecting this module to your server, the bot will transmit the following to third parties: ',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_LINKS]: 'For more detailed information, please review the Privacy Policy and Terms of Use.\nPrivacy policy: https://github.com/mrganmak/RP-Universe-Bot/blob/main/PRIVACY_POLICY.md\nTerms of use: https://github.com/mrganmak/RP-Universe-Bot/blob/main/TERMS_OF_USE.md',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_MARKERS_COLLECTED]: 'Guild id, User IDs to whom you have issued markers and collected markers info',
+	[TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_MARKERS_SHARING]: 'Guild name, User IDs to whom you have issued markers and collected markers info',
+	[TextsLocalizationsIds.REQUEST_PROCCES_CANCELED]: 'The request process has been canceled',
 	[TextsLocalizationsIds.REQUEST_SUCCESS_SENT]: 'The request has been successfully submitted. Please await a response.',
 	[TextsLocalizationsIds.REQUEST_APPROVED_TEXT]: 'Your request to add the module has been approved.',
 	[TextsLocalizationsIds.REQUEST_REJECTED_TEXT]: 'Your request to add the module has been rejected.',
