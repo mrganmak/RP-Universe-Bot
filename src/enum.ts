@@ -33,3 +33,19 @@ export enum GuildModules {
 }
 
 export enum ButtosPanelSSettingsIds { }
+
+export enum QuestionTypes {
+	SELECT_MENU,
+	MODAL_MENU,
+	BUTTONS
+}
+
+export enum ButtonsQuestionTypes {
+	DEFAULT,
+	CONFIRMATION
+}
+
+export enum DataCollectionPollQuestionContentTypes {
+	EMBED,
+	MESSAGE,
+}
