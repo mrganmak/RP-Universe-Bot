@@ -48,7 +48,7 @@ export class Util {
 
 	public static async getMembersByRole(guild: Guild, roleId: Snowflake): Promise<GuildMember[] | undefined> {
 		await guild.members.fetch();
-		const role = await guild.roles.fetch(roleId).catch(() => {});
+		const role = await guild.roles.fetch(roleId).catch(console.error);
 		if (!role) return;
 
 		const members = Array.from(role.members.values()).filter((member) => (!member.user.bot));
