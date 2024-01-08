@@ -37,9 +37,10 @@ class StartCommand {
 		await this._sendWelcomeText(interaction);
 
 		const language = await this._getLocalizationLanguageFromUser(interaction);
-		await this._addLanguageToBase(interaction, language);
+		if (!language) return;
 
-		await this._handleFinal(interaction, language);
+		const privacyPolicyConfirmation = await this._getUserPrivacyPolicyConfirmation(interaction, language);
+		await this._handleConfirmationAnswer(interaction, language, privacyPolicyConfirmation);
 	}
 
 	private async _sendWelcomeText(interaction: CommandInteraction): Promise<void> {
@@ -51,14 +52,45 @@ class StartCommand {
 		await interaction.reply({ content, ephemeral: true });
 	}
 
-	private async _getLocalizationLanguageFromUser(interaction: ChatInputCommandInteraction): Promise<LocalizationsLanguages> {
+	private async _getLocalizationLanguageFromUser(interaction: ChatInputCommandInteraction): Promise<LocalizationsLanguages | null> {
 		const choices: APISelectMenuOption[] = Object.entries(LocalizationsLanguages).map(([label, value]) => ({ label, value }));
-		const selectMenu = await PaginationSelectMenu.create(interaction, interaction.user, {
+		const paginationSelectMenu = await PaginationSelectMenu.create(interaction, interaction.user, {
 			isLocalizationRequer: false,
 			choices: choices
 		});
+		const answerInteraction = (await paginationSelectMenu.getUserAnswer());
+		if (!answerInteraction) return null; //TODO
+
+		await answerInteraction.deferUpdate();
+		const answer = answerInteraction.values[0];
 		
-		return (await selectMenu.getUserAnswer()).values[0] as unknown as LocalizationsLanguages;
+		return answer as unknown as LocalizationsLanguages;
+	}
+
+	private async _getUserPrivacyPolicyConfirmation(interaction: ChatInputCommandInteraction, language: LocalizationsLanguages): Promise<UserConfirmationsAnswers> {
+		return await getUserConfirmation(interaction, {
+			content: getLocalizationForText(TextsLocalizationsIds.START_PRIVACY_POLICY, language),
+			labels: {
+				confirm: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_CONTINUE,
+				deny: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_DECLINE
+			},
+			language
+		});
+	}
+
+	private async _handleConfirmationAnswer(interaction: ChatInputCommandInteraction, language: LocalizationsLanguages, answer: UserConfirmationsAnswers): Promise<void> {
+		if (answer === 'confirm') return await this._handleSuccessConfirmation(interaction, language);
+		else return await this._handleDeclineConfirmation(interaction, language);
+	}
+
+	private async _handleSuccessConfirmation(interaction: ChatInputCommandInteraction, language: LocalizationsLanguages): Promise<void> {
+		if (!interaction.guild) return;
+
+		await this._addLanguageToBase(interaction, language);
+		await this._addModuleToBase(interaction);
+		await CommandsIniter.changeCommandsForGuild(interaction.guild.id);
+
+		await interaction.editReply({ content: getLocalizationForText(TextsLocalizationsIds.START_SUCCESS_FINAL, language) });
 	}
 
 	private async _addLanguageToBase(interaction: ChatInputCommandInteraction, language: LocalizationsLanguages): Promise<void> {
@@ -68,13 +100,16 @@ class StartCommand {
 		await settingsBase.addSettings({ guildId: interaction.guild.id, language });
 	}
 
-	private async _handleFinal(interaction: ChatInputCommandInteraction, language: LocalizationsLanguages): Promise<void> {
+	private async _addModuleToBase(interaction: ChatInputCommandInteraction): Promise<void> {
 		if (!interaction.guild) return;
 
 		const modulesBase = new GuildsModulesBase();
 		await modulesBase.changeModuleState(interaction.guild.id, GuildModules.INITED_GUILD, true);
-		CommandsIniter.changeCommandsForGuild(interaction.guild.id);
+	}
 
-		interaction.editReply({ content: getLocalizationForText(TextsLocalizationsIds.START_FINAL, language) });
+	private async _handleDeclineConfirmation(interaction: ChatInputCommandInteraction, language: LocalizationsLanguages): Promise<void> {
+		if (!interaction.guild) return;
+
+		interaction.editReply({ content: getLocalizationForText(TextsLocalizationsIds.START_DECLINE_FINAL, language) });
 	}
 }
