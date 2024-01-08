@@ -1,5 +1,5 @@
-import { ButtonStyle } from "discord.js";
-import { TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, UserConfirmationInteractionButtonsSettings } from "./index.js";
+import { ButtonStyle, ComponentType, TextInputStyle } from "discord.js";
+import { TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, MarkerTypes, UserConfirmationInteractionButtonsSettings, DataCollectionPollQuestions, QuestionTypes, DataCollectionPollQuestionContentTypes } from "./index.js";
 
 export const guildsIds = {
 	hubGuildId: '1079448420630139023'
@@ -47,3 +47,48 @@ export const reSendingSettingsSelectMenuComponents: SelectMenuOptionsWithLocaliz
 	}
 ];
 
+export const markerCreatePollQuestions: DataCollectionPollQuestions = [
+	{
+		contentType: DataCollectionPollQuestionContentTypes.MESSAGE,
+		content: TextsLocalizationsIds.USER_MARKERS_SELECT_MARKER_TYPE_TEXT,
+		type: QuestionTypes.SELECT_MENU,
+		selectMenuType: ComponentType.StringSelect,
+		answers: [
+			{
+				label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_LABLE,
+				description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_DESCRIPTION,
+				value: `${MarkerTypes.BLACK}`
+			},
+			{
+				label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_LABLE,
+				description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_DESCRIPTION,
+				value: `${MarkerTypes.RED}`
+			},
+			{
+				label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_LABLE,
+				description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_DESCRIPTION,
+				value: `${MarkerTypes.YELLOW}`
+			},
+			{
+				label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_LABLE,
+				description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_DESCRIPTION,
+				value: `${MarkerTypes.GREEN}`
+			}
+		],
+	},
+	{
+		contentType: DataCollectionPollQuestionContentTypes.MESSAGE,
+		content: TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_MODAL_MESSAGE_TEXT,
+		type: QuestionTypes.MODAL_MENU,
+		title: TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_MODAL_TEXT,
+		inputs: [
+			{
+				custom_id: 'reason',
+				label: TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_TEXT,
+				placeholder: TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_PLACEHOLDER,
+				required: true,
+				style: TextInputStyle.Paragraph,
+			}
+		],
+	}
+];
