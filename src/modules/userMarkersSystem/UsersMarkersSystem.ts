@@ -1,5 +1,5 @@
-import { ActionRowBuilder, ComponentType, Interaction, ModalBuilder, TextInputBuilder, TextInputStyle, User } from "discord.js";
-import { INTEGRITY_POINTS_MULTIPLE_VALUE, Marker, MarkerData, MarkerEmbedBuilder, MarkerTypes, MarkersCollection, PaginationSelectMenu, TextsLocalizationsIds, UsersMarkersBase, getGuildLanguage, getLocalizationForText, getUserConfirmation, selectMarkerTypeSelectMenuComponents } from "../../index.js";
+import { ComponentType, GuildMember, Interaction, RepliableInteraction, User } from "discord.js";
+import { CollectedQuestionAnswer, DataCollectionPoll, INTEGRITY_POINTS_MULTIPLE_VALUE, Marker, MarkerData, MarkerEmbedBuilder, MarkerTypes, MarkersCollection, QuestionTypes, TextsLocalizationsIds, UsersMarkersBase, getGuildLanguage, getLocalizationForText, getUserConfirmation, markerCreatePollQuestions } from "../../index.js";
 
 export class UsersMarkersSystem {
 	public static async hasUserHaveMarkers(user: User): Promise<boolean> {
@@ -45,54 +45,32 @@ export class UsersMarkersSystem {
 		});
 	}
 
-	public static async addNewMarkerInteraction(user: User, interaction: Interaction): Promise<void> {
+	public static async addNewMarkerInteraction(user: User, interaction: RepliableInteraction): Promise<void> {
 		if (!interaction.isRepliable()) throw new Error('Interaction is nor repliable');
-		if (!interaction.guild) throw new Error('Interaction is not in guild');
+		if (!interaction.guild || !interaction.member) throw new Error('Interaction is not in guild');
 		if (!interaction.replied || !interaction.deferred) interaction.deferReply({ ephemeral: true });
 
 		const guildLanguage = await getGuildLanguage(interaction.guild?.id);
-		
-		await interaction.editReply({
-			content: getLocalizationForText(
-				TextsLocalizationsIds.USER_MARKERS_SELECT_MARKER_TYPE_TEXT,
-				guildLanguage,
-			),
-			embeds: []
+		const member = (
+			interaction.member instanceof GuildMember
+			? interaction.member
+			: await interaction.guild.members.fetch(interaction.member.user.id).catch(() => {})
+		);
+		if (!member) throw new Error('Cant find member');
+
+		const dataCollectionPoll = new DataCollectionPoll({
+			language: guildLanguage,
+			interaction: interaction,
+			respondent: member,
+			questions: markerCreatePollQuestions
 		});
-		
-		const paginationSelectMenu = await PaginationSelectMenu.create(interaction, interaction.user, {
-			isLocalizationRequer: true,
-			choices: selectMarkerTypeSelectMenuComponents,
-			language: guildLanguage
-		});
-		const answerInteracion = (await paginationSelectMenu.getUserAnswer()) ;
-		const markerType = Number(answerInteracion.values[0]) as unknown as MarkerTypes;
+		const pollData = await dataCollectionPoll.collectPollData();
+		if (!pollData) return;
 
-		const modal = new ModalBuilder();
-		modal
-		.setCustomId('modal')
-		.setComponents(
-			new ActionRowBuilder<TextInputBuilder>().addComponents(
-				new TextInputBuilder()
-					.setLabel(getLocalizationForText(TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_TEXT, guildLanguage))
-					.setPlaceholder(getLocalizationForText(TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_PLACEHOLDER, guildLanguage))
-					.setCustomId('reason')
-					.setRequired(true)
-					.setStyle(TextInputStyle.Paragraph)
-			)
-		)
-		.setTitle(getLocalizationForText(TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_MODAL_TEXT, guildLanguage));
+		const markerType = UsersMarkersSystem._getMarkerTypeFromPollData(pollData[0]);
+		const reason = UsersMarkersSystem._getReasonFromPollData(pollData[1]);
+		if (!markerType || !reason) return;
 
-		await answerInteracion.showModal(modal);
-		const modalSubmit = await answerInteracion.awaitModalSubmit({ time: 60*60*1000 }).catch((error) => { });
-
-		if (!modalSubmit) return;
-		await modalSubmit.deferUpdate();
-
-		const userAnswer = modalSubmit.fields.getField('reason');
-		if (userAnswer.type !== ComponentType.TextInput) return;
-		const reason = userAnswer.value;
-		
 		const userConfirmationAnswer = await getUserConfirmation(
 			interaction,
 			{
@@ -106,7 +84,7 @@ export class UsersMarkersSystem {
 					interaction.guild.name
 				)]
 			}
-		)
+		);
 
 		if (userConfirmationAnswer === 'confirm') {
 			await this.addMarkerToUser(user, {
@@ -122,6 +100,18 @@ export class UsersMarkersSystem {
 		} else {
 			return await this.addNewMarkerInteraction(user, interaction);
 		}
+	}
+
+	private static _getMarkerTypeFromPollData(pollData: CollectedQuestionAnswer): MarkerTypes | undefined {
+		if (pollData.type !== QuestionTypes.SELECT_MENU || pollData.seletMenuType !== ComponentType.StringSelect) return undefined;
+
+		return Number(pollData.answer[0].value) as unknown as MarkerTypes;
+	}
+
+	private static _getReasonFromPollData(pollData: CollectedQuestionAnswer): string | undefined {
+		if (pollData.type !== QuestionTypes.MODAL_MENU) return undefined;
+
+		return pollData.answer['reason']?.value ?? undefined;
 	}
 }
 
