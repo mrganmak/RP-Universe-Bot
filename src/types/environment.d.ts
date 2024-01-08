@@ -16,6 +16,7 @@ declare global {
 			DB_GUILDS_USERS_MARKERS: string;
 			YANDEX_API_KEY: string;
 			DB_REQUESTS_TO_INTEGRATE_MODULES: string;
+			DB_GUILDS_TICKETS: string;
 		}
 	}
 }
