@@ -28,12 +28,12 @@ export class GuildsTicketsBase {
 		return ticket[0] ?? null;
 	}
 
-	public async addGuild(guildMarkers: GuildTicketsBase): Promise<InsertOneResult<GuildTicketsBase>> {
-		const ticketsById = await this.getTicketsByGuildId(guildMarkers.guildId);
+	public async addGuild(guildTickets: GuildTicketsBase): Promise<InsertOneResult<GuildTicketsBase>> {
+		const ticketsById = await this.getTicketsByGuildId(guildTickets.guildId);
 
 		if (ticketsById) throw new Error('I cant add ticket with same property');
 
-		return await this._collection.insertOne(guildMarkers);
+		return await this._collection.insertOne(guildTickets);
 	}
 
 	public async deleteTicketsByGuildId(guildId: Snowflake): Promise<DeleteResult> {
@@ -54,9 +54,8 @@ export class GuildsTicketsBase {
 			existedTicket.authorId = ticket.authorId;
 		} else {
 			guildTickets.tickets.push(ticket);
+			guildTickets.counter++;
 		}
-
-		guildTickets.counter++;
 
 		return await this._collection.updateOne(
 			{ guildId },
@@ -78,7 +77,6 @@ export class GuildsTicketsBase {
 		if (!guildTickets) return null;
 
 		guildTickets.tickets = guildTickets.tickets.filter((ticket) => (ticket.ticketChannelId !== ticketChannelId));
-		guildTickets.counter--;
 		
 		return await this._collection.updateOne(
 			{ guildId },
@@ -88,17 +86,30 @@ export class GuildsTicketsBase {
 	}
 }
 
-interface GuildTicketsBase {
+export interface GuildTicketsBase {
 	guildId: Snowflake;
-	ticketsCategoryId: Snowflake;
 	counter: number;
-	adminsRolesId: Snowflake[];
+	options: GuildTicketsOptions;
 	tickets: TicketData[];
+}
+
+export interface GuildTicketsOptions {
+	categories: TicketCategory[];
+	ticketsCategoryId: Snowflake;
+	adminsRolesIds: Snowflake[];
+}
+
+export interface TicketCategory {
+	name: string;
+	description?: string;
+	channelName?: string;
+	ticketStartText?: string;
 }
 
 export interface TicketData {
 	authorId: Snowflake;
 	ticketChannelId: Snowflake;
+	buttonsPanelCategory: string;
 	ticketVoiceChannelId?: Snowflake
 }
 
