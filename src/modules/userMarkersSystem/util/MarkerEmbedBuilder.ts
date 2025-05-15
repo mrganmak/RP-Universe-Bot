@@ -1,5 +1,5 @@
 import { EmbedBuilder } from "discord.js"
-import { TextsLocalizationsIds, getLocalizationForText, MarkerTypes, LocalizationsLanguages, markersColors, getLocalizationForEmbed, EmbedsLocalizationsIds } from "../../../index.js";
+import { MarkerTypes, LocalizationsLanguages, markersColors, getLocalizationForEmbed, EmbedsLocalizationsIds } from "../../../index.js";
 
 export class MarkerEmbedBuilder extends EmbedBuilder {
 	constructor (

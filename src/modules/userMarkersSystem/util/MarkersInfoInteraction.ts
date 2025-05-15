@@ -132,8 +132,9 @@ export class MarkersInfoInteraction {
 				{ context: { id: marker.guildId }
 			}).catch(console.error) as unknown as Guild[];
 			if (!guild) continue;
-			const translatedReason = await Translator.translate(marker.reason, { key: process.env.YANDEX_API_KEY, to: this._language.split('-')[0] });
 
+			const translatedReason = await this._getTranslitionForReason(marker.reason);
+			
 			embeds.push(
 				new MarkerEmbedBuilder(
 					this._language,
@@ -146,6 +147,15 @@ export class MarkersInfoInteraction {
 		}
 
 		return embeds;
+	}
+
+	private async _getTranslitionForReason(reason: string): Promise<string> {
+		const translatedReason = await Translator.translate(
+			reason,
+			{ key: process.env.YANDEX_API_KEY, to: this._language.split('-')[0] }
+		).catch(() => { });
+
+		return (translatedReason ?? reason);
 	}
 
 	private _getButtonsForPagination(): ButtonWrapper[] {
