@@ -1,7 +1,7 @@
 import { ChannelType, GuildChannelCreateOptions, GuildMember, OverwriteResolvable, PermissionFlagsBits, PermissionOverwriteOptions, PermissionResolvable, Snowflake, TextChannel, VoiceChannel } from "discord.js";
 
 export class PrivateChannel<T extends PrivateChannelTypes> {
-	public static async create<T extends PrivateChannelTypes>(type: T, name: string, owner: GuildMember, adminsRolesId: Snowflake[], parent?: Snowflake): Promise<PrivateChannel<PrivateChannelTypes>> {
+	public static async create<T extends PrivateChannelTypes>(type: T, name: string, owner: GuildMember, adminsRolesId: Snowflake[], parent?: Snowflake): Promise<PrivateChannel<T>> {
 		const channel = await owner.guild.channels.create({
 			name,
 			type: privateChannelsCreateTypes[type],
@@ -45,6 +45,14 @@ export class PrivateChannel<T extends PrivateChannelTypes> {
 
 	public get id(): Snowflake {
 		return this.channel.id;
+	}
+
+	public get allowedRoles(): Snowflake[] {
+		return this._adminsRolesId;
+	}
+
+	public get categoryId(): Snowflake | undefined {
+		return this.channel.parentId ?? undefined;
 	}
 
 	public async close(): Promise<void> {
