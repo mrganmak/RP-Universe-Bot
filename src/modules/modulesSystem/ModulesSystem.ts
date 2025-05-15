@@ -24,23 +24,23 @@ export class ModulesSystem {
 
 		return await getUserConfirmation(interaction, {
 			content: 
-			getLocalizationForText(TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_WARNING_TEXT, guildLanguage)
-			+'\n'
-			+ (
-				modulePrivacyPolicyData.collectedData
-				? (
-					getLocalizationForText(TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_COLLECTED_DATA, guildLanguage)
-					+ getLocalizationForText(modulePrivacyPolicyData.collectedData, guildLanguage)
-					+ '\n'
-				) : ''
-			) + (
-				modulePrivacyPolicyData.sharingData
-				? (
-					getLocalizationForText(TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_SHARING_DATA, guildLanguage)
-					+ getLocalizationForText(modulePrivacyPolicyData.sharingData, guildLanguage)
-					+ '\n'
-				) : ''
-			) + getLocalizationForText(TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_LINKS, guildLanguage),
+				getLocalizationForText(TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_WARNING_TEXT, guildLanguage)
+				+'\n'
+				+ (
+					modulePrivacyPolicyData.collectedData
+					? (
+						getLocalizationForText(TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_COLLECTED_DATA, guildLanguage)
+						+ getLocalizationForText(modulePrivacyPolicyData.collectedData, guildLanguage)
+						+ '\n'
+					) : ''
+				) + (
+					modulePrivacyPolicyData.sharingData
+					? (
+						getLocalizationForText(TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_SHARING_DATA, guildLanguage)
+						+ getLocalizationForText(modulePrivacyPolicyData.sharingData, guildLanguage)
+						+ '\n'
+					) : ''
+				) + getLocalizationForText(TextsLocalizationsIds.REQUEST_PRIVACY_POLICY_LINKS, guildLanguage),
 			labels: {
 				confirm: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_CONTINUE,
 				deny: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_DECLINE
