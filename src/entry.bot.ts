@@ -4,6 +4,7 @@ import { Client } from "discordx";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { CommandsIniter, MongoBase } from "./index.js";
+import { config } from "dotenv";
 
 export class Bot {
 	private static _client = new Client({
@@ -21,7 +22,8 @@ export class Bot {
 
 		const __filename = fileURLToPath(import.meta.url);
 		const __dirname = dirname(__filename);
-	
+		config({ path: `${__dirname}/../.env`});
+		
 		await MongoBase.initBase();
 		await importx(`${__dirname}/{events,commands}/**/**.js`);
 		await this._client.login(process.env.TOKEN);
