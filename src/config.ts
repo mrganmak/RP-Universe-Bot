@@ -1,5 +1,5 @@
 import { ButtonStyle, ComponentType, TextInputStyle } from "discord.js";
-import { TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, MarkerTypes, UserConfirmationInteractionButtonsSettings, DataCollectionPollQuestions, QuestionTypes, DataCollectionPollQuestionContentTypes } from "./index.js";
+import { TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, MarkerTypes, UserConfirmationInteractionButtonsSettings, DataCollectionPollQuestions, QuestionTypes, DataCollectionPollQuestionContentTypes, ButtosPanelsSettingsIds } from "./index.js";
 
 export const guildsIds = {
 	hubGuildId: '1079448420630139023'
@@ -24,7 +24,41 @@ export const userConfirmationInteractionButtonsSettings: UserConfirmationInterac
 	}
 };
 
-export const buttonsPanelsSettings: ButtonsPanelsSettings = { }
+export const buttonsPanelsSettings: ButtonsPanelsSettings = {
+	[ButtosPanelsSettingsIds.TICKET]: {
+		buttons: {
+			begin: {
+				closeTicket: {
+					type: 'valueAndCategory',
+					style: ButtonStyle.Danger,
+					label: TextsLocalizationsIds.TICKET_CLOSE,
+					category: 'closed',
+					value: 'close',
+					emoji: '🔒'
+				}
+			},
+			closed: {
+				openTicket: {
+					type: 'valueAndCategory',
+					style: ButtonStyle.Success,
+					label: TextsLocalizationsIds.TICKET_OPEN,
+					category: 'begin',
+					value: 'open',
+					emoji: '🔓'
+				},
+				removeTicket: {
+					type: 'value',
+					style: ButtonStyle.Danger,
+					label: TextsLocalizationsIds.TICKET_REMOVE,
+					value: 'remove',
+					isClose: true,
+					emoji: '🗑️'
+				},
+			}
+		},
+		isWithCollector: false
+	}
+}
 
 export const ticketsSettingsSelectMenuComponents: SelectMenuOptionsWithLocalizations = [
 	{

@@ -32,7 +32,9 @@ export enum GuildModules {
 	MARKERS = 'isMarkersModuleInited'
 }
 
-export enum ButtosPanelSSettingsIds { }
+export enum ButtosPanelsSettingsIds {
+	TICKET
+}
 
 export enum QuestionTypes {
 	SELECT_MENU,
