@@ -57,7 +57,10 @@ export class Util {
 	}
 
 	public static async hasMemberHaveRoles(member: GuildMember, roleIds: Snowflake[]): Promise<boolean> {
-		for (const roleId of roleIds) if (await Util.hasMemberHaveRole(member, roleId)) return true;
+		await member.fetch();
+
+		for (const roleId of roleIds) if (member.roles.cache.has(roleId)) return true;
+
 		return false;
 	}
 
@@ -94,6 +97,13 @@ export class Util {
 		}
 
 		return array;
+	}
+
+	public static createAnyIdRegExp(ids: string[]): RegExp {
+		const escapeRegExp = (text: string) => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+		const pattern = ids.map(escapeRegExp).join('|');
+
+		return new RegExp(`^(?:${pattern})$`);
 	}
 }
 
