@@ -7,6 +7,8 @@ export const enTextsLocaliztion: TextsLocalization = {
 
 	[TextsLocalizationsIds.SET_SERVER_LANGUAGE_MESSAGE_TEXT]: 'English is set for your server',
 
+	[TextsLocalizationsIds.DONT_HAVE_ROLE_TO_USE_THIS]: 'You do not have a role to use this',
+
 	[TextsLocalizationsIds.BOT_MISSING_DEFAULT_PERMISSIONS_ERROR]: 'Before using the bot, you need to grant it the following permissions: ',
 
 	[TextsLocalizationsIds.DATA_COLLECTION_POLL_MODAL_MENU_MESSAGE_BUTTON]: 'Send',
@@ -40,6 +42,11 @@ export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_TITLE_TEXT]: 'Ticket Sender',
 	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_DESCRIPTION_TEXT]: 'Click on the button below to open the ticket',
 	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_BUTTON_TEXT]: 'Open Ticket',
+
+	[TextsLocalizationsIds.TICKET_OPEN]: 'Open',
+	[TextsLocalizationsIds.TICKET_CLOSE]: 'Close',
+	[TextsLocalizationsIds.TICKET_REMOVE]: 'Remove',
+	[TextsLocalizationsIds.TICKET_REMOVE_OPEN_VOICE]: 'Open voice channel',
 
 	[TextsLocalizationsIds.START_ABOUT_ME]: 'Greetings, dear friend!\nI am an intelligent machine that will help you manage your RP server.\nYou can find detailed information by clicking on the github link.\nAfter going through the initial setup, new commands will open for you, with which you can configure me specifically for your guild.',
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'First, let\'s set up the guild language.',
@@ -93,4 +100,6 @@ export const enTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.REQUEST_SUCCESS_SENT]: 'The request has been successfully submitted. Please await a response.',
 	[TextsLocalizationsIds.REQUEST_APPROVED_TEXT]: 'Your request to add the module has been approved.',
 	[TextsLocalizationsIds.REQUEST_REJECTED_TEXT]: 'Your request to add the module has been rejected.',
+
+	[TextsLocalizationsIds.WELCOME_MESSAGE_SHOW_MARKERS_BUTTON]: 'Show markers',
 };

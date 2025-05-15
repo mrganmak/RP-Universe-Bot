@@ -29,20 +29,41 @@ export function getLocalizationForEmbed({ embedId, language, replaceValues }: Ge
 
 function getEmbedDataWithReplacedValues(embedData: APIEmbed, values: ReplaceValues): APIEmbed {
 	embedData = structuredClone(embedData);
+	embedData = replaceDataInEmbed(embedData, values);
 
-	for (const [searchValue, replcaeValue] of Object.entries(values)) {
+	/*for (const [searchValue, replcaeValue] of Object.entries(values)) {
 		embedData = replaceDataInEmbed(embedData, searchValue, replcaeValue);
-	}
+	}*/
 
 	return embedData;
 }
 
-function replaceDataInEmbed<T extends ReplaceDataInEmbedObject | string>(data: T, searchValue: string, replcaeValue: string): T {
+/*function replaceDataInEmbed<T extends ReplaceDataInEmbedObject | string>(data: T, searchValue: string, replcaeValue: string): T {
 	if (typeof data === 'string') {
 		return data.replace(`{${searchValue}}`, replcaeValue) as unknown as T;
 	} else {
 		for (const [key, value] of Object.entries(data)) {
 			if (typeof value === 'string' || typeof value === 'object') data[key] = replaceDataInEmbed(value, searchValue, replcaeValue);
+		}
+
+		return data;
+	}
+}*/
+
+function replaceDataInEmbed<T extends ReplaceDataInEmbedObject | string>(data: T, values: ReplaceValues): T {
+	if (typeof data === 'string') {
+		if (data.search('{') === -1) return data;
+
+		const regex = /#?\{([^}]+)\}/g;
+		const targetValues = Array.from(data.matchAll(regex), m => m[1]);
+
+		for (const targetValue of targetValues) {
+            if (values[targetValue]) data = data.replace(`{${targetValue}}`, values[targetValue]) as unknown as T;
+        }
+		return data;
+	} else {
+		for (const [key, value] of Object.entries(data)) {
+			if (typeof value === 'string' || typeof value === 'object') data[key] = replaceDataInEmbed(value, values);
 		}
 
 		return data;

@@ -7,6 +7,8 @@ export const ruTextsLocaliztion: TextsLocalization = {
 
 	[TextsLocalizationsIds.SET_SERVER_LANGUAGE_MESSAGE_TEXT]: 'Русский язык установлен для вашего сервера',
 
+	[TextsLocalizationsIds.DONT_HAVE_ROLE_TO_USE_THIS]: 'У вас нет роли, чтобы использовать это',
+
 	[TextsLocalizationsIds.BOT_MISSING_DEFAULT_PERMISSIONS_ERROR]: 'Перед тем, как использовать бота, вам нужно предоставить ему следующие права: ',
 
 	[TextsLocalizationsIds.DATA_COLLECTION_POLL_MODAL_MENU_MESSAGE_BUTTON]: 'Отправить',
@@ -41,6 +43,11 @@ export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_DESCRIPTION_TEXT]: 'Нажмите на кнопку ниже, чтобы открыть тикет',
 	[TextsLocalizationsIds.TICKETS_DEFAULT_TICKET_MESSAGE_BUTTON_TEXT]: 'Открыть тикет',
 
+	[TextsLocalizationsIds.TICKET_OPEN]: 'Открыть',
+	[TextsLocalizationsIds.TICKET_CLOSE]: 'Закрыть',
+	[TextsLocalizationsIds.TICKET_REMOVE]: 'Удалить',
+	[TextsLocalizationsIds.TICKET_REMOVE_OPEN_VOICE]: 'Открыть голосовой кананал',
+	
 	[TextsLocalizationsIds.START_ABOUT_ME]: 'Приветствую тебя, дорогой друг!\nЯ — интеллектуальная машина, которая поможет тебе управлять твоим РП сервером.\nПодробную информацию ты можешь найти, перейдя по ссылке на гитхаб\nПосле прохождения первичной настройки тебе откроются новые команды, при помощи которых ты сможешь настроить меня конкретно под свой сервер.',
 	[TextsLocalizationsIds.START_CHOOSE_LANGUAGE]: 'Для начала настроим язык сервера.',
 	[TextsLocalizationsIds.START_PRIVACY_POLICY]: 'Нажимая "продолжить", вы подтверждаете, что ознакомились с условиями эксплуатации и политикой конфиденциальности, а так же даёте согласие на сбор и хранение в базе данных идентификатора вашего дискорд-сервера и предпочитаемого языка локализации.\nПолитика конфиденциальности: https://docs.google.com/document/d/1eVOgm8ljx7QW8MA8LFPV_xninhOXWONe8mtuzd8RFzE/edit?usp=sharing\nУсловия эксплуатации: https://docs.google.com/document/d/1VtJ3IEwLkJe4Gdp5btu8yH89GjCskMPjdGyudvZHUko/edit?usp=sharing',
@@ -93,4 +100,6 @@ export const ruTextsLocaliztion: TextsLocalization = {
 	[TextsLocalizationsIds.REQUEST_SUCCESS_SENT]: 'Запрос успешно отправлен, ожидайте ответа.',
 	[TextsLocalizationsIds.REQUEST_APPROVED_TEXT]: 'Ваш запрос на добавление модуля был одобрен.',
 	[TextsLocalizationsIds.REQUEST_REJECTED_TEXT]: 'Ваш запрос на добавление модуля был отклонён.',
+
+	[TextsLocalizationsIds.WELCOME_MESSAGE_SHOW_MARKERS_BUTTON]: 'Показать метки',
 }
