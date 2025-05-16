@@ -61,7 +61,7 @@ class ButtonsPanel extends EventEmitter {
 	}
 
 	public async onCollect(interaction: ButtonInteraction): Promise<string | undefined> {
-		const collectedButton = this._settings.buttons[this._categoryName][Number(interaction.id)];
+		const collectedButton = this._settings.buttons[this._categoryName][Number(interaction.customId)];
 
 		if (
 			collectedButton.necessaryRoles
