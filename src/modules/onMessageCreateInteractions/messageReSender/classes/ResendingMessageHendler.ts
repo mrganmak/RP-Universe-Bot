@@ -1,5 +1,5 @@
 import { EmbedBuilder, Message, WebhookClient, resolveColor } from "discord.js";
-import { GuildReSender, GuildsReSendingSettingsBase, LocalizationsLanguages, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText } from "../../../../index.js";
+import { GuildReSender, GuildsReSendingsBase, LocalizationsLanguages, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText } from "../../../../index.js";
 
 export class ResendingMessageHendler {
 	constructor(private _message: Message, private _settings: GuildReSender) {}
@@ -101,7 +101,7 @@ export class ResendingMessageHendler {
 		if (!this._settings.isInEmbed) throw new Error('Something went wrong in ResendingMessageHendler _handleEmbedCounter');
 
 		if (this._settings.counter != null) {
-			const base = new GuildsReSendingSettingsBase();
+			const base = new GuildsReSendingsBase();
 			const guildSettings = await base.getByGuildId(this._message.guild?.id ?? '0');
 			if (!guildSettings) return;
 

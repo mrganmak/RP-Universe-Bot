@@ -1,44 +1,31 @@
 import { Snowflake } from "discord.js";
-import { Collection, InsertOneResult, UpdateResult } from "mongodb";
-import { MongoBase } from "../../index.js";
+import { InsertOneResult, UpdateResult, WithId } from "mongodb";
+import { BaseCollection } from "../MongoBase.js";
 
-export class GuildsThreadsCreatorBase {
-	private static _instance: GuildsThreadsCreatorBase | undefined;
-
-	private _database!: typeof MongoBase['database'];
-	private _collection!: Collection<GuildThreadsCreatorSettingsBase>;
-	private _localBase: Map<Snowflake, GuildThreadsCreatorSettingsBase> = new Map();
-
+export class GuildsThreadsCreatorBase extends BaseCollection<GuildThreadsCreatorSettingsBase> {
 	constructor() {
-		if (GuildsThreadsCreatorBase._instance) return GuildsThreadsCreatorBase._instance;
-		GuildsThreadsCreatorBase._instance = this;
-
-		this._database = MongoBase.database;
-		this._collection = this._database.collection<GuildThreadsCreatorSettingsBase>(process.env.DB_GUILDS_THREADS_CREATOR_SETTINGS);
-
-		this._collection.find().forEach((settings) => {
-			this._localBase.set(settings.guildId, settings);
-		});
+		super(process.env.DB_GUILDS_THREADS_CREATOR_SETTINGS);
+		this.initCache();
 	}
 
-	public async getByGuildId(guildId: Snowflake): Promise<GuildThreadsCreatorSettingsBase | null> {
-		const localData = this._localBase.get(guildId);
+	protected getCacheKey(doc: WithId<GuildThreadsCreatorSettingsBase>): string {
+		return doc.guildId;
+	}
 
-		if (localData) {
-			return localData;
-		} else {
-			const settings = await this._collection.findOne({ guildId });
+	public async getByGuildId(guildId: Snowflake): Promise<WithId<GuildThreadsCreatorSettingsBase> | null> {
+		const cached = await this.getFromCache(guildId);
+		if (cached) return cached;
 
-			if (!settings) return null;
+		const settings = await this._collection.findOne({ guildId });
+		if (!settings) return null;
 
-			this._localBase.set(settings.guildId, settings);
-			return settings;
-		}
+		this.setToCache(guildId, settings);
+		return settings;
 	}
 
 	public async addSettings(settings: GuildThreadsCreatorSettingsBase): Promise<InsertOneResult<GuildThreadsCreatorSettingsBase> | UpdateResult> {
 		const settingsById = await this.getByGuildId(settings.guildId);
-		this._localBase.set(settings.guildId, settings);
+		this.setToCache(settings.guildId, settings as WithId<GuildThreadsCreatorSettingsBase>);
 
 		if (settingsById) {
 			return await this._collection.updateOne(
@@ -47,7 +34,9 @@ export class GuildsThreadsCreatorBase {
 				{ upsert: true }
 			);
 		} else {
-			return await this._collection.insertOne(settings);
+			const result = await this._collection.insertOne(settings);
+			this.setToCache(settings.guildId, { ...settings, _id: result.insertedId });
+			return result;
 		}
 	}
 
@@ -56,7 +45,7 @@ export class GuildsThreadsCreatorBase {
 
 		if (!settingsById) return null;
 
-		this._localBase.set(settings.guildId, settings);
+		this.setToCache(settings.guildId, settings as WithId<GuildThreadsCreatorSettingsBase>);
 		return await this._collection.updateOne(
 			{ guildId: settings.guildId },
 			{ $set: settings },

@@ -1,44 +1,31 @@
 import { EmojiResolvable, HexColorString, Snowflake } from "discord.js";
-import { Collection, InsertOneResult, UpdateResult } from "mongodb";
-import { MongoBase } from "../../index.js";
+import { Collection, InsertOneResult, UpdateResult, WithId } from "mongodb";
+import { BaseCollection } from "../MongoBase.js";
 
-export class GuildsReSendingSettingsBase {
-	private static _instance: GuildsReSendingSettingsBase | undefined;
-
-	private _database!: typeof MongoBase['database'];
-	private _collection!: Collection<GuildReSendingSettingsBase>;
-	private _localBase: Map<Snowflake, GuildReSendingSettingsBase> = new Map();
-
+export class GuildsReSendingsBase extends BaseCollection<GuildReSendingsBase> {
 	constructor() {
-		if (GuildsReSendingSettingsBase._instance) return GuildsReSendingSettingsBase._instance;
-		GuildsReSendingSettingsBase._instance = this;
-
-		this._database = MongoBase.database;
-		this._collection = this._database.collection<GuildReSendingSettingsBase>(process.env.DB_GUILDS_RE_SENDING_SETTINGS);
-
-		this._collection.find().forEach((settings) => {
-			this._localBase.set(settings.guildId, settings);
-		});
+		super(process.env.DB_GUILDS_RE_SENDING_SETTINGS);
+		this.initCache();
 	}
 
-	public async getByGuildId(guildId: Snowflake): Promise<GuildReSendingSettingsBase | null> {
-		const localData = this._localBase.get(guildId);
-
-		if (localData) {
-			return localData;
-		} else {
-			const settings = await this._collection.findOne({ guildId });
-
-			if (!settings) return null;
-
-			this._localBase.set(settings.guildId, settings);
-			return settings;
-		}
+	protected getCacheKey(doc: WithId<GuildReSendingsBase>): string {
+		return doc.guildId;
 	}
 
-	public async addSettings(settings: GuildReSendingSettingsBase): Promise<InsertOneResult<GuildReSendingSettingsBase> | UpdateResult> {
+	public async getByGuildId(guildId: Snowflake): Promise<WithId<GuildReSendingsBase> | null> {
+		const cached = await this.getFromCache(guildId);
+		if (cached) return cached;
+
+		const settings = await this._collection.findOne({ guildId });
+		if (!settings) return null;
+
+		this.setToCache(guildId, settings);
+		return settings;
+	}
+
+	public async addSettings(settings: GuildReSendingsBase): Promise<InsertOneResult<GuildReSendingsBase> | UpdateResult> {
 		const settingsById = await this.getByGuildId(settings.guildId);
-		this._localBase.set(settings.guildId, settings);
+		this.setToCache(settings.guildId, settings as WithId<GuildReSendingsBase>);
 
 		if (settingsById) {
 			return await this._collection.updateOne(
@@ -47,16 +34,18 @@ export class GuildsReSendingSettingsBase {
 				{ upsert: true }
 			);
 		} else {
-			return await this._collection.insertOne(settings);
+			const result = await this._collection.insertOne(settings);
+			this.setToCache(settings.guildId, { ...settings, _id: result.insertedId });
+			return result;
 		}
 	}
 
-	public async changeSettings(settings: GuildReSendingSettingsBase): Promise<UpdateResult | null> {
+	public async changeSettings(settings: GuildReSendingsBase): Promise<UpdateResult | null> {
 		const settingsById = await this.getByGuildId(settings.guildId);
 
 		if (!settingsById) return null;
 
-		this._localBase.set(settings.guildId, settings);
+		this.setToCache(settings.guildId, settings as WithId<GuildReSendingsBase>);
 		return await this._collection.updateOne(
 			{ guildId: settings.guildId },
 			{ $set: settings },
@@ -65,7 +54,7 @@ export class GuildsReSendingSettingsBase {
 	}
 }
 
-interface GuildReSendingSettingsBase {
+interface GuildReSendingsBase {
 	guildId: Snowflake;
 	reSenders: GuildReSenders
 }

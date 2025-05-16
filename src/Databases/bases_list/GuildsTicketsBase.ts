@@ -1,23 +1,25 @@
-import { Collection, DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
-import { MongoBase } from "../../index.js";
+import { DeleteResult, InsertOneResult, UpdateResult, WithId } from "mongodb";
+import { BaseCollection } from "../MongoBase.js";
 import { Snowflake } from "discord.js";
 
-export class GuildsTicketsBase {
-	private static _instance: GuildsTicketsBase | undefined;
-
-	private _database!: typeof MongoBase['database'];
-	private _collection!: Collection<GuildTicketsBase>;
-
+export class GuildsTicketsBase extends BaseCollection<GuildTicketsBase> {
 	constructor() {
-		if (GuildsTicketsBase._instance) return GuildsTicketsBase._instance;
-		GuildsTicketsBase._instance = this;
-
-		this._database = MongoBase.database;
-		this._collection = this._database.collection<GuildTicketsBase>(process.env.DB_GUILDS_TICKETS);
+		super(process.env.DB_GUILDS_TICKETS);
 	}
 
-	public async getTicketsByGuildId(guildId: Snowflake): Promise<GuildTicketsBase | null> {
-		return await this._collection.findOne({ guildId });
+	protected getCacheKey(doc: WithId<GuildTicketsBase>): string {
+		return doc.guildId;
+	}
+
+	public async getTicketsByGuildId(guildId: Snowflake): Promise<WithId<GuildTicketsBase> | null> {
+		const cached = await this.getFromCache(guildId);
+		if (cached) return cached;
+
+		const tickets = await this._collection.findOne({ guildId });
+		if (!tickets) return null;
+
+		this.setToCache(guildId, tickets);
+		return tickets;
 	}
 
 	public async getTicketByChannelId(guildId: Snowflake, channelId: Snowflake): Promise<TicketData | null> {
@@ -33,11 +35,15 @@ export class GuildsTicketsBase {
 
 		if (ticketsById) throw new Error('I cant add ticket with same property');
 
-		return await this._collection.insertOne(guildTickets);
+		const result = await this._collection.insertOne(guildTickets);
+		this.setToCache(guildTickets.guildId, { ...guildTickets, _id: result.insertedId });
+		return result;
 	}
 
 	public async deleteTicketsByGuildId(guildId: Snowflake): Promise<DeleteResult> {
-		return await this._collection.deleteOne({ guildId });
+		const result = await this._collection.deleteOne({ guildId });
+		this.removeFromCache(guildId);
+		return result;
 	}
 
 	public async changeTicketForGuild(guildId: Snowflake, ticket: TicketData): Promise<UpdateResult | InsertOneResult<GuildTicketsBase> | void> {
@@ -57,6 +63,7 @@ export class GuildsTicketsBase {
 			guildTickets.counter++;
 		}
 
+		this.setToCache(guildId, guildTickets);
 		return await this._collection.updateOne(
 			{ guildId },
 			{ $set: guildTickets },
@@ -66,7 +73,7 @@ export class GuildsTicketsBase {
 
 	private _findTicketInGuildTicketsByChannelId(ticketChannelId: Snowflake, tickets: TicketData[]): TicketData | undefined {
 		for (const ticket of tickets) {
-			if (ticket.ticketChannelId === ticketChannelId) return ticket; //TODO: Проверить
+			if (ticket.ticketChannelId === ticketChannelId) return ticket;
 		}
 
 		return undefined;
@@ -78,6 +85,7 @@ export class GuildsTicketsBase {
 
 		guildTickets.tickets = guildTickets.tickets.filter((ticket) => (ticket.ticketChannelId !== ticketChannelId));
 		
+		this.setToCache(guildId, guildTickets);
 		return await this._collection.updateOne(
 			{ guildId },
 			{ $set: guildTickets },
