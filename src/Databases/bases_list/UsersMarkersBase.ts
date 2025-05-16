@@ -73,15 +73,15 @@ export class UsersMarkersBase extends BaseCollection<UsersMarkersBaseData> {
 	}
 
 	public async deleteMarkerFromUserByGuildId(userId: Snowflake, guildId: Snowflake): Promise<UpdateResult | null> {
-		const guildMarkers = await this.getByUserId(userId);
-		if (!guildMarkers) return null;
+		const userMarkers = await this.getByUserId(userId);
+		if (!userMarkers) return null;
 
-		guildMarkers.markers = guildMarkers.markers.filter((marker) => (marker.guildId !== guildId));
+		userMarkers.markers = userMarkers.markers.filter((marker) => (marker.guildId !== guildId));
 		
-		this.setToCache(guildId, guildMarkers);
+		this.setToCache(userId, userMarkers);
 		return await this._collection.updateOne(
-			{ guildId },
-			{ $set: guildMarkers },
+			{ userId },
+			{ $set: userMarkers },
 			{ upsert: false }
 		);
 	}

@@ -10,7 +10,7 @@ export class UsersMarkersSystem {
 	}
 
 	public static async getUserMarkersCollection(user: User): Promise<MarkersCollection | null> {
-		if (!UsersMarkersSystem.hasUserHaveMarkers(user)) return null;
+		if (!await UsersMarkersSystem.hasUserHaveMarkers(user)) return null;
 
 		const base = new UsersMarkersBase();
 		const userMarkers = await base.getByUserId(user.id);
