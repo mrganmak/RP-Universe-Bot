@@ -29,8 +29,6 @@ export function BusCommandName(name: keyof ModulesCommandsList) {
 }
 
 export function UseGuards(...guards: Array<GuardSpec | (new (...args: any[]) => any) >) {
-	console.log('guards complete')
-
 	const incomingSpecs: GuardSpec[] = guards.map(guard =>
 		typeof guard === "function" ? { use: guard } : (guard as GuardSpec)
 	);
