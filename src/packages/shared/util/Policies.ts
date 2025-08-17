@@ -1,5 +1,5 @@
 import { Client, PermissionFlagsBits } from "discord.js";
-import { ModulesErrorCodes } from "../enums/ErrorCodes.js";
+import { ModulesErrorCodes } from "@src/index.js";
 
 export class GuildPolicy {
 	constructor(
