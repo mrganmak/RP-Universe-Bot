@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { GuildPolicy, Guard, Result } from "@src/index.js";
 import { PermissionFlagsBits } from "discord.js";
 import { TOKENS } from "../di/tokens.js";
+import { ModulesErrorCodes } from "../enums/ErrorCodes.js";
 
 const CanManageChannels = [
 	PermissionFlagsBits.ManageChannels,
@@ -19,7 +20,7 @@ export class ModuleEnabledGuard<T extends { guildId: string }> implements Guard<
 	) {}
 	async check(input: T): Promise<Result<true>> {
 		//const isOk = await this.repo.isModuleEnabled(input.guildId, this.moduleName);
-		//return isOk ? { ok: true, value: true } : { ok: false, error: "MODULE_DISABLED" };
+		//return isOk ? { ok: true, value: true } : { ok: false, error: ModulesErrorCodes.ModuleDisabled };
 		return { ok: true, value: true };
 	}
 
