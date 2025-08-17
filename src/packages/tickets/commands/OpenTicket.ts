@@ -1,8 +1,8 @@
-import { BusCommandName, CommandHandler, RequirePermissions, Result, TOKENS, RegisterModule, OpenTicketInput, OpenTicketOutput } from "@src/index.js";
+import { BusCommandName, CommandHandler, RequirePermissions, Result, TOKENS, UseModules, OpenTicketInput, OpenTicketOutput } from "@src/index.js";
 import { Client } from "discord.js";
 import { inject, injectable } from "tsyringe";
 
-@RegisterModule('TICKETS')
+@UseModules()
 @BusCommandName('Ticket.Open')
 @RequirePermissions(
 

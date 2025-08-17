@@ -15,10 +15,9 @@ export const CommandRegistry = {
 	all: () => Array.from(commandRegistry),
 };
 
-export function RegisterModule(moduleName: string) {
+export function UseModules() {
 	return function (target: HandlerConstructor) {
 		CommandRegistry.add(target);
-		UseGuards({ use: ModuleEnabledGuard, params: { moduleName } })(target);
 	};
 }
 
