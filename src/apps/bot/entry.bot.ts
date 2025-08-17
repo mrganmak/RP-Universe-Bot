@@ -6,7 +6,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { DIService, tsyringeDependencyRegistryEngine } from "@discordx/di";
 import { container } from "tsyringe";
-import { ModulesBus, GuildPolicy, registerAllHandlers, TOKENS } from "@src/index.js";
+import { ModuleCommandsBus, GuildPolicy, registerAllHandlers, TOKENS } from "@src/index.js";
 
 async function int() {
 	DIService.engine = tsyringeDependencyRegistryEngine.setInjector(container);
@@ -22,7 +22,7 @@ async function int() {
 	});
 	container.registerInstance(TOKENS.Client, client);
 	
-	const bus = new ModulesBus();
+	const bus = new ModuleCommandsBus();
 	container.registerInstance(TOKENS.Bus, bus);
 
 	const policies = new GuildPolicy(client);

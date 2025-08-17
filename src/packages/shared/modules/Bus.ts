@@ -17,7 +17,7 @@ export interface Guard<In> {
 type Entry = { handler: CommandHandler<any, any>; guards: Guard<any>[] };
 
 @singleton()
-export class ModulesBus {
+export class ModuleCommandsBus {
 	private map = new Map<string, Entry>();
 
 	register<In, Out>(name: string, handler: CommandHandler<In, Out>, guards: Guard<In>[] = []) {

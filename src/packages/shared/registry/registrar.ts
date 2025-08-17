@@ -1,8 +1,8 @@
 import { container } from "tsyringe";
-import { BusDecoratorsMetadata, CommandHandler, CommandRegistry, ModulesBus, Guard, GuardSpec, TOKENS } from "@src/index.js";
+import { BusDecoratorsMetadata, CommandHandler, CommandRegistry, ModuleCommandsBus, Guard, GuardSpec, TOKENS } from "@src/index.js";
 
 export function registerAllHandlers() {
-	const bus = container.resolve<ModulesBus>(TOKENS.Bus);
+	const bus = container.resolve<ModuleCommandsBus>(TOKENS.Bus);
 
 	for (const module of CommandRegistry.all()) {
 		const commandName = Reflect.getMetadata(BusDecoratorsMetadata.COMMAND, module);
