@@ -1,11 +1,6 @@
-import { BusCommandName, CommandHandler, RequirePermissions, Result, TOKENS, RegisterModule } from "@src/index.js";
-import { Client, Snowflake } from "discord.js";
+import { BusCommandName, CommandHandler, RequirePermissions, Result, TOKENS, RegisterModule, OpenTicketInput, OpenTicketOutput } from "@src/index.js";
+import { Client } from "discord.js";
 import { inject, injectable } from "tsyringe";
-
-export type OpenTicketInput = {
-	guildId: Snowflake; userId: Snowflake; subject?: string; categoryId?: string;
-};
-export type OpenTicketOutput = { channelId: Snowflake };
 
 @RegisterModule('TICKETS')
 @BusCommandName('Ticket.Open')
