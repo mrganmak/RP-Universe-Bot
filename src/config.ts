@@ -1,5 +1,5 @@
-import { ButtonStyle } from "discord.js";
-import { UserConfirmationInteractionButtonSettings, TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, MarkerTypes } from "./index.js";
+import { ButtonStyle, ComponentType, TextInputStyle } from "discord.js";
+import { TextsLocalizationsIds, ButtonsPanelsSettings, SelectMenuOptionsWithLocalizations, MarkerTypes, UserConfirmationInteractionButtonsSettings, DataCollectionPollQuestions, QuestionTypes, DataCollectionPollQuestionContentTypes, ButtosPanelsSettingsIds } from "./index.js";
 
 export const guildsIds = {
 	hubGuildId: '1079448420630139023'
@@ -11,20 +11,54 @@ export const channelsIds = {
 
 export const devMode = true;
 
-export const userConfirmationInteractionButtonsSettings: UserConfirmationInteractionButtonSettings[] = [
-	{
-		label: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_NO,
-		style: ButtonStyle.Danger,
-		customId: 'deny'
-	},
-	{
+export const userConfirmationInteractionButtonsSettings: UserConfirmationInteractionButtonsSettings = {
+	'confirm': {
 		label: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_YES,
 		style: ButtonStyle.Success,
 		customId: 'confirm'
+	},
+	'deny': {
+		label: TextsLocalizationsIds.USER_CONFIRMATION_BUTTON_NO,
+		style: ButtonStyle.Danger,
+		customId: 'deny'
 	}
-];
+};
 
-export const buttonsPanelsSettings: ButtonsPanelsSettings = { }
+export const buttonsPanelsSettings: ButtonsPanelsSettings = {
+	[ButtosPanelsSettingsIds.TICKET]: {
+		buttons: {
+			begin: {
+				closeTicket: {
+					type: 'valueAndCategory',
+					style: ButtonStyle.Danger,
+					label: TextsLocalizationsIds.TICKET_CLOSE,
+					category: 'closed',
+					value: 'close',
+					emoji: '🔒'
+				}
+			},
+			closed: {
+				openTicket: {
+					type: 'valueAndCategory',
+					style: ButtonStyle.Success,
+					label: TextsLocalizationsIds.TICKET_OPEN,
+					category: 'begin',
+					value: 'open',
+					emoji: '🔓'
+				},
+				removeTicket: {
+					type: 'value',
+					style: ButtonStyle.Danger,
+					label: TextsLocalizationsIds.TICKET_REMOVE,
+					value: 'remove',
+					isClose: true,
+					emoji: '🗑️'
+				},
+			}
+		},
+		isWithCollector: false
+	}
+}
 
 export const ticketsSettingsSelectMenuComponents: SelectMenuOptionsWithLocalizations = [
 	{
@@ -47,26 +81,48 @@ export const reSendingSettingsSelectMenuComponents: SelectMenuOptionsWithLocaliz
 	}
 ];
 
-export const selectMarkerTypeSelectMenuComponents: SelectMenuOptionsWithLocalizations = [
+export const markerCreatePollQuestions: DataCollectionPollQuestions = [
 	{
-		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_LABLE,
-		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_DESCRIPTION,
-		value: `${MarkerTypes.BLACK}`
+		contentType: DataCollectionPollQuestionContentTypes.MESSAGE,
+		content: TextsLocalizationsIds.USER_MARKERS_SELECT_MARKER_TYPE_TEXT,
+		type: QuestionTypes.SELECT_MENU,
+		selectMenuType: ComponentType.StringSelect,
+		answers: [
+			{
+				label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_LABLE,
+				description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_BLACK_DESCRIPTION,
+				value: `${MarkerTypes.BLACK}`
+			},
+			{
+				label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_LABLE,
+				description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_DESCRIPTION,
+				value: `${MarkerTypes.RED}`
+			},
+			{
+				label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_LABLE,
+				description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_DESCRIPTION,
+				value: `${MarkerTypes.YELLOW}`
+			},
+			{
+				label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_LABLE,
+				description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_DESCRIPTION,
+				value: `${MarkerTypes.GREEN}`
+			}
+		],
 	},
 	{
-		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_LABLE,
-		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_RED_DESCRIPTION,
-		value: `${MarkerTypes.RED}`
-	},
-	{
-		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_LABLE,
-		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_YELLOW_DESCRIPTION,
-		value: `${MarkerTypes.YELLOW}`
-	},
-	{
-		label: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_LABLE,
-		description: TextsLocalizationsIds.USER_MARKERS_MARKER_TYPE_GREEN_DESCRIPTION,
-		value: `${MarkerTypes.GREEN}`
+		contentType: DataCollectionPollQuestionContentTypes.MESSAGE,
+		content: TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_MODAL_MESSAGE_TEXT,
+		type: QuestionTypes.MODAL_MENU,
+		title: TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_MODAL_TEXT,
+		inputs: [
+			{
+				custom_id: 'reason',
+				label: TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_TEXT,
+				placeholder: TextsLocalizationsIds.USER_MARKERS_SET_MARKER_REASON_PLACEHOLDER,
+				required: true,
+				style: TextInputStyle.Paragraph,
+			}
+		],
 	}
 ];
-

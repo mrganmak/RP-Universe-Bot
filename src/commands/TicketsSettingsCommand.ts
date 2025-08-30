@@ -44,9 +44,13 @@ class TicketsSettingsCommand {
 			choices: ticketsSettingsSelectMenuComponents,
 			language: guildLanguage
 		});
-		const answer = (await paginationSelectMenu.getUserAnswer()).values;
-		
-		if (answer[0] === 'change_category') {
+		const answerInteraction = (await paginationSelectMenu.getUserAnswer());
+		if (!answerInteraction) return null; //TODO
+
+		await answerInteraction.deferUpdate();
+		const answer = answerInteraction.values[0];
+
+		if (answer === 'change_category') {
 			const changeCategoryEmbed = new EmbedBuilder();
 			changeCategoryEmbed
 				.setTitle(getLocalizationForText(TextsLocalizationsIds.TICKETS_SETTINGS_CHANGE_CATEGORY_EMBED_LABLE, guildLanguage))

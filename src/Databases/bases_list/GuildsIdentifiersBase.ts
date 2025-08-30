@@ -1,26 +1,28 @@
 import { Snowflake } from "discord.js";
-import { Collection, DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
-import { MongoBase } from "../../index.js";
+import { DeleteResult, InsertOneResult, UpdateResult, WithId } from "mongodb";
+import { BaseCollection } from "../MongoBase.js";
 
-export class GuildsIdentifiersBase {
-	private static _instance: GuildsIdentifiersBase | undefined;
-
-	private _database!: typeof MongoBase['database'];
-	private _collection!: Collection<GuildIdentifiersBase>;
-
+export class GuildsIdentifiersBase extends BaseCollection<GuildIdentifiersBase> {
 	constructor() {
-		if (GuildsIdentifiersBase._instance) return GuildsIdentifiersBase._instance;
-		GuildsIdentifiersBase._instance = this;
-
-		this._database = MongoBase.database;
-		this._collection = this._database.collection<GuildIdentifiersBase>(process.env.DB_GUILDS_IDENTIFIRES);
+		super(process.env.DB_GUILDS_IDENTIFIRES);
 	}
 
-	public async getByGuildId(guildId: Snowflake): Promise<GuildIdentifiersBase | null> {
-		return await this._collection.findOne({ guildId });
+	protected getCacheKey(doc: WithId<GuildIdentifiersBase>): string {
+		return doc.guildId;
 	}
 
-	public async getByToken(token: string): Promise<GuildIdentifiersBase | null> {
+	public async getByGuildId(guildId: Snowflake): Promise<WithId<GuildIdentifiersBase> | null> {
+		const cached = await this.getFromCache(guildId);
+		if (cached) return cached;
+
+		const identifier = await this._collection.findOne({ guildId });
+		if (!identifier) return null;
+
+		this.setToCache(guildId, identifier);
+		return identifier;
+	}
+
+	public async getByToken(token: string): Promise<WithId<GuildIdentifiersBase> | null> {
 		return await this._collection.findOne({ token });
 	}
 
@@ -30,26 +32,38 @@ export class GuildsIdentifiersBase {
 
 		if (identifierById || identifierByToken) throw new Error('I cant add identifier with same property');
 
-		return await this._collection.insertOne(identifier);
+		const result = await this._collection.insertOne(identifier);
+		this.setToCache(identifier.guildId, { ...identifier, _id: result.insertedId });
+		return result;
 	}
 
 	public async deleteIdentifierByGuildId(guildId: Snowflake): Promise<DeleteResult> {
-		return await this._collection.deleteOne({ guildId });
+		const result = await this._collection.deleteOne({ guildId });
+		this.removeFromCache(guildId);
+		return result;
 	}
 
 	public async deleteIdentifierByToken(token: string): Promise<DeleteResult> {
-		return await this._collection.deleteOne({ token });
+		const identifier = await this.getByToken(token);
+		const result = await this._collection.deleteOne({ token });
+		if (identifier) this.removeFromCache(identifier.guildId);
+		return result;
 	}
 
 	public async addAPIKeyForGuild(guildId: Snowflake, APIKey: string): Promise<UpdateResult> {
-		return await this._collection.updateOne(
+		const result = await this._collection.updateOne(
 			{ guildId },
 			{ $set: { APIKey } },
 			{ upsert: false }
 		);
+		
+		const updated = await this.getByGuildId(guildId);
+		if (updated) this.setToCache(guildId, updated);
+		
+		return result;
 	}
 
-	public async getByAPIKey(APIKey: string): Promise<GuildIdentifiersBase | null> {
+	public async getByAPIKey(APIKey: string): Promise<WithId<GuildIdentifiersBase> | null> {
 		return await this._collection.findOne({ APIKey });
 	}
 }

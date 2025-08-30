@@ -56,4 +56,3 @@ We reserve the right to update our Privacy Policy as necessary. All changes will
 
 ## Contact Information
 If you have any questions or suggestions regarding our Privacy Policy, please contact us through our Discord server: [RP Universe Discord Server](https://discord.gg/PKqDqdp2vY). We are committed to transparency and openness in handling personal data and are always ready to discuss any questions or concerns.
-

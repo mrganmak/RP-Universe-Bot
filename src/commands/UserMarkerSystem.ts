@@ -16,7 +16,6 @@ import {
 	GuildModules,
 } from '../index.js';
 
-
 const userMarkersInfoCommandLocalizationPropertys = getLocalizationForCommand(CommandsIds.USER_MARKERS_INFO, DEFAULT_SERVER_LANGUAGE);
 const startMarkersCommandLocalizationPropertys = getLocalizationForCommand(CommandsIds.START_MARKERS, DEFAULT_SERVER_LANGUAGE);
 

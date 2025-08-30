@@ -1,5 +1,5 @@
 import { EmbedBuilder, Message, WebhookClient, resolveColor } from "discord.js";
-import { GuildReSender, GuildsReSendingSettingsBase, LocalizationsLanguages, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText } from "../../../../index.js";
+import { GuildReSender, GuildsReSendingsBase, LocalizationsLanguages, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText } from "../../../../index.js";
 
 export class ResendingMessageHendler {
 	constructor(private _message: Message, private _settings: GuildReSender) {}
@@ -22,7 +22,7 @@ export class ResendingMessageHendler {
 			? null
 			: (this._settings.isInEmbed ? await this._createEmbeds(this._message.content) : this._message.content)
 		);
-		const replyedMessage = await this._message.fetchReference().catch(() => { });
+		const replyedMessage = await this._message.fetchReference().catch(() => {});
 		const attachments = this._message.attachments;
 
 		const resolvedMessage = await sendingMessageFunction(Object.assign({ },
@@ -50,7 +50,7 @@ export class ResendingMessageHendler {
 			)
 		));
 
-		const message = await this._message.channel.messages.fetch(resolvedMessage.id).catch(() => { });
+		const message = await this._message.channel.messages.fetch(resolvedMessage.id).catch(console.error);
 		if (!message) return;
 
 		if (attachments.size > 0 && contentOrEmbed != null && typeof contentOrEmbed === 'object') {
@@ -81,10 +81,10 @@ export class ResendingMessageHendler {
 		}
 
 		if (this._settings.logChannelId) {
-			const channel = await this._message.guild?.channels.fetch(this._settings.logChannelId).catch(() => {});
+			const channel = await this._message.guild?.channels.fetch(this._settings.logChannelId).catch(console.error);
 
 			if (channel && channel.isTextBased()) {
-				channel.send(`${this._message.author.toString()}: \n\`\`\`${this._message.content}\`\`\``).catch(() => {});
+				channel.send(`${this._message.author.toString()}: \n\`\`\`${this._message.content}\`\`\``).catch(console.error);
 			}
 		}
 	}
@@ -101,7 +101,7 @@ export class ResendingMessageHendler {
 		if (!this._settings.isInEmbed) throw new Error('Something went wrong in ResendingMessageHendler _handleEmbedCounter');
 
 		if (this._settings.counter != null) {
-			const base = new GuildsReSendingSettingsBase();
+			const base = new GuildsReSendingsBase();
 			const guildSettings = await base.getByGuildId(this._message.guild?.id ?? '0');
 			if (!guildSettings) return;
 

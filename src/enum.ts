@@ -32,4 +32,22 @@ export enum GuildModules {
 	MARKERS = 'isMarkersModuleInited'
 }
 
-export enum ButtosPanelSSettingsIds { }
+export enum ButtosPanelsSettingsIds {
+	TICKET
+}
+
+export enum QuestionTypes {
+	SELECT_MENU,
+	MODAL_MENU,
+	BUTTONS
+}
+
+export enum ButtonsQuestionTypes {
+	DEFAULT,
+	CONFIRMATION
+}
+
+export enum DataCollectionPollQuestionContentTypes {
+	EMBED,
+	MESSAGE,
+}

@@ -50,7 +50,12 @@ class ReSenedersSettingsCommand {
 			choices: reSendingSettingsSelectMenuComponents,
 			language: guildLanguage
 		});
-		const answer = (await paginationSelectMenu.getUserAnswer()).values[0];
+		const answerInteraction = (await paginationSelectMenu.getUserAnswer());
+
+		if (!answerInteraction) return; //TODO
+
+		await answerInteraction.deferUpdate();
+		const answer = answerInteraction.values[0];
 
 		if (answer === 'delete_re_sender') return await this._deleteReSender(interaction);
 		else if (answer === 'add_re_sender') return await this._addReSender(interaction);
@@ -70,7 +75,7 @@ class ReSenedersSettingsCommand {
 		};
 
 		for (const reSender of Object.values(guildSettings.reSenders)) {
-			const channel = await interaction.guild.channels.fetch(reSender.channelId).catch(() => { });
+			const channel = await interaction.guild.channels.fetch(reSender.channelId).catch(console.error);
 			if (!channel) continue;
 
 			options.choices.push({ label: channel.name, value: channel.id })
@@ -87,8 +92,12 @@ class ReSenedersSettingsCommand {
 		}
 
 		const paginationSelectMenu = await PaginationSelectMenu.create(interaction, interaction.user, options);
-		const answer = (await paginationSelectMenu.getUserAnswer()).values[0];
+		const answerInteraction = (await paginationSelectMenu.getUserAnswer());
+		if (!answerInteraction) return; //TODO
 
+		await answerInteraction.deferUpdate();
+		const answer = answerInteraction.values[0];
+		
 		guildSettings.reSenders = Object.fromEntries(Object.entries(guildSettings.reSenders).filter(([id]) => (id !== answer)));
 		await base.changeSettings(guildSettings);
 	}

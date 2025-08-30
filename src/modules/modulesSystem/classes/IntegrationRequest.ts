@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, Colors, EmbedBuilder, Guild, Message, RepliableInteraction, Snowflake } from "discord.js";
+import { APIMessage, ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, Colors, EmbedBuilder, Guild, Message, RepliableInteraction, Snowflake } from "discord.js";
 import { DEFAULT_SERVER_LANGUAGE, GuildModules, RequestsToIntegrateBase, TextsLocalizationsIds, Util, getGuildLanguage, getLocalizationForText, RequestData, findGuildInClient, LocalizationsLanguages, sendMessageIntoChannel, ModulesSystem } from "../../../index.js";
 import { ButtonComponent, Discord } from "discordx";
 
@@ -37,7 +37,7 @@ export class IntegrationRequest {
 		);
 	}
 
-	private async _sendRequestMessage(targetChannelId: Snowflake, targetGuildlId: Snowflake): Promise<Message | null> {
+	private async _sendRequestMessage(targetChannelId: Snowflake, targetGuildlId: Snowflake): Promise<APIMessage | null> {
 		const promisedMessage = await this._interaction.client.shard?.broadcastEval(
 			sendMessageIntoChannel,
 			{context: {
@@ -45,7 +45,7 @@ export class IntegrationRequest {
 				channelId: targetChannelId,
 				messageOptions: { embeds: [this._getEmbed()], components: [this._getButtons()] }
 			} }
-		).catch(() => {}) as unknown as Promise<Message>[];
+		).catch(console.error) as unknown as Promise<APIMessage>[];
 		if (!promisedMessage) return null;
 
 		return await promisedMessage[0];
@@ -58,7 +58,7 @@ export class IntegrationRequest {
 				{ name: 'Название модуля', value: `${this._moduleName}` }
 			)
 			.setFooter({
-				text: `${this._interaction.user.username}`,
+				text: `${this._interaction.guild?.id}`,
 				iconURL: Util.getUserAvatarUrl(this._interaction.user)
 			})
 			.setColor(Colors.DarkPurple)
@@ -96,7 +96,6 @@ class IntegrationRequestButtonsInteraction {
 
 	private async _handler(interaction: ButtonInteraction, status: 'approve' | 'reject') {
 		await interaction.deferUpdate();
-		
 		const requestData = await this._getRequestData(interaction);
 		if (!requestData) return;
 
@@ -106,7 +105,7 @@ class IntegrationRequestButtonsInteraction {
 
 	private async _getRequestData(interaction: ButtonInteraction): Promise<RequestData | null> {
 		const base = new RequestsToIntegrateBase();
-		const guildRquests = await base.getByGuildId(interaction.guild?.id ?? '');
+		const guildRquests = await base.getByGuildId(interaction.message.embeds[0]?.footer?.text ?? '');
 		if (!guildRquests) return null;
 
 		const request = Object.values(guildRquests.requests).filter(
@@ -142,7 +141,7 @@ class CompleetedIntegrationRequest {
 		const guilds = await this._interaction.client.shard?.broadcastEval(
 			findGuildInClient,
 			{context: { id: this._requestData.guildId } }
-		).catch(() => {}) as unknown as Guild[];
+		).catch(console.error) as unknown as Guild[];
 
 		if (!guilds) return null;
 		else return guilds[0];
@@ -168,7 +167,7 @@ class CompleetedIntegrationRequest {
 				channelId: this._requestData.senderChannelId,
 				messageOptions: { content }
 			} }
-		).catch(() => {}) as unknown as Promise<Message>[];
+		).catch(console.error) as unknown as Promise<Message>[];
 	}
 
 	private async _removeRequestFromBase(): Promise<void> {

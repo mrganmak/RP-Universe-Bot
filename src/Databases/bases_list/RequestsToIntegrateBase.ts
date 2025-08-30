@@ -1,51 +1,43 @@
 import { Snowflake } from "discord.js";
-import { Collection, InsertOneResult, UpdateResult } from "mongodb";
-import { GuildModules, MongoBase } from "../../index.js";
+import { InsertOneResult, ObjectId, UpdateResult, WithId } from "mongodb";
+import { BaseCollection } from "../MongoBase.js";
+import { GuildModules } from "../../index.js";
 
-export class RequestsToIntegrateBase {
-	private static _instance: RequestsToIntegrateBase | undefined;
-
-	private _database!: typeof MongoBase['database'];
-	private _collection!: Collection<RequestToIntegrateBase>;
-	private _localBase: Map<Snowflake, RequestToIntegrateBase> = new Map();
-
+export class RequestsToIntegrateBase extends BaseCollection<RequestToIntegrateBase> {
 	constructor() {
-		if (RequestsToIntegrateBase._instance) return RequestsToIntegrateBase._instance;
-		RequestsToIntegrateBase._instance = this;
-
-		this._database = MongoBase.database;
-		this._collection = this._database.collection<RequestToIntegrateBase>(process.env.DB_REQUESTS_TO_INTEGRATE_MODULES);
+		super(process.env.DB_REQUESTS_TO_INTEGRATE_MODULES);
+		this.initCache();
 	}
 
-	public async init(): Promise<void> {
-		return this._collection.find().forEach((settings) => {
-			this._localBase.set(settings.guildId, settings);
-		});
+	protected getCacheKey(doc: WithId<RequestToIntegrateBase>): string {
+		return doc.guildId;
 	}
 
-	public async getByGuildId(guildId: Snowflake): Promise<RequestToIntegrateBase | null> {
-		const localData = this._localBase.get(guildId);
+	public async getByGuildId(guildId: Snowflake): Promise<WithId<RequestToIntegrateBase> | null> {
+		const cached = await this.getFromCache(guildId);
+		if (cached) return cached;
 
-		if (localData) {
-			return localData;
-		} else {
-			const settings = await this._collection.findOne({ guildId });
-			if (!settings) return null;
+		const settings = await this._collection.findOne({ guildId });
+		if (!settings) return null;
 
-			this._localBase.set(settings.guildId, settings);
-			return settings;
-		}
+		this.setToCache(guildId, settings);
+		return settings;
 	}
 
 	public async addRequest(guildId: Snowflake, moduleName: GuildModules, data: RequestData): Promise<UpdateResult> {
-		const requestsById = (await this.getByGuildId(guildId) ?? { guildId, requests: { [moduleName]: data } });
-		requestsById.requests[moduleName] = data;
-
-		this._localBase.set(guildId, requestsById);
+		const requestsById = await this.getByGuildId(guildId);
+		const newRequests = requestsById ?? { 
+			_id: new ObjectId(),
+			guildId, 
+			requests: { [moduleName]: data } 
+		};
+		
+		newRequests.requests[moduleName] = data;
+		this.setToCache(guildId, newRequests);
 
 		return await this._collection.updateOne(
 			{ guildId: guildId },
-			{ $set: requestsById },
+			{ $set: newRequests },
 			{ upsert: true }
 		);
 	}
@@ -58,7 +50,7 @@ export class RequestsToIntegrateBase {
 		const filteredRequestsEntries = Object.entries(requestsById.requests).filter(([key]) => (key !== String(moduleName)));
 		requestsById.requests = Object.fromEntries(filteredRequestsEntries);
 
-		this._localBase.set(guildId, requestsById);
+		this.setToCache(guildId, requestsById);
 
 		return await this._collection.updateOne(
 			{ guildId: guildId },

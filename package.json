@@ -18,7 +18,7 @@
     "discord.js": "^14.11.0",
     "discordx": "^11.7.1",
     "djs-button-pages": "^4.0.1",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.4.5",
     "generate-api-key": "^1.0.2",
     "mongodb": "^5.1.0",
     "ytranslate": "^1.0.0"

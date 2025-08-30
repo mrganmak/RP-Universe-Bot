@@ -1,84 +1,93 @@
 import { Colors, Snowflake } from "discord.js";
-import { MongoBase } from "../MongoBase.js";
-import { Collection, DeleteResult, InsertOneResult, UpdateResult } from "mongodb";
+import { DeleteResult, InsertOneResult, UpdateResult, WithId } from "mongodb";
+import { BaseCollection } from "../MongoBase.js";
 
-export class UsersMarkersBase {
-	private static _instance: UsersMarkersBase | undefined;
-
-	private _database!: typeof MongoBase['database'];
-	private _collection!: Collection<UserMarkersBase>;
-
+export class UsersMarkersBase extends BaseCollection<UsersMarkersBaseData> {
 	constructor() {
-		if (UsersMarkersBase._instance) return UsersMarkersBase._instance;
-		UsersMarkersBase._instance = this;
-
-		this._database = MongoBase.database;
-		this._collection = this._database.collection<UserMarkersBase>(process.env.DB_GUILDS_USERS_MARKERS);
+		super(process.env.DB_GUILDS_USERS_MARKERS);
+		this.initCache();
 	}
 
-	public async getByUserId(userId: Snowflake): Promise<UserMarkersBase | null> {
-		return await this._collection.findOne({ userId });
+	protected getCacheKey(doc: WithId<UsersMarkersBaseData>): string {
+		return doc.userId;
 	}
 
-	public async addUser(userMarkers: UserMarkersBase): Promise<InsertOneResult<UserMarkersBase>> {
-		const markersById = await this.getByUserId(userMarkers.userId);
+	public async getByUserId(userId: Snowflake): Promise<WithId<UsersMarkersBaseData> | null> {
+		const cached = await this.getFromCache(userId);
+		if (cached) return cached;
+
+		const markers = await this._collection.findOne({ userId });
+		if (!markers) return null;
+
+		this.setToCache(userId, markers);
+		return markers;
+	}
+
+	public async addUser(markers: UsersMarkersBaseData): Promise<InsertOneResult<UsersMarkersBaseData>> {
+		const markersById = await this.getByUserId(markers.userId);
 
 		if (markersById) throw new Error('I cant add markers with same property');
 
-		return await this._collection.insertOne(userMarkers);
+		const result = await this._collection.insertOne(markers);
+		this.setToCache(markers.userId, { ...markers, _id: result.insertedId });
+		return result;
 	}
 
 	public async deleteMarkersByUserId(userId: Snowflake): Promise<DeleteResult> {
-		return await this._collection.deleteOne({ userId });
+		const result = await this._collection.deleteOne({ userId });
+		this.removeFromCache(userId);
+		return result;
 	}
 
-	public async changeMarkerForUser(userId: Snowflake, marker: MarkerData): Promise<UpdateResult | InsertOneResult<UserMarkersBase>> {
+	public async changeMarkerForUser(userId: Snowflake, marker: MarkerData): Promise<UpdateResult | InsertOneResult<UsersMarkersBaseData> | void> {
 		return await this.addMarkerForUser(userId, marker);
 	}
 
-	public async addMarkerForUser(userId: Snowflake, marker: MarkerData): Promise<UpdateResult | InsertOneResult<UserMarkersBase>> {
-		const userMarkersData = await this.getByUserId(userId);
-		if (!userMarkersData) return await this.addUser({ userId, markers: [marker] });
+	public async addMarkerForUser(userId: Snowflake, marker: MarkerData): Promise<UpdateResult | InsertOneResult<UsersMarkersBaseData> | void> {
+		const markersById = await this.getByUserId(userId);
+		if (!markersById) return;
 
-		const existedMarker = this._findMarkerInUserMarkersByGuildId(marker.guildId, userMarkersData.markers);
+		const existedMarker = this._findMarkerInUserMarkersByGuildId(marker.guildId, markersById.markers);
 		if (existedMarker) {
-			existedMarker.markerType = marker.markerType;
+			existedMarker.guildId = marker.guildId;
 			existedMarker.reason = marker.reason;
 			existedMarker.hiddenInGuilds = marker.hiddenInGuilds
 		} else {
-			userMarkersData.markers.push(marker);
+			markersById.markers.push(marker);
 		}
 
+		this.setToCache(userId, markersById);
 		return await this._collection.updateOne(
 			{ userId },
-			{ $set: userMarkersData },
+			{ $set: markersById },
 			{ upsert: false }
 		);
 	}
 
 	private _findMarkerInUserMarkersByGuildId(guildId: Snowflake, markers: MarkerData[]): MarkerData | undefined {
 		for (const marker of markers) {
-			if (marker.guildId === guildId) return marker; //TODO: Проверить
+			if (marker.guildId === guildId) return marker;
 		}
 
 		return undefined;
 	}
 
 	public async deleteMarkerFromUserByGuildId(userId: Snowflake, guildId: Snowflake): Promise<UpdateResult | null> {
-		const userMarkersData = await this.getByUserId(userId);
-		if (!userMarkersData) return null;
+		const userMarkers = await this.getByUserId(userId);
+		if (!userMarkers) return null;
 
-		userMarkersData.markers = userMarkersData.markers.filter((marker) => (marker.guildId !== guildId));
-
+		userMarkers.markers = userMarkers.markers.filter((marker) => (marker.guildId !== guildId));
+		
+		this.setToCache(userId, userMarkers);
 		return await this._collection.updateOne(
 			{ userId },
-			{ $set: userMarkersData },
+			{ $set: userMarkers },
 			{ upsert: false }
 		);
 	}
 }
 
-interface UserMarkersBase {
+interface UsersMarkersBaseData {
 	userId: Snowflake;
 	markers: MarkerData[];
 }
