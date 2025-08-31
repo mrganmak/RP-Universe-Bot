@@ -362,7 +362,6 @@ export class PaginationSelectMenu<T extends PaginationSelectMenuOptions = Pagina
 		);
 	}
 
-
 	private _getCurrentPageOptions(): APISelectMenuOption[] {
 		const startIndex = (this._state.currentPage - 1) * this._config.itemsPerPage;
 		const endIndex = startIndex + this._config.itemsPerPage;
