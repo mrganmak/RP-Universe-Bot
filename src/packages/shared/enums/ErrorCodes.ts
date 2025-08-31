@@ -3,4 +3,6 @@ export enum ModulesErrorCodes {
 	BotPermissionsMissing = 'BOT_PERMISSIONS_MISSING',
 	GuildNotFound = 'GUILD_NOT_FOUND',
 	ModuleDisabled = 'MODULE_DISABLED',
+	MuduleAlreadyActiveted = 'MODULE_ALREADY_ACTIVETED',
+	PollNotCollected = 'POLL_NOT_COLLECTED',
 }
