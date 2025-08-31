@@ -1,9 +1,5 @@
-import { ModulesCommandsList } from "@src/index.js";
+import { ModulesCommandsList, Result } from "@src/index.js";
 import { singleton } from "tsyringe";
-
-export type Result<T, E = string> =
-	| { ok: true; value: T }
-	| { ok: false; error: E };
 
 export interface CommandHandler<In, Out> {
 	execute(input: In): Promise<Result<Out>>;
