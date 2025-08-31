@@ -1,4 +1,4 @@
-import { APIButtonComponentWithCustomId, APIChannelSelectComponent, APIMentionableSelectComponent, APIRoleSelectComponent, APISelectMenuOption, APITextInputComponent, APIUserSelectComponent, ComponentType, EmbedBuilder, GuildMember, RepliableInteraction, Role } from "discord.js";
+import { APIButtonComponentWithCustomId, APIChannelSelectComponent, APIMentionableSelectComponent, APIRoleSelectComponent, APISelectMenuOption, APITextInputComponent, APIUserSelectComponent, Channel, ComponentType, EmbedBuilder, GuildMember, RepliableInteraction, Role, User } from "discord.js";
 import { EmbedLocalizationIds, LocalizationLanguages, TextLocalizationIds, UserConfirmationButtonLabels, UserConfirmationAnswers } from "@src/index.js";
 
 export interface DataCollectionPollOptions {
@@ -149,7 +149,8 @@ export type CollectedSelectMenuAnswer =
 	CollectedStringSelectMenuAnswer
 	| CollectedUserSelectMenuAnswer
 	| CollectedRoleSelectMenuAnswer
-	| CollectedMentionableSelectMenuAnswer;
+	| CollectedMentionableSelectMenuAnswer
+	| CollectedChannelSelectMenuAnswer;
 
 export interface CollectedBaseSelectMenuAnswer extends CollectedBaseAnswer {
 	type: CollectionPollQuestionTypes.SELECT_MENU;
@@ -167,7 +168,7 @@ export interface StringSelectMenuAnswerData {
 
 export interface CollectedUserSelectMenuAnswer extends CollectedBaseSelectMenuAnswer {
 	seletMenuType: ComponentType.UserSelect;
-	answer: GuildMember[];
+	answer: User[];
 }
 
 export interface CollectedRoleSelectMenuAnswer extends CollectedBaseSelectMenuAnswer {
@@ -183,6 +184,11 @@ export interface CollectedMentionableSelectMenuAnswer extends CollectedBaseSelec
 export interface MentionableSelectMenuAnswerData {
 	roles: Role[];
 	members: GuildMember[];
+}
+
+export interface CollectedChannelSelectMenuAnswer extends CollectedBaseSelectMenuAnswer {
+	seletMenuType: ComponentType.ChannelSelect;
+	answer: Channel[];
 }
 
 export interface CollectedModalMenuAnswer extends CollectedBaseAnswer {
