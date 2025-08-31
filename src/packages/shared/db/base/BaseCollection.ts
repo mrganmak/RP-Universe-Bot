@@ -32,7 +32,7 @@ export class BaseCollection<TDoc extends Document> {
 	}
 }
 
-class BaseValue<TDoc extends Document> {
+export class BaseValue<TDoc extends Document> {
 	constructor(
 		private _doc: WithId<TDoc>,
 		private _base: BaseCollection<TDoc>
