@@ -1,7 +1,7 @@
 import { RepliableInteraction } from "discord.js";
 import { container } from "tsyringe";
 import { GuildModulesValue, ModulesBase } from "./ModulesBase.js";
-import { DataCollectionPoll, GuildModuleIds, ModulesErrorCodes, Result } from "../shared/index.js";
+import { DataCollectionPoll, GuildModuleIds, ModulesErrorCodes, PollCollectedData, Result } from "../shared/index.js";
 
 export abstract class Module {
 	constructor(
@@ -18,7 +18,7 @@ export abstract class Module {
 		const setupDataResult = await this._getSetupData(interaction);
 		if (!setupDataResult.ok) return setupDataResult;
 
-		const initilizeResult = await this._initilize(setupDataResult.value);
+		const initilizeResult = await this._initilize(setupDataResult.value, interaction);
 		if (!initilizeResult.ok) return initilizeResult;
 
 		guildModules.doc[this._moduleId] = true;
@@ -31,21 +31,20 @@ export abstract class Module {
 		const guildModulesBase = container.resolve(ModulesBase);
 		const guildModules = await guildModulesBase.getByKey('guildId', guildId);
 
-		if (!guildModules) return { ok: false, error: ModulesErrorCodes.GuildNotFound };
+		if (!guildModules) return { ok: true, value: await guildModulesBase.create({ guildId }) };
 		if (guildModules.doc[this._moduleId] === true) return { ok: false, error: ModulesErrorCodes.MuduleAlreadyActiveted };
 
 		return { ok: true, value: guildModules };
 	}
 
-	private async _getSetupData(interaction: RepliableInteraction<'raw' | 'cached'>): Promise<any> {
+	private async _getSetupData(interaction: RepliableInteraction<'raw' | 'cached'>): Promise<Result<PollCollectedData>> {
 		const setupPoll = this._getSetupPoll(interaction);
 		const setupData = await setupPoll.collectPollData();
 		if (!setupData) return { ok: false, error: ModulesErrorCodes.PollNotCollected };
-		return setupData;
+		return { ok: true, value: setupData };
 	}
 
 	protected abstract _getSetupPoll(interaction: RepliableInteraction<'raw' | 'cached'>): DataCollectionPoll;
 	protected abstract _getChangePoll(interaction: RepliableInteraction<'raw' | 'cached'>): DataCollectionPoll;
-	protected abstract _initilize(setupData: any): Promise<Result<boolean>>;
-
+	protected abstract _initilize(setupData: PollCollectedData, interaction: RepliableInteraction<'raw' | 'cached'>): Promise<Result<boolean>>;
 }
