@@ -1,7 +1,7 @@
 import { Guild, Locale } from "discord.js";
 import { LocalizationLanguages, DEFAULT_SERVER_LANGUAGE } from "@src/index.js";
 
-export async function getGuildLanguage(guild: Guild): Promise<LocalizationLanguages> {
+export function getGuildLanguage(guild: Guild): LocalizationLanguages {
 	if (!guild.preferredLocale) {
 		return DEFAULT_SERVER_LANGUAGE;
 	} else {
