@@ -1,7 +1,7 @@
-import type { Collection, Document, ObjectId, WithId } from "mongodb";
+import type { Collection, Document, ObjectId, WithId, OptionalUnlessRequiredId } from "mongodb";
 import { MongoDatabase } from "../mongo/MongoDatabase";
 
-export class BaseCollection<TDoc extends Document> {
+export abstract class BaseCollection<TDoc extends Document> {
 	private _collection: Collection<TDoc>;
 
 	protected constructor(collectionName: string) {
@@ -9,6 +9,25 @@ export class BaseCollection<TDoc extends Document> {
 	}
 
 	protected get collection(): Collection<TDoc> { return this._collection; }
+
+	public async create(doc: OptionalUnlessRequiredId<TDoc>): Promise<BaseValue<TDoc>> {
+		const standardKey = this._getStandartKey();
+		const keyValue = (doc as any)[standardKey];
+		if (keyValue !== undefined) {
+			const isExists = await this.getByKey(standardKey as any, keyValue);
+			if (isExists) throw new Error(`Document with ${String(standardKey)} ${keyValue} already exists`);
+		} else {
+			throw new Error(`${String(standardKey)} is standart key in ${this.collection.collectionName}. But not found in doc ${JSON.stringify(doc)}`);
+		}
+		
+		const insertedDoc = await this.collection.insertOne(doc);
+		const docWithId: WithId<TDoc> = {
+			...doc,
+			_id: insertedDoc.insertedId
+		} as WithId<TDoc>;
+		
+		return new BaseValue(docWithId, this);
+	}
 
 	public async getByKey<Key extends keyof WithId<TDoc>>(key: Key, value: WithId<TDoc>[Key]): Promise<BaseValue<TDoc> | null> {
 		const valueData = await this.collection.findOne({ [key]: value } as any);
@@ -30,6 +49,8 @@ export class BaseCollection<TDoc extends Document> {
 			{ upsert: true }
 		);
 	}
+
+	protected abstract _getStandartKey(): keyof TDoc;
 }
 
 export class BaseValue<TDoc extends Document> {

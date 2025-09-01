@@ -8,6 +8,10 @@ export class ModulesBase extends BaseCollection<GuildModulesBase> {
 	constructor() {
 		super(process.env.DB_GUILDS_MODULES);
 	}
+
+	protected _getStandartKey(): keyof GuildModulesBase {
+		return 'guildId';
+	}
 }
 
 export type GuildModulesValue = BaseValue<GuildModulesBase>;
