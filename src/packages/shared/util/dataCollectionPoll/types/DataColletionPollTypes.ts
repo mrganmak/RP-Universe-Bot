@@ -8,13 +8,15 @@ export interface DataCollectionPollOptions {
 	interaction: RepliableInteraction;
 }
 
-export type DataCollectionPollQuestions = DataCollectionPollCategoriesQuestions | DataCollectionPollArrayQuestions<false>;
+export type DataCollectionPollQuestions = DataCollectionPollCategoriesQuestions | DataCollectionPollArrayQuestions;
 
 export interface DataCollectionPollCategoriesQuestions {
-	[categoryName: string]: DataCollectionPollArrayQuestions<true>;
+	[categoryName: string]: DataCollectionPollArrayQuestionsGeneric<true>;
 }
 
-export type DataCollectionPollArrayQuestions<T extends boolean> = DataCollectionPollQuestion<T>[];
+export type DataCollectionPollArrayQuestions = DataCollectionPollArrayQuestionsGeneric<false>;
+
+export type DataCollectionPollArrayQuestionsGeneric<IsWithCategories extends boolean> = DataCollectionPollQuestion<IsWithCategories>[];
 
 export type DataCollectionPollQuestion<IsWithCategories extends boolean> = 
 	DataCollectionPollSelectMenuQuestion<IsWithCategories>

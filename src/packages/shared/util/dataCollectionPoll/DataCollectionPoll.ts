@@ -1,7 +1,7 @@
 import {
 	DataCollectionPollOptions,
 	DataCollectionPollQuestions,
-	DataCollectionPollArrayQuestions,
+	DataCollectionPollArrayQuestionsGeneric,
 	PollCollectedData,
 	CollectedQuestionAnswer,
 	DataCollectionPollQuestion,
@@ -47,7 +47,7 @@ export class DataCollectionPoll {
 		return this.getAnswersForQuestions(questions);
 	}
 
-	private async getAnswersForQuestions(questions: DataCollectionPollArrayQuestions<boolean>): Promise<PollCollectedData | null> {
+	private async getAnswersForQuestions(questions: DataCollectionPollArrayQuestionsGeneric<boolean>): Promise<PollCollectedData | null> {
 		const collectedData: PollCollectedData = [];
 
 		for (const question of questions) {
