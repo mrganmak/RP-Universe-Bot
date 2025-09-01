@@ -17,4 +17,15 @@ export const ruTextLocaliztions: TextLocalizations = {
 	[TextLocalizationIds.UIManagerMentionableSelectPlaceholder]: 'Выберите пользователя или роль',
 	[TextLocalizationIds.UIManagerChannelSelectPlaceholder]: 'Выберите канал',
 	[TextLocalizationIds.UIManagerDefaultSelectPlaceholder]: 'Выберите опцию',
+	
+	// TicketsModule
+	[TextLocalizationIds.TicketsModuleCategorySelectPlaceholder]: 'Выберите категорию для тикетов',
+	[TextLocalizationIds.TicketsModuleRolesSelectPlaceholder]: 'Выберите админские роли',
+	[TextLocalizationIds.TicketsModuleSetupButton]: 'Начать настройку',
+	[TextLocalizationIds.TicketsModuleChangeSelectionQuestion]: 'Выберите, что вы хотите изменить',
+	[TextLocalizationIds.TicketsModuleChangeCategoryLabel]: 'Изменить категорию тикетов',
+	[TextLocalizationIds.TicketsModuleChangeCategoryDescription]: 'Изменить категорию, где будут создаваться новые тикеты',
+	[TextLocalizationIds.TicketsModuleChangeRolesLabel]: 'Изменить админские роли',
+	[TextLocalizationIds.TicketsModuleChangeRolesDescription]: 'Изменить роли, которые будут иметь разрешение на управление тикетами',
+	[TextLocalizationIds.TicketsModuleChangeIsContinueQuestion]: 'Хотите изменить что-то еще?',
 }

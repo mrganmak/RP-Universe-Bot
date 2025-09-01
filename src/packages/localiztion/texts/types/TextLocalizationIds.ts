@@ -15,4 +15,15 @@ export enum TextLocalizationIds {
 	UIManagerMentionableSelectPlaceholder = 'ui_manager_mentionable_select_placeholder',
 	UIManagerChannelSelectPlaceholder = 'ui_manager_channel_select_placeholder',
 	UIManagerDefaultSelectPlaceholder = 'ui_manager_default_select_placeholder',
+	
+	// TicketsModule
+	TicketsModuleCategorySelectPlaceholder = 'tickets_module_category_select_placeholder',
+	TicketsModuleRolesSelectPlaceholder = 'tickets_module_roles_select_placeholder',
+	TicketsModuleSetupButton = 'tickets_module_setup_button',
+	TicketsModuleChangeSelectionQuestion = 'tickets_module_change_selection_question',
+	TicketsModuleChangeCategoryLabel = 'tickets_module_change_category_label',
+	TicketsModuleChangeCategoryDescription = 'tickets_module_change_category_description',
+	TicketsModuleChangeRolesLabel = 'tickets_module_change_roles_label',
+	TicketsModuleChangeRolesDescription = 'tickets_module_change_roles_description',
+	TicketsModuleChangeIsContinueQuestion = 'tickets_module_change_is_continue_question',
 }
