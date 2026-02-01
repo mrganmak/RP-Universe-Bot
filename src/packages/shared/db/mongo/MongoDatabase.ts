@@ -11,4 +11,4 @@ export class MongoDatabase {
 		if (!MongoDatabase._db) throw new Error("MongoDatabase is not initialized");
 		return MongoDatabase._db;
 	}
-	}
+}
