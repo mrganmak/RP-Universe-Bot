@@ -6,15 +6,10 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { DIService, tsyringeDependencyRegistryEngine } from "@discordx/di";
 import { container } from "tsyringe";
-import { ModuleCommandsBus, GuildPolicy, registerAllHandlers, TOKENS } from "@src/index.js";
-import { MongoClientFactory, MongoDatabase } from "@src/packages/shared/db/index.js";
+import { ModuleCommandsBus, GuildPolicy, registerAllHandlers, TOKENS, MongoClientFactory, MongoDatabase } from "@src/index.js";
 
-async function int() {
+async function init() {
 	DIService.engine = tsyringeDependencyRegistryEngine.setInjector(container);
-
-	const mongoClient = await MongoClientFactory.getClient(process.env.DB_URL);
-	MongoDatabase.initialize(mongoClient);
-	container.registerInstance(TOKENS.Mongo, MongoDatabase);
 
 	const client = new Client({
 		intents: [
@@ -26,6 +21,10 @@ async function int() {
 		]
 	});
 	container.registerInstance(TOKENS.Client, client);
+
+	const mongoClient = await MongoClientFactory.getClient(process.env.DB_URL);
+	MongoDatabase.initialize(mongoClient);
+	container.registerInstance(TOKENS.Mongo, MongoDatabase);
 	
 	const bus = new ModuleCommandsBus();
 	container.registerInstance(TOKENS.Bus, bus);
@@ -36,11 +35,11 @@ async function int() {
 	const __filename = fileURLToPath(import.meta.url);
 	const __dirname = dirname(__filename);
 	//await importx(`${__dirname}/{events,commands}/**/**.js`);
-	//await client.login(process.env.TOKEN);
+	await client.login(process.env.TOKEN);
 
 	registerAllHandlers();
 
-	console.log(await bus.execute('Ticket.Open', {'guildId': '4', 'userId': '4'}))
+	//console.log(await bus.execute('Ticket.Open', {'guildId': '4', 'userId': '4'}))
 }
 
-int();
+init();
