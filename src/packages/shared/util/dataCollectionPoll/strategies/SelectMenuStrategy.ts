@@ -237,6 +237,7 @@ export class SelectMenuStrategy extends BaseStrategy {
 		return question.contentType === CollectionPollQuestionContentTypes.MESSAGE
 			? getLocalizationForText(question.content as TextLocalizationIds, this._language)
 			: getLocalizationForEmbed({ embedId: question.content as EmbedLocalizationIds, language: this._language });
+		//As is necessary in this case, since the check question.contentType === CollectionPollQuestionContentTypes.MESSAGE has already been performed above, which excludes other types.
 	}
 
 }

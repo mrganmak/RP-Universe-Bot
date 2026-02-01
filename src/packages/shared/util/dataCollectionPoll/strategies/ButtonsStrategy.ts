@@ -52,6 +52,9 @@ export class ButtonsStrategy extends BaseStrategy {
 				return await this.handleConfirmationButtons(buttonsQuestion);
 			default:
 				throw new Error(`Unsupported buttons type: ${(buttonsQuestion as any).buttonsType}`);
+			//As any is necessary in this case, since we have already gone through all possible types,
+			// buttonsQuestion.buttonsType automatically becomes never, which ultimately leads to an error on the part of TS.
+			// But the check itself is designed to catch errors. TODO: Переделать на функцию с never
 		}
 	}
 
@@ -131,5 +134,7 @@ export class ButtonsStrategy extends BaseStrategy {
 		return question.contentType === CollectionPollQuestionContentTypes.MESSAGE
 			? getLocalizationForText(question.content as TextLocalizationIds, this._language)
 			: getLocalizationForEmbed({ embedId: question.content as EmbedLocalizationIds, language: this._language });
+		//As is necessary in this case, since the check question.contentType === CollectionPollQuestionContentTypes.MESSAGE has already been performed above, which excludes other types.
+
 	}
 }

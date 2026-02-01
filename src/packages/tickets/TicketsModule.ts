@@ -189,5 +189,6 @@ export class TicketsModule extends Module {
 		
 		throw new Error('GuildMember is required, not APIInteractionGuildMember');
 	}
-}
 
+	//TODO: Сделать систему проверки на права бота в Категории Тикетов и в каждом канале при взаимодействии. Сделать через Guard и Functions в нём
+}

@@ -264,6 +264,7 @@ export class UIManager {
 				embedId: question.content as EmbedLocalizationIds, 
 				language: this.language 
 			});
+		//As is necessary in this case, since the check question.contentType === CollectionPollQuestionContentTypes.MESSAGE has already been performed above, which excludes other types.
 	}
 
 	/**

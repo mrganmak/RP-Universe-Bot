@@ -73,7 +73,9 @@ class UserConfirmation {
 	private constructor(messageOrInteraction: Message | RepliableInteraction, options: UserConfirmationInteractionOptions, interactionMessage?: Message) {
 		this._messageOrInteraction = messageOrInteraction;
 
-		const message = ((messageOrInteraction instanceof Message) ? messageOrInteraction : interactionMessage) as Message;
+		const message = ((messageOrInteraction instanceof Message) ? messageOrInteraction : interactionMessage);
+		if (!message) throw new Error('Message or interaction message is not found');
+		
 		this._buttonCollector = message.createMessageComponentCollector({ componentType: ComponentType.Button, filter: options.filter, time: options.time, idle: 60*60*1000 });
 		this._buttonCollector.on('collect', (interaction) => (this._onCollect(interaction)));
 	}

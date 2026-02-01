@@ -388,8 +388,7 @@ export class PaginationSelectMenu<T extends PaginationSelectMenuOptions = Pagina
 					: undefined,
 				emoji: localizedOption.emoji
 			};
-		}
-		return option as APISelectMenuOption;
+		} else return option as APISelectMenuOption;
 	}
 
 	private async _cleanupMessage(): Promise<void> {

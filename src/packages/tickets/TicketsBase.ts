@@ -1,5 +1,5 @@
 import { Snowflake } from "discord.js";
-import { BaseCollection, BaseValue } from "../shared/db/index.js";
+import { BaseCollection, BaseValue } from "@src/index.js";
 import { singleton } from "tsyringe";
 
 @singleton()
