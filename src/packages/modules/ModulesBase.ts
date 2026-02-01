@@ -1,6 +1,5 @@
 import { Snowflake } from "discord.js";
-import { BaseCollection, BaseValue } from "../shared/db/index.js";
-import { GuildModuleIds } from "../shared/index.js";
+import { BaseCollection, BaseValue, GuildModuleIds } from "@src/index.js";
 import { singleton } from "tsyringe";
 
 @singleton()

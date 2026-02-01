@@ -1,9 +1,6 @@
+import { GuildPolicy, Guard, Result, TOKENS, ModulesErrorCodes } from "@src/index.js";
 import { inject, injectable } from "tsyringe";
-//import type { GuildSettingsRepo } from "../infra/Repos";
-import { GuildPolicy, Guard, Result } from "@src/index.js";
 import { PermissionFlagsBits } from "discord.js";
-import { TOKENS } from "../di/tokens.js";
-import { ModulesErrorCodes } from "../enums/ErrorCodes.js";
 
 const CanManageChannels = [
 	PermissionFlagsBits.ManageChannels,

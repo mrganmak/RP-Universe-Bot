@@ -1,5 +1,6 @@
 import "reflect-metadata";
-import { BotPermissionsGuard, CommandHandler, ModuleEnabledGuard, ModulesCommandsList } from "@src/index.js";
+import { BotPermissionsGuard, CommandHandler, ModuleEnabledGuard, ModulesCommandsList, ModulesErrorCodes } from "@src/index.js";
+import { injectable } from "tsyringe";
 
 const META = {
 	COMMAND: Symbol("CommandHandler"),
@@ -29,7 +30,7 @@ export function BusCommandName(name: keyof ModulesCommandsList) {
 
 export function UseGuards(...guards: Array<GuardSpec | (new (...args: any[]) => any) >) {
 	const incomingSpecs: GuardSpec[] = guards.map(guard =>
-		typeof guard === "function" ? { use: guard } : (guard as GuardSpec)
+		typeof guard === "function" ? { use: guard } : (guard)
 	);
 
 	return function (target: HandlerConstructor) {
@@ -43,10 +44,40 @@ export function UseGuards(...guards: Array<GuardSpec | (new (...args: any[]) => 
 	};
 }
 
-export function RequirePermissions(...required: bigint[]) {
-	return UseGuards({ use: BotPermissionsGuard, params: { required } });
+export function RequirePermissions(...required: bigint[]): (target: HandlerConstructor) => void;
+export function RequirePermissions(guardFn: (input: any) => Promise<boolean>): (target: HandlerConstructor) => void;
+export function RequirePermissions(...args: (bigint | ((input: any) => Promise<boolean>))[]) {
+	if (args.length === 0) {
+		throw new Error("RequirePermissions requires at least one argument");
+	}
+	
+	const firstArg = args[0];
+	if (typeof firstArg === "function") {
+		return UseGuards({ use: FunctionalGuardWrapper, params: { guard: firstArg } });
+	} else {
+		const permissions = args as bigint[];
+		return UseGuards({ use: BotPermissionsGuard, params: { required: permissions } });
+	}
 }
 
 export type GuardSpec = { use: new (...args: any[]) => any; params?: unknown };
 
 export const BusDecoratorsMetadata = META;
+
+@injectable()
+class FunctionalGuardWrapper<T extends { guildId: string }> {
+	private guardFn: (input: T) => Promise<boolean> = async () => {
+		throw new Error("Guard function is not configured");
+	};
+
+	constructor() {}
+	
+	async check(input: T): Promise<{ ok: boolean; value?: true; error?: string }> {
+		const isAllowed = await this.guardFn(input);
+		return isAllowed ? { ok: true, value: true } : { ok: false, error: ModulesErrorCodes.BotPermissionsMissing } as const;
+	}
+	
+	configure(params: { guard: (input: T) => Promise<boolean> }): void {
+		this.guardFn = params.guard;
+	}
+}

@@ -26,7 +26,7 @@ export class ModuleCommandsBus {
 		Out extends ModulesCommandsList[Name]['Out'],
 	>(name: Name, input: In): Promise<Result<Out>> {
 		const entries = this.map.get(name);
-		if (!entries) return { ok: false, error: "NO_HANDLER" } as any;
+		if (!entries) return { ok: false, error: "NO_HANDLER" };
 
 		for (const guard of entries.guards) {
 			const result = await guard.check(input);

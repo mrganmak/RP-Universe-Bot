@@ -1,10 +1,15 @@
-import { Snowflake } from "discord.js";
+import { RepliableInteraction, Snowflake } from "discord.js";
 
-export type OpenTicketInput = {
+interface BaseInput {
+	interaction: RepliableInteraction;
+}
+
+export interface OpenTicketInput extends BaseInput {
 	guildId: Snowflake; userId: Snowflake; subject?: string; categoryId?: string;
-};
-export type OpenTicketOutput = { channelId: Snowflake };
+}
 
-export type ModulesCommandsList = {
+export interface OpenTicketOutput { channelId: Snowflake }
+
+export interface ModulesCommandsList {
 	'Ticket.Open': { In: OpenTicketInput, Out: OpenTicketOutput }
 }
