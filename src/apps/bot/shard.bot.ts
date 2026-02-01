@@ -4,7 +4,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 export class ShardBot {
-	static start(): void {
+	static async start(): Promise<void> {
 		const __filename = fileURLToPath(import.meta.url);
 		const __dirname = dirname(__filename);
 
@@ -27,7 +27,7 @@ export class ShardBot {
 			});
 		});
 
-		manager.spawn();
+		await manager.spawn();
 	}
 }
 
